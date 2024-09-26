@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
 
-import "./App.css";
-import LoadingPage from "./pages/entry/LoadingPage";
 import { BrowserRouter } from "react-router-dom";
+
+import { AuthProvider } from "./contexts/authContext";
+
 import AppRoutes from "./AppRoutes";
+
+import LoadingPage from "./pages/entry/LoadingPage";
+
+import "./App.css";
 
 function App() {
   const [isLoadingApp, setIsLoadingApp] = useState(true);
@@ -21,7 +26,9 @@ function App() {
     <LoadingPage />
   ) : (
     <BrowserRouter>
-      <AppRoutes />
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
     </BrowserRouter>
   );
 }

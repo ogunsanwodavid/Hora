@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Route, Routes } from "react-router-dom";
+
+import { useAuth } from "./contexts/authContext";
 
 import CreateAccount from "./pages/auth/CreateAccount";
 import SignIn from "./pages/auth/SignIn";
@@ -14,7 +16,7 @@ import VerifyEmail from "./pages/auth/VerifyEmail";
 
 function AppRoutes() {
   const [isAuthenticated, setisAuthenticated] = useState(false);
-  /* const { token, user, isLoggingOut } = useAuth();
+  const { token, user, isLoggingOut } = useAuth();
   const userId = user?._id || null;
 
   //Authenticate user if token and user id exists in the local Storage
@@ -25,7 +27,7 @@ function AppRoutes() {
       setisAuthenticated(false);
     }
   }, [token, userId]);
- */
+
   return (
     <Routes>
       {/**** Route to profile page if user is authenticated else go to the landing page */}

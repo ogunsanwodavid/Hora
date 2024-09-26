@@ -1,10 +1,12 @@
-import { Link, useNavigate } from "react-router-dom";
-import FormButton from "../../ui/FormButton";
-import leftArrow from "../../icons/leftArrowIcon.svg";
 import { useState } from "react";
+
+import { useNavigate } from "react-router-dom";
+
 import { ClipLoader } from "react-spinners";
-import CountdownTImer from "./CountdownTimer";
+
 import CountdownTimer from "./CountdownTimer";
+
+import leftArrow from "../../icons/leftArrowIcon.svg";
 
 function VerifyEmail() {
   const navigate = useNavigate();
@@ -34,6 +36,12 @@ function VerifyEmail() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(otpString);
+  };
+
+  const handleResendCode = (e) => {
+    e.preventDefault();
+    setOtp(new Array(6).fill(""));
+    setTimeLeft(60);
   };
 
   const loading = false;
@@ -87,7 +95,7 @@ function VerifyEmail() {
             </div>
           ) : (
             <div className="flex justify-center gap-x-6 font-semibold text-blue200">
-              <p>Resend code</p>
+              <p onClick={handleResendCode}>Resend code</p>
               <p>Resend as SMS</p>
             </div>
           )}
