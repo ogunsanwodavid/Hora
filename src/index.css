@@ -21,7 +21,7 @@
 
 /*** Style for opacity transition on welcome page ***/
 .welcome-scale {
-  animation: welcome-scale-animation 2s ease-in-out;
+  animation: welcome-scale-animation 1.5s ease-in-out;
 }
 
 @keyframes welcome-scale-animation {

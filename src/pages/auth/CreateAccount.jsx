@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { useForm } from "react-hook-form";
+
+import { Link, useNavigate } from "react-router-dom";
 
 import FormInput from "../../ui/FormInput";
 import FormButton from "../../ui/FormButton";
@@ -28,13 +30,21 @@ function CreateAccount() {
   const { errors } = formState;
 
   async function onSubmit(data) {
-    console.log(data);
+    const formData = data;
+    console.log(formData);
   }
+
+  const navigate = useNavigate();
 
   return (
     <div className="font-inter w-full min-h-screen bg-darkestBlue px-6 py-10 pb-20">
       <header className="px-2 space-y-4">
-        <img src={leftArrow} className="w-4" alt="left-arrow" />
+        <img
+          src={leftArrow}
+          className="w-4"
+          alt="left-arrow"
+          onClick={() => navigate(-1)}
+        />
 
         <main className="space-y-3 text-white text-center">
           <h2 className="font-semibold text-2xl">Create an account.</h2>
@@ -173,7 +183,9 @@ function CreateAccount() {
 
           <div className="w-full mt-4 space-x-2 text-white text-center text-[14px] font-semibold">
             Already have an account?{" "}
-            <span className="text-blue300">Sign in</span>
+            <Link to="/signin">
+              <span className="text-blue300">Sign in</span>
+            </Link>
           </div>
         </section>
       </form>

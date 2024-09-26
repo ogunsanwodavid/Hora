@@ -6,7 +6,7 @@ function FormButton({ content, loading }) {
       type="submit"
       className="w-full bg-blue200 h-[46px] rounded-[50px] text-white text-base font-semibold flex items-center justify-center"
       style={{
-        opacity: loading && 0.8,
+        opacity: loading && 0.6,
       }}
     >
       {loading ? (

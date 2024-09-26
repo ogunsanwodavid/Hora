@@ -10,6 +10,7 @@ import PageNotFound from "./pages/error/PageNotFound";
 
 import ProtectedRoute from "./pages/entry/ProtectedRoute";
 import WelcomePage from "./pages/entry/WelcomePage";
+import VerifyEmail from "./pages/auth/VerifyEmail";
 
 function AppRoutes() {
   const [isAuthenticated, setisAuthenticated] = useState(false);
@@ -36,6 +37,7 @@ function AppRoutes() {
 
       <Route path="/createaccount" element={<CreateAccount />} />
       <Route path="/signin" element={<SignIn />} />
+      <Route path="/verifyemail" element={<VerifyEmail />} />
       <Route path="/forgotpassword" element={<ForgotPassword />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
