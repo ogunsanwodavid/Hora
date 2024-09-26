@@ -67,6 +67,9 @@ export default {
         midnightBlue150: "rgba(227, 231, 253, 0.49)",
         midnightBlue100: "rgba(239, 240, 254, 0.73)",
         midnightBlue50: "rgba(253, 253, 255, 0.94)",
+
+        //Error colors
+        errorRed: "#E54D51",
       },
     },
   },

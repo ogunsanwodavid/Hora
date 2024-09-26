@@ -1,3 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/**** Style for the loading page logo scaling transition ****/
+.logo-scale {
+  animation: logo-scale-animation 2s infinite ease-in-out;
+}
+
+@keyframes logo-scale-animation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.6);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/*** Style for opacity transition on welcome page ***/
+.welcome-scale {
+  animation: welcome-scale-animation 2s ease-in-out;
+}
+
+@keyframes welcome-scale-animation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
