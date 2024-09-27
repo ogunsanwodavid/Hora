@@ -12,6 +12,7 @@ import fullLogo from "../../assets/fullLogo.svg";
 import leftArrow from "../../icons/leftArrowIcon.svg";
 import eyeIcon from "../../icons/eyeIcon.svg";
 import eyeOffIcon from "../../icons/eyeOffIcon.svg";
+import { useAuth } from "../../contexts/authContext";
 
 function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,12 +23,22 @@ function SignIn() {
     setShowPassword((p) => !p);
   };
 
-  const { register, formState, handleSubmit } = useForm();
+  const { register, formState, setValue, handleSubmit } = useForm();
   const { errors } = formState;
 
+  const { login, isLoggingIn } = useAuth();
+
   async function onSubmit(data) {
-    const formData = data;
-    console.log(formData);
+    const formData = {
+      email: data.email,
+      password: data.password,
+    };
+
+    await login(formData);
+
+    //Reset form inputs on successful login request
+    setValue("email", "");
+    setValue("password", "");
   }
 
   const navigate = useNavigate();
@@ -114,7 +125,7 @@ function SignIn() {
         </section>
 
         <section className="mt-10">
-          <FormButton content="Sign in" loading={false} />
+          <FormButton content="Sign in" loading={isLoggingIn} />
 
           <div className="w-full mt-4 space-x-2 text-white text-center text-[14px] font-semibold">
             Don't have an account?{" "}

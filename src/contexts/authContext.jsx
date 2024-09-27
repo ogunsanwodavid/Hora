@@ -109,7 +109,7 @@ const AuthProvider = ({ children }) => {
 
       if (response.status === 200) {
         console.log(data);
-        // Registration successful
+        // Verification successful
         const { message: verifyEmailMessage } = data;
 
         // set is veryifying email to false
@@ -153,6 +153,100 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  //Get User function
+  const getUser = async (userId) => {
+    try {
+      const response = await fetch(`${BASE_URL}/${userId}`);
+
+      const data = await response.json();
+
+      // Check if the response is OK (status 200)
+      if (response.ok) {
+        //set User to the fetched user information
+        await setUser(data.get.user);
+      } else {
+        // Other errors
+        toast.warning(data.error || "An unexpected error occurred");
+
+        return {
+          success: false,
+          error: data.error || "An unexpected error occurred",
+        };
+      }
+    } catch (error) {
+      // Network or other errors
+      toast.warning(error.message || "An unexpected error occurred");
+
+      return {
+        success: false,
+        error: error.message || "An unexpected error occurred",
+      };
+    }
+  };
+
+  //Login function
+  const login = async ({ email, password }) => {
+    setIsLoggingIn(true);
+    try {
+      const response = await fetch(`${BASE_URL}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+        redirect: "follow",
+      });
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+        console.log(data);
+        // Login successful
+        const { message: loginMessage } = data;
+        const token = data.login.login.token;
+
+        //set user information and token to local storage
+        setToken(token);
+        await getUser(data.login.login._id);
+
+        // set is logging up to false
+        setIsLoggingIn(false);
+
+        toast.success(loginMessage);
+
+        //Navigate to verify email page
+        navigate("/verifyemail");
+
+        //Set otp
+        setVerificationOtp(data.register.createUser.onetime);
+
+        return { success: true, loginMessage, user };
+      } else {
+        console.log(data);
+        // if an error
+        toast.warning(data.error || "An unexpected error occurred");
+
+        return {
+          success: false,
+          error: data.error || "An unexpected error occurred",
+        };
+      }
+    } catch (error) {
+      // set is logging in to false
+      setIsLoggingIn(false);
+
+      // Network or other errors
+      toast.warning(error.message || "An unexpected error occurred");
+
+      return {
+        success: false,
+        error: error.message || "An unexpected error occurred",
+      };
+    } finally {
+      setIsLoggingIn(false);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -164,6 +258,7 @@ const AuthProvider = ({ children }) => {
         verifyEmailAddress,
         setVerifyEmailAddress,
         signup,
+        login,
         verifyEmail,
         verificationOtp,
         setVerificationOtp,

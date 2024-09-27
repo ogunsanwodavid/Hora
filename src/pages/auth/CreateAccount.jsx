@@ -124,7 +124,7 @@ function CreateAccount() {
               className={`w-full flex gap-x-2 bg-black700 h-[48px] px-4 py-3 text-base text-white border-[1.2px] border-black300 rounded-[4px] ${
                 errors?.password?.message ? "border-errorRed" : ""
               }  ${
-                !errors?.username?.message && passwordFocused && "border-white"
+                !errors?.password?.message && passwordFocused && "border-white"
               }`}
             >
               <input
@@ -166,7 +166,7 @@ function CreateAccount() {
               className={`w-full flex gap-x-2 bg-black700 h-[48px] px-4 py-3 text-base text-white border-[1.2px] border-black300 rounded-[4px] ${
                 errors?.confirmPassword?.message ? "border-errorRed" : ""
               } ${
-                !errors?.username?.message &&
+                !errors?.confirmPassword?.message &&
                 confirmPasswordFocused &&
                 "border-white"
               }`}
