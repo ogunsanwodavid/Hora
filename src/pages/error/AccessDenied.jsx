@@ -4,7 +4,7 @@ import accessDeniedImg from "../../assets/accessDenied.svg";
 
 function AccessDenied() {
   return (
-    <div className="w-full min-h-screen bg-darkestBlue flex flex-col gap-y-2 items-center justify-center px-6">
+    <div className="font-raleway w-full min-h-screen bg-darkestBlue flex flex-col gap-y-2 items-center justify-center px-6">
       <img src={accessDeniedImg} className="w-full max-w-[301px]" alt="" />
 
       <h1 className="font-semibold text-xl text-white text-center">

@@ -54,7 +54,7 @@ function CreateAccount() {
   const navigate = useNavigate();
 
   return (
-    <div className="font-inter w-full min-h-screen bg-darkestBlue px-6 py-10 pb-20">
+    <div className="font-raleway w-full min-h-screen bg-darkestBlue px-6 py-10 pb-20">
       <header className="px-2 space-y-4">
         <img
           src={leftArrow}

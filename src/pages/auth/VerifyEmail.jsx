@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import { useAuth } from "../../contexts/authContext";
+
 import { ClipLoader } from "react-spinners";
 
 import CountdownTimer from "./CountdownTimer";
@@ -9,7 +11,6 @@ import CountdownTimer from "./CountdownTimer";
 import fullLogo from "../../assets/fullLogo.svg";
 
 import leftArrow from "../../icons/leftArrowIcon.svg";
-import { useAuth } from "../../contexts/authContext";
 
 function VerifyEmail() {
   const navigate = useNavigate();
@@ -38,20 +39,12 @@ function VerifyEmail() {
     }
 
     return () => {
-      setVerifyEmailId("");
-      setVerifyEmailAddress("");
       setVerificationOtp("");
-      setVerificationOtpError("");
+      setVerificationOtpError(false);
+      setVerifyEmailAddress("");
+      setVerifyEmailId("");
     };
-  }, [
-    verificationOtp,
-    navigate,
-    verificationOtpError,
-    setVerifyEmailId,
-    setVerifyEmailAddress,
-    setVerificationOtp,
-    setVerificationOtpError,
-  ]);
+  }, [verificationOtp, navigate, verificationOtpError]);
 
   const [otp, setOtp] = useState(new Array(6).fill("")); // Initialize an array with 6 empty strings
   const otpString = otp.join("");
@@ -93,7 +86,7 @@ function VerifyEmail() {
   const [timeLeft, setTimeLeft] = useState(60); // Initialize to 60 seconds (1 minute) for countdown timer
 
   return (
-    <div className="font-inter w-full min-h-screen bg-darkestBlue px-6 py-10 pb-20">
+    <div className="font-raleway w-full min-h-screen bg-darkestBlue px-6 py-10 pb-20">
       <header className="px-2 space-y-4">
         <img
           src={leftArrow}

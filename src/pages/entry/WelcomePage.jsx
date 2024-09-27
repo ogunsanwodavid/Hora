@@ -4,7 +4,7 @@ import Logo from "../../assets/logo.svg";
 
 function WelcomePage() {
   return (
-    <div className="font-inter w-full bg-gradient-to-b from-blue300 via-blue150 to-darkestBlue">
+    <div className="font-raleway w-full bg-gradient-to-b from-blue300 via-blue150 to-darkestBlue">
       <main className="welcome-scale w-full min-h-screen flex flex-col gap-y-6 items-center justify-center px-6">
         {/*** Logo */}
         <section className="w-20 h-20 flex items-center justify-center p-3 rounded-full bg-darkestBlue">

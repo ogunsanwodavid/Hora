@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 
 import { Link, useNavigate } from "react-router-dom";
 
+import { useAuth } from "../../contexts/authContext";
+
 import FormInput from "../../ui/FormInput";
 import FormButton from "../../ui/FormButton";
 
@@ -12,7 +14,6 @@ import fullLogo from "../../assets/fullLogo.svg";
 import leftArrow from "../../icons/leftArrowIcon.svg";
 import eyeIcon from "../../icons/eyeIcon.svg";
 import eyeOffIcon from "../../icons/eyeOffIcon.svg";
-import { useAuth } from "../../contexts/authContext";
 
 function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
@@ -44,7 +45,7 @@ function SignIn() {
   const navigate = useNavigate();
 
   return (
-    <div className="font-inter w-full min-h-screen bg-darkestBlue px-6 py-10 pb-20">
+    <div className="font-raleway w-full min-h-screen bg-darkestBlue px-6 py-10 pb-20">
       <header className="px-2 space-y-4">
         <img
           src={leftArrow}
@@ -100,14 +101,6 @@ function SignIn() {
                 placeholder="Enter your password"
                 {...register("password", {
                   required: "This field is required",
-                  pattern: {
-                    value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/,
-                    message: "Must be a mix of letters, numbers and symbols",
-                  },
-                  minLength: {
-                    value: 8,
-                    message: "Password needs a minimum of 8 characters",
-                  },
                 })}
                 className={`w-full h-full bg-transparent transition-all duration-500  outline-none  placeholder:text-black150 `}
                 onFocus={() => setPassswordFocused(true)}

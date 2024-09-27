@@ -16,7 +16,7 @@ function ProtectedRoute({ isAuthenticated }) {
   //Fetch new user information using user's id on mount
   useEffect(() => {
     if (isAuthenticated) {
-      //getUser(userId);
+      getUser(userId);
     }
   }, [userId]);
 

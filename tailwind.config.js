@@ -4,7 +4,7 @@ export default {
   theme: {
     screens: { sm: "330px", md: "600px", lg: "1200px" },
     fontFamily: {
-      inter: "Inter, sans-serif",
+      raleway: "Raleway, sans-serif",
     },
     listStyleType: {
       square: "square",
