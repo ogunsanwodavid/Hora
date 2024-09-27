@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -6,10 +6,52 @@ import { ClipLoader } from "react-spinners";
 
 import CountdownTimer from "./CountdownTimer";
 
+import fullLogo from "../../assets/fullLogo.svg";
+
 import leftArrow from "../../icons/leftArrowIcon.svg";
+import { useAuth } from "../../contexts/authContext";
 
 function VerifyEmail() {
   const navigate = useNavigate();
+
+  const {
+    setVerifyEmailId,
+    verifyEmailAddress,
+    setVerifyEmailAddress,
+    verifyEmail,
+    isVerifyingEmail,
+    verificationOtp,
+    setVerificationOtp,
+    verificationOtpError,
+    setVerificationOtpError,
+  } = useAuth();
+
+  useEffect(() => {
+    //Navigate back to signup page if no verfication otp to show this component
+    if (!verificationOtp) {
+      navigate("/createaccount");
+    }
+
+    //Set time left to 0 if there is an error to get resend code
+    if (verificationOtpError) {
+      setTimeLeft(0);
+    }
+
+    return () => {
+      setVerifyEmailId("");
+      setVerifyEmailAddress("");
+      setVerificationOtp("");
+      setVerificationOtpError("");
+    };
+  }, [
+    verificationOtp,
+    navigate,
+    verificationOtpError,
+    setVerifyEmailId,
+    setVerifyEmailAddress,
+    setVerificationOtp,
+    setVerificationOtpError,
+  ]);
 
   const [otp, setOtp] = useState(new Array(6).fill("")); // Initialize an array with 6 empty strings
   const otpString = otp.join("");
@@ -33,9 +75,13 @@ function VerifyEmail() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(otpString);
+
+    await verifyEmail({
+      otp: otpString,
+      email: verifyEmailAddress,
+    });
   };
 
   const handleResendCode = (e) => {
@@ -43,8 +89,6 @@ function VerifyEmail() {
     setOtp(new Array(6).fill(""));
     setTimeLeft(60);
   };
-
-  const loading = false;
 
   const [timeLeft, setTimeLeft] = useState(60); // Initialize to 60 seconds (1 minute) for countdown timer
 
@@ -59,6 +103,7 @@ function VerifyEmail() {
         />
 
         <main className="space-y-3 text-white text-center">
+          <img src={fullLogo} className="mx-auto h-8" alt="" />
           <h2 className="font-semibold text-2xl">Verify your Email.</h2>
           <h3 className="font-regular text-base">
             Enter the OTP sent to your email address.
@@ -75,13 +120,21 @@ function VerifyEmail() {
               name="otp"
               maxLength="1"
               value={data}
-              className="w-[20px] h-[20px] bg-transparent border-[1.5px] text-white text-[20px] text-center border-black300 font-semibold sm:w-[40px] sm:h-[40px]"
+              className={`w-[20px] h-[20px] bg-transparent border-[1.5px] text-white text-[20px] text-center  font-semibold sm:w-[40px] sm:h-[40px] ${
+                verificationOtpError ? "border-errorRed" : "border-black300"
+              }`}
               onChange={(e) => handleChange(e.target, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
               onFocus={(e) => e.target.select()}
             />
           ))}
         </section>
+
+        {verificationOtpError && (
+          <section className="text-sm text-errorRed text-center font-semibold font-regular mt-2">
+            <p>Wrong verification code. Click resend to get new code</p>
+          </section>
+        )}
 
         <section className="text-base text-white text-center font-regular mt-6">
           {timeLeft ? (
@@ -105,12 +158,12 @@ function VerifyEmail() {
           <button
             className="w-full bg-blue200 h-[46px] rounded-[50px] text-white text-base font-semibold flex items-center justify-center"
             style={{
-              opacity: (loading || otpString.length !== 6) && 0.6,
+              opacity: (isVerifyingEmail || otpString.length !== 6) && 0.6,
             }}
-            disabled={loading || otpString.length !== 6}
+            disabled={isVerifyingEmail || otpString.length !== 6}
             onClick={handleSubmit}
           >
-            {loading ? (
+            {isVerifyingEmail ? (
               <ClipLoader
                 color={"#fff"}
                 loading={true}

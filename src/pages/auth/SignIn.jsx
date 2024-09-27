@@ -7,6 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import FormInput from "../../ui/FormInput";
 import FormButton from "../../ui/FormButton";
 
+import fullLogo from "../../assets/fullLogo.svg";
+
 import leftArrow from "../../icons/leftArrowIcon.svg";
 import eyeIcon from "../../icons/eyeIcon.svg";
 import eyeOffIcon from "../../icons/eyeOffIcon.svg";
@@ -41,6 +43,7 @@ function SignIn() {
         />
 
         <main className="space-y-3 text-white text-center">
+          <img src={fullLogo} className="mx-auto h-8" alt="" />
           <h2 className="font-semibold text-2xl">Sign in to your account.</h2>
           <h3 className="font-regular text-base">
             Sign in to access all our features.
@@ -76,7 +79,7 @@ function SignIn() {
               className={`w-full flex gap-x-2 bg-black700 h-[48px] px-4 py-3 text-base text-white border-[1.2px] border-black300 rounded-[4px] ${
                 errors?.password?.message ? "border-errorRed" : ""
               }  ${
-                !errors?.fullName?.message && passwordFocused && "border-white"
+                !errors?.username?.message && passwordFocused && "border-white"
               }`}
             >
               <input

@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/**** Style for react toastify toasts ***/
+:root {
+  --toastify-font-family: "Inter", sans-serif !important;
+}
+
 /**** Style for the loading page logo scaling transition ****/
 .logo-scale {
   animation: logo-scale-animation 2s infinite ease-in-out;

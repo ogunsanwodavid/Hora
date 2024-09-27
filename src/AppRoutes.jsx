@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import { useAuth } from "./contexts/authContext";
 
@@ -13,6 +13,7 @@ import PageNotFound from "./pages/error/PageNotFound";
 import ProtectedRoute from "./pages/entry/ProtectedRoute";
 import WelcomePage from "./pages/entry/WelcomePage";
 import VerifyEmail from "./pages/auth/VerifyEmail";
+import Tasks from "./pages/tasks/Tasks";
 
 function AppRoutes() {
   const [isAuthenticated, setisAuthenticated] = useState(false);
@@ -31,11 +32,16 @@ function AppRoutes() {
   return (
     <Routes>
       {/**** Route to profile page if user is authenticated else go to the landing page */}
-      <Route path="/" element={isAuthenticated ? null : <WelcomePage />} />
-
       <Route
-        element={<ProtectedRoute isAuthenticated={isAuthenticated} />}
-      ></Route>
+        path="/"
+        element={
+          isAuthenticated ? <Navigate to="/tasks" replace /> : <WelcomePage />
+        }
+      />
+
+      <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
+        <Route path="/tasks" element={<Tasks />} />
+      </Route>
 
       <Route path="/createaccount" element={<CreateAccount />} />
       <Route path="/signin" element={<SignIn />} />

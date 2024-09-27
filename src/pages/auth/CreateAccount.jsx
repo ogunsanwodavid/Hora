@@ -4,8 +4,12 @@ import { useForm } from "react-hook-form";
 
 import { Link, useNavigate } from "react-router-dom";
 
+import { useAuth } from "../../contexts/authContext";
+
 import FormInput from "../../ui/FormInput";
 import FormButton from "../../ui/FormButton";
+
+import fullLogo from "../../assets/fullLogo.svg";
 
 import leftArrow from "../../icons/leftArrowIcon.svg";
 import eyeIcon from "../../icons/eyeIcon.svg";
@@ -26,12 +30,25 @@ function CreateAccount() {
     setShowConfirmPassword((p) => !p);
   };
 
-  const { register, formState, getValues, handleSubmit } = useForm();
+  const { register, formState, setValue, getValues, handleSubmit } = useForm();
   const { errors } = formState;
 
+  const { signup, isSigningUp } = useAuth();
+
   async function onSubmit(data) {
-    const formData = data;
-    console.log(formData);
+    const formData = {
+      username: data.username,
+      email: data.email,
+      password: data.password,
+    };
+
+    await signup(formData);
+
+    //Reset form inputs on successful signup request
+    setValue("username", "");
+    setValue("email", "");
+    setValue("password", "");
+    setValue("confirmPassword", "");
   }
 
   const navigate = useNavigate();
@@ -47,6 +64,7 @@ function CreateAccount() {
         />
 
         <main className="space-y-3 text-white text-center">
+          <img src={fullLogo} className="mx-auto h-8" alt="" />
           <h2 className="font-semibold text-2xl">Create an account.</h2>
           <h3 className="font-regular text-base">
             Create an account to access all our features.
@@ -56,24 +74,27 @@ function CreateAccount() {
 
       <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
         <section className="space-y-4">
-          {/*** Full Name input */}
-          <FormInput label="Full Name" error={errors?.fullName?.message}>
+          {/*** Username input */}
+          <FormInput label="Username" error={errors?.username?.message}>
             <input
               type="text"
-              name="fullName"
-              id="fullname"
-              placeholder="Enter your full name"
-              {...register("fullName", {
+              name="username"
+              id="username"
+              placeholder="Enter your username"
+              {...register("username", {
                 required: "This field is required",
-                pattern: {
-                  value: /^[A-Z][a-zA-Z]* [A-Z][a-zA-Z]*$/,
-                  message:
-                    "Full name must include both first and last names - capitalize first letters",
-                },
               })}
               className={`w-full bg-black700 h-[48px] px-4 py-3 text-base text-white  transition-all duration-500 border-[1.2px] border-black300 outline-none rounded-[4px] placeholder:text-black150 ${
-                errors?.fullName?.message ? "border-errorRed" : ""
-              } ${!errors?.fullName?.message && "focus:border-white"}`}
+                errors?.username?.message ? "border-errorRed" : ""
+              } ${!errors?.username?.message && "focus:border-white"}`}
+              onKeyDown={(e) => {
+                const key = e.key;
+
+                // Allow only letters and digits
+                if (!/^[a-zA-Z0-9]$/.test(key) && key !== "Backspace") {
+                  e.preventDefault();
+                }
+              }}
             />
           </FormInput>
 
@@ -103,7 +124,7 @@ function CreateAccount() {
               className={`w-full flex gap-x-2 bg-black700 h-[48px] px-4 py-3 text-base text-white border-[1.2px] border-black300 rounded-[4px] ${
                 errors?.password?.message ? "border-errorRed" : ""
               }  ${
-                !errors?.fullName?.message && passwordFocused && "border-white"
+                !errors?.username?.message && passwordFocused && "border-white"
               }`}
             >
               <input
@@ -145,7 +166,7 @@ function CreateAccount() {
               className={`w-full flex gap-x-2 bg-black700 h-[48px] px-4 py-3 text-base text-white border-[1.2px] border-black300 rounded-[4px] ${
                 errors?.confirmPassword?.message ? "border-errorRed" : ""
               } ${
-                !errors?.fullName?.message &&
+                !errors?.username?.message &&
                 confirmPasswordFocused &&
                 "border-white"
               }`}
@@ -179,7 +200,7 @@ function CreateAccount() {
         </section>
 
         <section className="mt-10">
-          <FormButton content="Sign Up" loading={false} />
+          <FormButton content="Sign Up" loading={isSigningUp} />
 
           <div className="w-full mt-4 space-x-2 text-white text-center text-[14px] font-semibold">
             Already have an account?{" "}

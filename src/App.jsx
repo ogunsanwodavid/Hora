@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 
 import { BrowserRouter } from "react-router-dom";
 
+import { ToastContainer, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { AuthProvider } from "./contexts/authContext";
 
 import AppRoutes from "./AppRoutes";
@@ -28,6 +31,14 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <AppRoutes />
+
+        {/*** This contains toasted information display */}
+        <ToastContainer
+          position="top-center"
+          theme="dark"
+          transition={Zoom}
+          autoClose={200000000}
+        />
       </AuthProvider>
     </BrowserRouter>
   );
