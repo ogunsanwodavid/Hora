@@ -31,7 +31,7 @@
 
 @keyframes welcome-scale-animation {
   0% {
-    opacity: 30%;
+    opacity: 0;
   }
   100% {
     opacity: 100%;

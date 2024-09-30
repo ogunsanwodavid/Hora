@@ -312,11 +312,11 @@ const AuthProvider = ({ children }) => {
       };
     } finally {
       setIsRequestingReset(false);
-      //set reset password email
+      /* //set reset password email
       setResetPasswordEmail(email);
 
       //Navigate to reset password page
-      navigate("/resetpassword");
+      navigate("/resetpassword"); */
     }
   };
 

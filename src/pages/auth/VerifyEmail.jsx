@@ -11,6 +11,7 @@ import { ClipLoader } from "react-spinners";
 import CountdownTimer from "./CountdownTimer";
 
 import fullLogo from "../../assets/fullLogo.svg";
+import verifyEmailImg from "../../assets/verifyemail.svg";
 
 import leftArrow from "../../icons/leftArrowIcon.svg";
 
@@ -80,99 +81,115 @@ function VerifyEmail() {
 
   return (
     <div
-      className="font-raleway w-full bg-darkestBlue px-6 py-10 pb-20"
+      className="font-raleway w-full bg-electricBlue100  lg:flex lg:items-center"
       style={{
         minHeight: `${windowHeight}px`,
       }}
     >
-      <header className="px-2 space-y-4">
-        <img
-          src={leftArrow}
-          className="w-4"
-          alt="left-arrow"
-          onClick={() => navigate(-1)}
-        />
+      <main
+        className="w-full h-max bg-darkestBlue px-6 py-10 pb-20 lg:pb-0 lg:px-0 lg:py-0 lg:w-max lg:h-[631px] lg:mx-auto lg:flex lg:rounded-3xl lg:!min-h-0"
+        style={{
+          minHeight: `${windowHeight}px`,
+        }}
+      >
+        <section className="hidden w-max bg-blue300 m-6 rounded-3xl lg:flex items-center justify-center">
+          <img src={verifyEmailImg} className="min-w-[440px]" alt="" />
+        </section>
 
-        <main className="space-y-3 text-white text-center">
-          <img src={fullLogo} className="mx-auto h-8" alt="" />
-          <h2 className="font-semibold text-2xl">Verify your Email.</h2>
-          <h3 className="font-regular text-base">
-            Enter the OTP sent to your email address.
-          </h3>
-        </main>
-      </header>
-
-      <form className="mt-5">
-        <section className="w-max mx-auto space-x-3">
-          {otp.map((data, index) => (
-            <input
-              key={index}
-              type="text"
-              name="otp"
-              maxLength="1"
-              value={data}
-              className={`w-[20px] h-[20px] bg-transparent border-[1.5px] text-white text-[20px] text-center  font-semibold sm:w-[40px] sm:h-[40px] ${
-                verificationOtpError ? "border-errorRed" : "border-black300"
-              }`}
-              disabled={isVerifyingEmail}
-              onChange={(e) => handleChange(e.target, index)}
-              onKeyDown={(e) => handleKeyDown(e, index)}
-              onFocus={(e) => e.target.select()}
+        <section className="w-full max-w-[500px] mx-auto lg:w-[470px] lg:flex lg:flex-col lg:items-center lg:justify-center lg:p-6">
+          <header className="w-full px-2 space-y-4 max-w-[500px] mx-auto">
+            <img
+              src={leftArrow}
+              className="w-4"
+              alt="left-arrow"
+              onClick={() => navigate(-1)}
             />
-          ))}
-        </section>
 
-        {verificationOtpError && (
-          <section className="text-sm text-errorRed text-center font-semibold font-regular mt-2">
-            <p>Wrong verification code. Click resend to get new code</p>
-          </section>
-        )}
+            <main className="space-y-3 text-white text-center">
+              <img src={fullLogo} className="mx-auto h-8" alt="" />
+              <h2 className="font-semibold text-2xl">Verify your Email.</h2>
+              <h3 className="font-regular text-base">
+                Enter the OTP sent to your email address.
+              </h3>
+            </main>
+          </header>
 
-        <section className="text-base text-white text-center font-regular mt-6">
-          {timeLeft ? (
-            <div className="space-y-1">
-              <p>Didn't get the code?</p>
+          <form className="w-full mt-5 max-w-[500px] mx-auto">
+            <section className="w-max mx-auto space-x-3">
+              {otp.map((data, index) => (
+                <input
+                  key={index}
+                  type="text"
+                  name="otp"
+                  maxLength="1"
+                  value={data}
+                  className={`w-[20px] h-[20px] bg-transparent border-[1.5px] text-white text-[20px] text-center  font-semibold sm:w-[40px] sm:h-[40px] ${
+                    verificationOtpError ? "border-errorRed" : "border-black300"
+                  }`}
+                  disabled={isVerifyingEmail}
+                  onChange={(e) => handleChange(e.target, index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  onFocus={(e) => e.target.select()}
+                />
+              ))}
+            </section>
 
-              <p>
-                Resend code in{" "}
-                <CountdownTimer timeLeft={timeLeft} setTimeLeft={setTimeLeft} />
-              </p>
-            </div>
-          ) : (
-            <div className="flex justify-center gap-x-6 font-semibold text-blue200">
-              <p onClick={handleResendCode}>Resend code</p>
-              <p>Resend as SMS</p>
-            </div>
-          )}
-        </section>
-
-        <section className="mt-16">
-          <button
-            className="w-full bg-blue200 h-[46px] rounded-[50px] text-white text-base font-semibold flex items-center justify-center"
-            style={{
-              opacity: (isVerifyingEmail || otpString.length !== 6) && 0.6,
-            }}
-            disabled={isVerifyingEmail || otpString.length !== 6}
-            onClick={handleSubmit}
-          >
-            {isVerifyingEmail ? (
-              <ClipLoader
-                color={"#fff"}
-                loading={true}
-                cssOverride={{
-                  display: "block",
-                  borderColor: "#fff",
-                }}
-                size={25}
-                aria-label="Loading Spinner"
-                data-testid="loader"
-              />
-            ) : (
-              "Verify"
+            {verificationOtpError && (
+              <section className="text-sm text-errorRed text-center font-semibold font-regular mt-2">
+                <p>Wrong verification code. Click resend to get new code</p>
+              </section>
             )}
-          </button>
+
+            <section className="text-base text-white text-center font-regular mt-6">
+              {timeLeft ? (
+                <div className="space-y-1">
+                  <p>Didn't get the code?</p>
+
+                  <p>
+                    Resend code in{" "}
+                    <CountdownTimer
+                      timeLeft={timeLeft}
+                      setTimeLeft={setTimeLeft}
+                    />
+                  </p>
+                </div>
+              ) : (
+                <div className="flex justify-center gap-x-6 font-semibold text-blue200">
+                  <p onClick={handleResendCode}>Resend code</p>
+                  <p>Resend as SMS</p>
+                </div>
+              )}
+            </section>
+
+            <section className="mt-16">
+              <button
+                className="w-full bg-blue200 h-[46px] rounded-[50px] text-white text-base font-semibold flex items-center justify-center"
+                style={{
+                  opacity: (isVerifyingEmail || otpString.length !== 6) && 0.6,
+                }}
+                disabled={isVerifyingEmail || otpString.length !== 6}
+                onClick={handleSubmit}
+              >
+                {isVerifyingEmail ? (
+                  <ClipLoader
+                    color={"#fff"}
+                    loading={true}
+                    cssOverride={{
+                      display: "block",
+                      borderColor: "#fff",
+                    }}
+                    size={25}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                ) : (
+                  "Verify"
+                )}
+              </button>
+            </section>
+          </form>
         </section>
-      </form>
+      </main>
     </div>
   );
 }

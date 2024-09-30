@@ -10,7 +10,7 @@ function WelcomePage() {
   return (
     <div className="font-raleway w-full bg-gradient-to-b from-blue300 via-blue150 to-darkestBlue">
       <main
-        className="welcome-scale w-full flex flex-col gap-y-6 items-center justify-center px-6"
+        className="welcome-scale max-w-[550px] mx-auto w-full flex flex-col gap-y-6 items-center justify-center px-6"
         style={{
           minHeight: `${windowHeight}px`,
         }}
@@ -22,25 +22,25 @@ function WelcomePage() {
 
         {/*** Texts */}
         <section className="space-y-2">
-          <h2 className="text-white text-2xl text-center font-semibold">
+          <h2 className="text-white text-2xl text-center font-semibold md:text-3xl">
             Welcome!
           </h2>
-          <h4 className="text-electricBlue50 text-base text-center font-regular">
+          <h4 className="text-electricBlue50 text-base text-center font-regular md:text-lg">
             Thanks for joining! Access or create your account below, and get
-            started on your journey
+            started on your journey.
           </h4>
         </section>
 
         {/***Buttons */}
         <section className="w-full flex flex-wrap justify-center gap-3 mt-5 font-semibold">
           <Link className="w-full" to="/signin">
-            <button className="w-full h-[44px] p-2 border-2 border-electricBlue50 text-white text-base rounded-lg">
+            <button className="w-full h-[44px] p-2 border-2 border-electricBlue50 text-white text-base rounded-full md:h-max md:text-lg">
               Sign In
             </button>
           </Link>
 
           <Link className="w-full" to="/createaccount">
-            <button className="w-full h-[44px] p-2 bg-blue200 text-white text-base rounded-lg">
+            <button className="w-full h-[44px] p-2 bg-blue200 text-white text-base rounded-full md:h-max md:text-lg">
               Create Account
             </button>
           </Link>

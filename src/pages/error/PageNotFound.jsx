@@ -14,6 +14,11 @@ function PageNotFound() {
       }}
     >
       <img src={pageNotFoundImg} className="w-full max-w-[301px]" alt="" />
+
+      <h2 className="font-regular text-base text-white text-center">
+        Oops! Page Not Found. We can’t seem to find the page you’re looking for.
+      </h2>
+
       <Link className="w-full" to="/">
         <button className="w-max mx-auto px-6 py-3 bg-blue200 rounded-[50px] text-white text-base font-semibold flex items-center justify-center">
           Back To Home
