@@ -72,7 +72,7 @@ function ForgotPassword() {
               <img src={fullLogo} className="mx-auto h-8" alt="" />
               <h2 className="font-semibold text-2xl">Forgot Password?</h2>
               <h3 className="font-regular text-base">
-                Enter your email below to reset your password?
+                Enter your email below to reset your password
               </h3>
             </main>
           </header>
