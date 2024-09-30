@@ -20,10 +20,14 @@ const AuthProvider = ({ children }) => {
   const [verificationOtp, setVerificationOtp] = useState("");
   const [verificationOtpError, setVerificationOtpError] = useState(false);
 
+  const [resetPasswordEmail, setResetPasswordEmail] = useState("");
+
   const [isSigningUp, setIsSigningUp] = useState(false);
   const [isVerifyingEmail, setIsVerifyingEmail] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isRequestingReset, setIsRequestingReset] = useState(false);
+  const [isResettingPassword, setIsResettingPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -54,7 +58,7 @@ const AuthProvider = ({ children }) => {
         setVerifyEmailAddress(data.register.createUser.email);
 
         //Set token
-        setToken(data.register.createUser.token);
+        setToken(data.register.token);
 
         //Set otp
         setVerificationOtp(data.register.createUser.onetime);
@@ -65,7 +69,7 @@ const AuthProvider = ({ children }) => {
         return { success: true, signUpMessage };
       } else {
         console.log(data);
-        // if an error
+        // toast error
         toast.error(data.message || "An unexpected error occurred");
 
         return {
@@ -74,9 +78,6 @@ const AuthProvider = ({ children }) => {
         };
       }
     } catch (error) {
-      // set is signing to false
-      setIsSigningUp(false);
-
       // Network or other errors
       toast.error(error.message || "An unexpected error occurred");
 
@@ -113,10 +114,10 @@ const AuthProvider = ({ children }) => {
         // Verification successful
         const { message: verifyEmailMessage } = data;
 
-        // set is veryifying email to false
-        setIsVerifyingEmail(false);
-
         toast.success(verifyEmailMessage);
+
+        //set token empty
+        setToken("");
 
         //Navigate to signin page
         navigate("/signin");
@@ -124,7 +125,7 @@ const AuthProvider = ({ children }) => {
         return { success: true, verifyEmailMessage, user };
       } else {
         console.log(data);
-        // if an error
+        // toast error
         toast.error(data.message || "An unexpected error occurred");
 
         //remove Token
@@ -139,9 +140,6 @@ const AuthProvider = ({ children }) => {
         };
       }
     } catch (error) {
-      // set is verifying email to false
-      setIsVerifyingEmail(false);
-
       //set verification error
       setVerificationOtpError(true);
 
@@ -167,7 +165,7 @@ const AuthProvider = ({ children }) => {
 
       const data = await response.json();
 
-      // Check if the response is OK (status 200)
+      // Check if the response is Ok
       if (response.ok) {
         //set User to the fetched user information
         await setUser(data.get.user);
@@ -205,7 +203,7 @@ const AuthProvider = ({ children }) => {
 
       const data = await response.json();
 
-      if (response.status === 200) {
+      if (response.ok) {
         console.log(data);
         // Login successful
         const { message: loginMessage } = data;
@@ -215,21 +213,12 @@ const AuthProvider = ({ children }) => {
         setToken(token);
         await getUser(data.login.login._id);
 
-        // set is logging up to false
-        setIsLoggingIn(false);
-
         toast.success(loginMessage);
-
-        //Navigate to verify email page
-        navigate("/verifyemail");
-
-        //Set otp
-        setVerificationOtp(data.register.createUser.onetime);
 
         return { success: true, loginMessage, user };
       } else {
         console.log(data);
-        // if an error
+        // toast error
         toast.error(data.message || "An unexpected error occurred");
 
         return {
@@ -238,9 +227,6 @@ const AuthProvider = ({ children }) => {
         };
       }
     } catch (error) {
-      // set is logging in to false
-      setIsLoggingIn(false);
-
       // Network or other errors
       toast.error(error.message || "An unexpected error occurred");
 
@@ -272,6 +258,119 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  //Request reset Function
+  const requestReset = async ({ email }) => {
+    setIsRequestingReset(true);
+    try {
+      const response = await fetch(`${BASE_URL}/forgot-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+        redirect: "follow",
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data);
+        // Reset Request successful
+        const { message: resetRequestMessage } = data;
+        //const token = data.login.login.token;
+
+        //set token to local storage
+        //setToken(token);
+
+        //toast message
+        toast.success(resetRequestMessage);
+
+        //set reset password id and email
+        setResetPasswordEmail(email);
+
+        //Navigate to reset password page
+        navigate("/resetpassword");
+
+        return { success: true, resetRequestMessage, user };
+      } else {
+        console.log(data);
+        // toast error
+        toast.error(data.message || "An unexpected error occurred");
+
+        return {
+          success: false,
+          error: data.message || "An unexpected error occurred",
+        };
+      }
+    } catch (error) {
+      // Network or other errors
+      toast.error(error.message || "An unexpected error occurred");
+
+      return {
+        success: false,
+        error: error.message || "An unexpected error occurred",
+      };
+    } finally {
+      setIsRequestingReset(false);
+      //set reset password email
+      setResetPasswordEmail(email);
+
+      //Navigate to reset password page
+      navigate("/resetpassword");
+    }
+  };
+
+  //Reset password function
+  const resetPassword = async ({ email, otp, newPassword }) => {
+    setIsResettingPassword(true);
+    try {
+      const response = await fetch(`${BASE_URL}/reset-password`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, otp, newPassword }),
+        redirect: "follow",
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data);
+        // Reset Request successful
+        const { message: resetPasswordMessage } = data;
+
+        //toast message
+        toast.success(resetPasswordMessage);
+
+        //Navigate to signin page
+        navigate("/signin");
+
+        return { success: true, resetPasswordMessage, user };
+      } else {
+        console.log(data);
+        // toast error
+        toast.error(data.message || "An unexpected error occurred");
+
+        return {
+          success: false,
+          error: data.message || "An unexpected error occurred",
+        };
+      }
+    } catch (error) {
+      // Network or other errors
+      toast.error(error.message || "An unexpected error occurred");
+
+      return {
+        success: false,
+        error: error.message || "An unexpected error occurred",
+      };
+    } finally {
+      setIsResettingPassword(false);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -287,14 +386,20 @@ const AuthProvider = ({ children }) => {
         logout,
         getUser,
         verifyEmail,
+        requestReset,
+        resetPassword,
         verificationOtp,
         setVerificationOtp,
         verificationOtpError,
         setVerificationOtpError,
+        resetPasswordEmail,
+        setResetPasswordEmail,
         isSigningUp,
         isVerifyingEmail,
         isLoggingIn,
         isLoggingOut,
+        isRequestingReset,
+        isResettingPassword,
       }}
     >
       {children}

@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../contexts/authContext";
 
+import useWindowDimensions from "../../hooks/useWindowDimensions";
+
 import FormInput from "../../ui/FormInput";
 import FormButton from "../../ui/FormButton";
 
@@ -16,6 +18,8 @@ import eyeIcon from "../../icons/eyeIcon.svg";
 import eyeOffIcon from "../../icons/eyeOffIcon.svg";
 
 function SignIn() {
+  const { windowHeight } = useWindowDimensions();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const [passwordFocused, setPassswordFocused] = useState(false);
@@ -45,7 +49,12 @@ function SignIn() {
   const navigate = useNavigate();
 
   return (
-    <div className="font-raleway w-full min-h-screen bg-darkestBlue px-6 py-10 pb-20">
+    <div
+      className="font-raleway w-full bg-darkestBlue px-6 py-10 pb-20"
+      style={{
+        minHeight: `${windowHeight}px`,
+      }}
+    >
       <header className="px-2 space-y-4">
         <img
           src={leftArrow}
@@ -79,9 +88,10 @@ function SignIn() {
                   message: "Please provide a valid email address",
                 },
               })}
-              className={`w-full !bg-black700 h-[48px] px-4 py-3 text-base text-white  transition-all duration-500 border-[1.2px] border-black300 outline-none rounded-[4px] placeholder:text-black150 ${
+              className={`w-full !bg-black700 h-[48px] px-4 py-3 text-base text-white  transition-all duration-500 border-[1.2px] border-black300 outline-none rounded-[4px] lowercase placeholder:normal-case placeholder:text-black150 ${
                 errors?.email?.message ? "border-errorRed" : ""
               }  ${!errors?.email?.message && "focus:border-white"}`}
+              disabled={isLoggingIn}
             />
           </FormInput>
 
@@ -105,6 +115,7 @@ function SignIn() {
                 className={`w-full h-full bg-transparent transition-all duration-500  outline-none  placeholder:text-black150 `}
                 onFocus={() => setPassswordFocused(true)}
                 onBlur={() => setPassswordFocused(false)}
+                disabled={isLoggingIn}
               />
 
               <div onClick={togglePasswordVisibility}>
@@ -115,6 +126,12 @@ function SignIn() {
               </div>
             </main>
           </FormInput>
+
+          <Link to="/forgotpassword">
+            <p className="w-max ml-auto text-blue300 text-[14px] font-semibold mt-1">
+              Forgot password?
+            </p>
+          </Link>
         </section>
 
         <section className="mt-10">

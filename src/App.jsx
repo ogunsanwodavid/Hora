@@ -37,7 +37,7 @@ function App() {
           position="top-center"
           theme="dark"
           transition={Zoom}
-          autoClose={2000}
+          autoClose={4000}
         />
       </AuthProvider>
     </BrowserRouter>

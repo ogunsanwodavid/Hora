@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../contexts/authContext";
 
+import useWindowDimensions from "../../hooks/useWindowDimensions";
+
 import { ClipLoader } from "react-spinners";
 
 import CountdownTimer from "./CountdownTimer";
@@ -15,16 +17,14 @@ import leftArrow from "../../icons/leftArrowIcon.svg";
 function VerifyEmail() {
   const navigate = useNavigate();
 
+  const { windowHeight } = useWindowDimensions();
+
   const {
-    setVerifyEmailId,
     verifyEmailAddress,
-    setVerifyEmailAddress,
     verifyEmail,
     isVerifyingEmail,
     verificationOtp,
-    setVerificationOtp,
     verificationOtpError,
-    setVerificationOtpError,
   } = useAuth();
 
   useEffect(() => {
@@ -37,13 +37,6 @@ function VerifyEmail() {
     if (verificationOtpError) {
       setTimeLeft(0);
     }
-
-    return () => {
-      setVerificationOtp("");
-      setVerificationOtpError(false);
-      setVerifyEmailAddress("");
-      setVerifyEmailId("");
-    };
   }, [verificationOtp, navigate, verificationOtpError]);
 
   const [otp, setOtp] = useState(new Array(6).fill("")); // Initialize an array with 6 empty strings
@@ -86,7 +79,12 @@ function VerifyEmail() {
   const [timeLeft, setTimeLeft] = useState(60); // Initialize to 60 seconds (1 minute) for countdown timer
 
   return (
-    <div className="font-raleway w-full min-h-screen bg-darkestBlue px-6 py-10 pb-20">
+    <div
+      className="font-raleway w-full bg-darkestBlue px-6 py-10 pb-20"
+      style={{
+        minHeight: `${windowHeight}px`,
+      }}
+    >
       <header className="px-2 space-y-4">
         <img
           src={leftArrow}
@@ -116,6 +114,7 @@ function VerifyEmail() {
               className={`w-[20px] h-[20px] bg-transparent border-[1.5px] text-white text-[20px] text-center  font-semibold sm:w-[40px] sm:h-[40px] ${
                 verificationOtpError ? "border-errorRed" : "border-black300"
               }`}
+              disabled={isVerifyingEmail}
               onChange={(e) => handleChange(e.target, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
               onFocus={(e) => e.target.select()}

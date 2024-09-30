@@ -1,11 +1,20 @@
 import { Link } from "react-router-dom";
 
+import useWindowDimensions from "../../hooks/useWindowDimensions";
+
 import Logo from "../../assets/logo.svg";
 
 function WelcomePage() {
+  const { windowHeight } = useWindowDimensions();
+
   return (
     <div className="font-raleway w-full bg-gradient-to-b from-blue300 via-blue150 to-darkestBlue">
-      <main className="welcome-scale w-full min-h-screen flex flex-col gap-y-6 items-center justify-center px-6">
+      <main
+        className="welcome-scale w-full flex flex-col gap-y-6 items-center justify-center px-6"
+        style={{
+          minHeight: `${windowHeight}px`,
+        }}
+      >
         {/*** Logo */}
         <section className="w-20 h-20 flex items-center justify-center p-3 rounded-full bg-darkestBlue">
           <img src={Logo} className="w-16" alt="" />
