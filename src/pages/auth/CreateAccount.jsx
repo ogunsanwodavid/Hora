@@ -96,7 +96,7 @@ function CreateAccount() {
         </section>
 
         <section className="w-full max-w-[500px] mx-auto lg:w-[470px] lg:flex lg:flex-col lg:items-center lg:justify-center lg:p-6">
-          <header className="w-full px-2 space-y-4 lg:space-y-2">
+          <header className="w-full px-2 space-y-4 lg:space-y-1">
             <img
               src={leftArrow}
               className="w-4"
@@ -104,7 +104,7 @@ function CreateAccount() {
               onClick={() => navigate(-1)}
             />
 
-            <main className="space-y-3 text-white text-center lg:space-y-2">
+            <main className="space-y-3 text-white text-center lg:space-y-1">
               <img src={fullLogo} className="mx-auto h-8" alt="" />
               <h2 className="font-semibold text-2xl">Create an account.</h2>
               <h3 className="font-regular text-base">
@@ -251,10 +251,10 @@ function CreateAccount() {
               </FormInput>
             </section>
 
-            <section className="mt-10 lg:mt-5">
+            <section className="mt-10 lg:mt-3">
               <FormButton content="Sign Up" loading={isSigningUp} />
 
-              <div className="w-full mt-4 space-x-2 text-white text-center text-[14px] font-semibold">
+              <div className="w-full mt-4 space-x-2 text-white text-center text-[14px] font-semibold lg:mt-1">
                 Already have an account?{" "}
                 <Link to="/signin">
                   <span className="text-blue300">Sign in</span>

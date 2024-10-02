@@ -19,8 +19,7 @@ import Tasks from "./pages/tasks/Tasks";
 
 function AppRoutes() {
   const [isAuthenticated, setisAuthenticated] = useState(false);
-  const { token, user, isLoggingOut } = useAuth();
-  const userId = user?._id || null;
+  const { token, userId, isLoggingOut } = useAuth();
 
   //Authenticate user if token and user id exists in the local Storage
   useEffect(() => {

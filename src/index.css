@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+button,
+img,
+a {
+  cursor: pointer;
+}
+
 /**** Style for react toastify toasts ***/
 :root {
   --toastify-font-family: "Inter", sans-serif !important;

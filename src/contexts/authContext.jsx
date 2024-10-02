@@ -11,7 +11,11 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const BASE_URL = "https://hora-1daj.onrender.com/user";
 
-  const [user, setUser, removeUser] = useLocalStorageState(null, "user");
+  const [user, setUser] = useLocalStorageState(null, "user");
+  const [userId, setUserId, removeUserId] = useLocalStorageState(
+    null,
+    "userId"
+  );
   const [token, setToken, removeToken] = useLocalStorageState("", "token");
 
   const [verifyEmailId, setVerifyEmailId] = useState("");
@@ -211,7 +215,9 @@ const AuthProvider = ({ children }) => {
 
         //set user information and token to local storage
         setToken(token);
-        await getUser(data.login.login._id);
+        setUserId(data.login.login._id);
+
+        //await getUser(data.login.login._id);
 
         toast.success(loginMessage);
 
@@ -375,6 +381,7 @@ const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
+        userId,
         token,
         removeToken,
         verifyEmailId,

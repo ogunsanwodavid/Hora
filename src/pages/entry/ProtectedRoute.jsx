@@ -7,9 +7,7 @@ import { useAuth } from "../../contexts/authContext";
 import AccessDenied from "../error/AccessDenied";
 
 function ProtectedRoute({ isAuthenticated }) {
-  const { user, getUser, isLoggingOut } = useAuth();
-
-  const userId = user?._id || null;
+  const { userId, getUser, isLoggingOut } = useAuth();
 
   console.log(isAuthenticated);
 
