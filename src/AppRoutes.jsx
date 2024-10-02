@@ -5,7 +5,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "./contexts/authContext";
 
 import ProtectedRoute from "./pages/entry/ProtectedRoute";
-import WelcomePage from "./pages/entry/WelcomePage";
+import LandingPage from "./pages/entry/LandingPage";
 
 import PageNotFound from "./pages/error/PageNotFound";
 
@@ -37,7 +37,7 @@ function AppRoutes() {
       <Route
         path="/"
         element={
-          isAuthenticated ? <Navigate to="/tasks" replace /> : <WelcomePage />
+          isAuthenticated ? <Navigate to="/tasks" replace /> : <LandingPage />
         }
       />
 
