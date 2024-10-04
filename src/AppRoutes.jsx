@@ -15,6 +15,7 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import OnboardingUserLoader from "./pages/auth/OnboardingUserLoader";
 
 import Tasks from "./pages/tasks/Tasks";
+import TimeTest from "./ui/TimeTest";
 
 function AppRoutes() {
   const { token, userId, isLoggingOut } = useAuth();
@@ -42,6 +43,7 @@ function AppRoutes() {
       <Route path="/forgotpassword" element={<ForgotPassword />} />
       <Route path="/resetpassword" element={<ResetPassword />} />
       <Route path="/onboarding" element={<OnboardingUserLoader />} />
+      <Route path="/time" element={<TimeTest />} />
 
       <Route path="*" element={<PageNotFound />} />
     </Routes>
