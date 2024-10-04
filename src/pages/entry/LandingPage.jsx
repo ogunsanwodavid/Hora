@@ -8,15 +8,14 @@ import landingPageImg from "../../assets/landingpage.svg";
 
 function LandingPage() {
   const { windowHeight, windowWidth } = useWindowDimensions();
-  console.log(windowWidth);
 
   return (
     <div
       className="font-raleway w-full lg:flex lg:items-center"
       style={{
         minHeight: `${windowHeight}px`,
-        background: `linear-gradient(to bottom${
-          windowWidth > 1200 ? " right" : ""
+        background: `linear-gradient(to bottom ${
+          windowWidth > 1200 ? "right" : ""
         }, rgba(64, 94, 178, 1) 0%, rgba(17, 23, 37, 1) ${
           windowWidth > 1200 ? "20%" : "10%"
         }, rgba(17, 23, 37, 1) ${

@@ -1,9 +1,26 @@
+import { useEffect } from "react";
+
+import { useNavigate } from "react-router-dom";
+
+import { useAuth } from "../../contexts/authContext";
+
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 import { CubeSpinner } from "react-spinners-kit";
 
 function OnboardingPageLoader() {
   const { windowHeight, windowWidth } = useWindowDimensions();
+
+  const navigate = useNavigate();
+
+  const { isOnboardingUser } = useAuth();
+
+  useEffect(() => {
+    if (!isOnboardingUser) {
+      navigate("/");
+    }
+  }, [isOnboardingUser, navigate]);
+
   return (
     <div
       className="font-raleway w-full bg-darkestBlue flex flex-col items-center justify-center px-6 gap-y-6 lg:gap-y-7"
