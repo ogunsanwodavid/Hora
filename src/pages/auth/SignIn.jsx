@@ -154,7 +154,7 @@ function SignIn() {
               <FormButton content="Sign in" loading={isLoggingIn} />
 
               <div className="w-full mt-4 space-x-2 text-white text-center text-[14px] font-semibold">
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <Link to="/createaccount">
                   <span className="text-blue300">Sign up</span>
                 </Link>

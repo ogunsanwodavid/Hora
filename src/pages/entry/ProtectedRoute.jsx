@@ -4,27 +4,34 @@ import { Navigate, Outlet } from "react-router-dom";
 
 import { useAuth } from "../../contexts/authContext";
 
+import LoadingPage from "../entry/LoadingPage";
+
 import AccessDenied from "../error/AccessDenied";
 
 function ProtectedRoute({ isAuthenticated }) {
-  const { userId, getUser, isLoggingOut } = useAuth();
-
-  console.log(isAuthenticated);
+  const { userId, onboardUser, isOnboardingUser, isLoggingOut } = useAuth();
 
   //Fetch new user information using user's id on mount
   useEffect(() => {
     if (isAuthenticated) {
-      getUser(userId);
+      //onboardUser(userId);
     }
   }, [userId]);
+
+  //Navigate to onboarding page when onboarding user
+  if (isOnboardingUser && isAuthenticated) return <Navigate to="/onboarding" />;
 
   //Displays Accessdenied page if user is not authenticated
   if (isAuthenticated === false && !isLoggingOut) return <AccessDenied />;
 
   //Show Spinner if user is logging out
-  /* if (isAuthenticated === false && isLoggingOut) return <Spinner />; */
+  if (isAuthenticated === false && isLoggingOut) return <LoadingPage />;
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/signin" />;
+  return isAuthenticated & !isOnboardingUser ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/signin" />
+  );
 }
 
 export default ProtectedRoute;

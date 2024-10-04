@@ -11,11 +11,8 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const BASE_URL = "https://hora-1daj.onrender.com/user";
 
-  const [user, setUser] = useLocalStorageState(null, "user");
-  const [userId, setUserId, removeUserId] = useLocalStorageState(
-    null,
-    "userId"
-  );
+  const [user, setUser] = useState(null, "user");
+  const [userId, setUserId, removeUserId] = useLocalStorageState("", "userId");
   const [token, setToken, removeToken] = useLocalStorageState("", "token");
 
   const [verifyEmailId, setVerifyEmailId] = useState("");
@@ -32,6 +29,7 @@ const AuthProvider = ({ children }) => {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isRequestingReset, setIsRequestingReset] = useState(false);
   const [isResettingPassword, setIsResettingPassword] = useState(false);
+  const [isOnboardingUser, setIsOnboardingUser] = useState(false);
 
   const navigate = useNavigate();
 
@@ -97,6 +95,7 @@ const AuthProvider = ({ children }) => {
   //VerifyEmail function
   const verifyEmail = async ({ otp, email }) => {
     setIsVerifyingEmail(true);
+    setVerificationOtpError(false);
     try {
       const response = await fetch(
         `${BASE_URL}/verify-email/${verifyEmailId}`,
@@ -118,10 +117,11 @@ const AuthProvider = ({ children }) => {
         // Verification successful
         const { message: verifyEmailMessage } = data;
 
+        //toast verify email message
         toast.success(verifyEmailMessage);
 
-        //set token empty
-        setToken("");
+        //removeToken
+        removeToken();
 
         //Navigate to signin page
         navigate("/signin");
@@ -131,9 +131,6 @@ const AuthProvider = ({ children }) => {
         console.log(data);
         // toast error
         toast.error(data.message || "An unexpected error occurred");
-
-        //remove Token
-        removeToken();
 
         //set verification error
         setVerificationOtpError(true);
@@ -145,7 +142,7 @@ const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       //set verification error
-      setVerificationOtpError(true);
+      //setVerificationOtpError(true);
 
       // Network or other errors
       toast.error(error.message || "An unexpected error occurred");
@@ -159,11 +156,16 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  //Get User function
-  const getUser = async (userId) => {
+  //Onboard User function
+  const onboardUser = async (userId) => {
+    setIsOnboardingUser(true);
     try {
       const response = await fetch(`${BASE_URL}/${userId}`, {
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
         redirect: "follow",
       });
 
@@ -188,6 +190,8 @@ const AuthProvider = ({ children }) => {
         success: false,
         error: error.message || "An unexpected error occurred",
       };
+    } finally {
+      setIsOnboardingUser(false);
     }
   };
 
@@ -253,7 +257,7 @@ const AuthProvider = ({ children }) => {
       await removeToken();
 
       //remove user from local storage
-      await removeUser();
+      await removeUserId();
 
       //Redirect to landing page
       window.location.href = "/";
@@ -390,8 +394,9 @@ const AuthProvider = ({ children }) => {
         setVerifyEmailAddress,
         signup,
         login,
+        onboardUser,
+        isOnboardingUser,
         logout,
-        getUser,
         verifyEmail,
         requestReset,
         resetPassword,

@@ -20,7 +20,7 @@ function App() {
     // Simulating a 1-second delay before loading the main page
     const timer = setTimeout(() => {
       setIsLoadingApp(false);
-    }, 4000);
+    }, 2500);
 
     return () => clearTimeout(timer); // Clear the timer when the component is unmounted
   }, []);

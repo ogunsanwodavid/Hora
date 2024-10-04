@@ -143,7 +143,7 @@ function VerifyEmail() {
             <section className="text-base text-white text-center font-regular mt-6">
               {timeLeft ? (
                 <div className="space-y-1">
-                  <p>Didn't get the code?</p>
+                  <p>Didn&apos;t get the code?</p>
 
                   <p>
                     Resend code in{" "}
@@ -156,7 +156,7 @@ function VerifyEmail() {
               ) : (
                 <div className="flex justify-center gap-x-6 font-semibold text-blue200">
                   <p onClick={handleResendCode}>Resend code</p>
-                  <p>Resend as SMS</p>
+                  {/* <p>Resend as SMS</p> */}
                 </div>
               )}
             </section>

@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import { useAuth } from "./contexts/authContext";
@@ -14,21 +12,15 @@ import VerifyEmail from "./pages/auth/VerifyEmail";
 import SignIn from "./pages/auth/SignIn";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
+import OnboardingUserLoader from "./pages/auth/OnboardingUserLoader";
 
 import Tasks from "./pages/tasks/Tasks";
 
 function AppRoutes() {
-  const [isAuthenticated, setisAuthenticated] = useState(false);
   const { token, userId, isLoggingOut } = useAuth();
 
-  //Authenticate user if token and user id exists in the local Storage
-  useEffect(() => {
-    if (token && userId) {
-      setisAuthenticated(true);
-    } else {
-      setisAuthenticated(false);
-    }
-  }, [token, userId]);
+  //set user authenticated if userId and token exists in local storage
+  const isAuthenticated = Boolean(token && userId);
 
   return (
     <Routes>
@@ -49,6 +41,7 @@ function AppRoutes() {
       <Route path="/verifyemail" element={<VerifyEmail />} />
       <Route path="/forgotpassword" element={<ForgotPassword />} />
       <Route path="/resetpassword" element={<ResetPassword />} />
+      <Route path="/onboarding" element={<OnboardingUserLoader />} />
 
       <Route path="*" element={<PageNotFound />} />
     </Routes>

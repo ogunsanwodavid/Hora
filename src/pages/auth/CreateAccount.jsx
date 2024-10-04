@@ -67,6 +67,8 @@ function CreateAccount() {
       password: data.password,
     };
 
+    console.log(formData);
+
     await signup(formData);
 
     //Reset form inputs on successful signup request

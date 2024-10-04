@@ -2,22 +2,26 @@ import { Link } from "react-router-dom";
 
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 
-import Logo from "../../assets/logo.svg";
 import fullLogo from "../../assets/fullLogo.svg";
 
-import resetPasswordImg from "../../assets/resetpassword.svg";
 import landingPageImg from "../../assets/landingpage.svg";
 
 function LandingPage() {
-  const { windowHeight } = useWindowDimensions();
+  const { windowHeight, windowWidth } = useWindowDimensions();
+  console.log(windowWidth);
 
   return (
     <div
       className="font-raleway w-full lg:flex lg:items-center"
       style={{
         minHeight: `${windowHeight}px`,
-        background:
-          "linear-gradient(to bottom right,rgba(64, 94, 178, 1) 0%, rgba(17, 23, 37, 1) 20%,rgba(17, 23, 37, 1) 80%, rgba(64, 94, 178, 1) 100%)",
+        background: `linear-gradient(to bottom${
+          windowWidth > 1200 ? " right" : ""
+        }, rgba(64, 94, 178, 1) 0%, rgba(17, 23, 37, 1) ${
+          windowWidth > 1200 ? "20%" : "10%"
+        }, rgba(17, 23, 37, 1) ${
+          windowWidth > 1200 ? "80%" : "90%"
+        }, rgba(64, 94, 178, 1) 100%)`,
       }}
     >
       <main
