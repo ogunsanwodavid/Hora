@@ -2,11 +2,11 @@ import { useEffect } from "react";
 
 import { Navigate, Outlet } from "react-router-dom";
 
-import { useAuth } from "../../contexts/authContext";
+import { useAuth } from "../contexts/authContext";
 
-import LoadingPage from "../entry/LoadingPage";
+import LoadingPage from "../pages/entry/LoadingPage";
 
-import AccessDenied from "../error/AccessDenied";
+import AccessDenied from "../pages/error/AccessDenied";
 
 function ProtectedRoute({ isAuthenticated }) {
   const { userId, onboardUser, isOnboardingUser, isLoggingOut } = useAuth();

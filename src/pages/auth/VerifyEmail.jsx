@@ -6,9 +6,9 @@ import { useAuth } from "../../contexts/authContext";
 
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 
-import { ClipLoader } from "react-spinners";
-
 import CountdownTimer from "./CountdownTimer";
+
+import { ClassicSpinner } from "react-spinners-kit";
 
 import fullLogo from "../../assets/fullLogo.svg";
 import verifyEmailImg from "../../assets/verifyemail.svg";
@@ -120,6 +120,7 @@ function VerifyEmail() {
                 <input
                   key={index}
                   type="text"
+                  inputMode="numeric"
                   name="otp"
                   maxLength="1"
                   value={data}
@@ -171,17 +172,7 @@ function VerifyEmail() {
                 onClick={handleSubmit}
               >
                 {isVerifyingEmail ? (
-                  <ClipLoader
-                    color={"#fff"}
-                    loading={true}
-                    cssOverride={{
-                      display: "block",
-                      borderColor: "#fff",
-                    }}
-                    size={25}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                  />
+                  <ClassicSpinner size={20} color="#fff" />
                 ) : (
                   "Verify"
                 )}

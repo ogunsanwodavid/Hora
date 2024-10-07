@@ -2,15 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+input,
+select,
+button {
+  outline: 0;
+}
+
+a,
 button,
 img,
-a {
+select {
   cursor: pointer;
 }
 
 /**** Style for react toastify toasts ***/
 :root {
-  --toastify-font-family: "Inter", sans-serif !important;
+  --toastify-font-family: "Raleway", sans-serif !important;
 }
 
 /**** Style for the loading page logo scaling transition ****/
@@ -41,5 +48,56 @@ a {
   }
   100% {
     opacity: 100%;
+  }
+}
+
+/**** Sidebar styling for desktop ****/
+.sidebar a.active {
+  background: rgba(12, 17, 28, 1);
+}
+
+.sidebar a.active .showcase-tag {
+  opacity: 1;
+}
+
+.sidebar a.active svg {
+  fill: #3f71fd !important;
+}
+
+.sidebar a.active .navtext {
+  color: #3f71fd;
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .main-scrollbar::-webkit-scrollbar {
+    width: 9px;
+    border-radius: 4.5px !important;
+  }
+
+  .main-scrollbar::-webkit-scrollbar-track {
+    /* Customize the scrollbar track */
+    background-color: #aaa !important;
+  }
+
+  .main-scrollbar::-webkit-scrollbar-thumb {
+    /* Customize the scrollbar thumb */
+    background-color: #3f71fd !important;
+    border-radius: 4.5px !important;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .main-scrollbar::-webkit-scrollbar {
+    width: 0px !important;
   }
 }

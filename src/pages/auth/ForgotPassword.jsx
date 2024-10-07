@@ -22,12 +22,18 @@ function ForgotPassword() {
   const { register, formState, setValue, handleSubmit } = useForm();
   const { errors } = formState;
 
-  const { requestReset, isRequestingReset, setResetPasswordEmail } = useAuth();
+  const {
+    requestReset,
+    isRequestingReset,
+    setResetPasswordId,
+    setResetPasswordEmail,
+  } = useAuth();
 
   useEffect(() => {
-    //set reset password email to empty string on mount
+    //set reset password id and email to empty string on mount
+    setResetPasswordId("");
     setResetPasswordEmail("");
-  }, [setResetPasswordEmail]);
+  }, [setResetPasswordId, setResetPasswordEmail]);
 
   async function onSubmit(data) {
     const formData = {

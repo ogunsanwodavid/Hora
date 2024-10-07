@@ -21,6 +21,7 @@ const AuthProvider = ({ children }) => {
   const [verificationOtp, setVerificationOtp] = useState("");
   const [verificationOtpError, setVerificationOtpError] = useState(false);
 
+  const [resetPasswordId, setResetPasswordId] = useState("");
   const [resetPasswordEmail, setResetPasswordEmail] = useState("");
 
   const [isSigningUp, setIsSigningUp] = useState(false);
@@ -249,25 +250,6 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  //Logout Function
-  const logout = async () => {
-    setIsLoggingOut(true);
-    try {
-      //remove token from local storage
-      await removeToken();
-
-      //remove user from local storage
-      await removeUserId();
-
-      //Redirect to landing page
-      window.location.href = "/";
-    } catch (error) {
-      console.log(error.message);
-    } finally {
-      setIsLoggingOut(false);
-    }
-  };
-
   //Request reset Function
   const requestReset = async ({ email }) => {
     setIsRequestingReset(true);
@@ -296,6 +278,7 @@ const AuthProvider = ({ children }) => {
         toast.success(resetRequestMessage);
 
         //set reset password id and email
+        //setResetPasswordId(data.forgotPassword.forgotPassword.id)
         setResetPasswordEmail(email);
 
         //Navigate to reset password page
@@ -334,15 +317,18 @@ const AuthProvider = ({ children }) => {
   const resetPassword = async ({ email, otp, newPassword }) => {
     setIsResettingPassword(true);
     try {
-      const response = await fetch(`${BASE_URL}/reset-password`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, otp, newPassword }),
-        redirect: "follow",
-      });
+      const response = await fetch(
+        `${BASE_URL}/reset-password/${resetPasswordId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, otp, newPassword }),
+          redirect: "follow",
+        }
+      );
 
       const data = await response.json();
 
@@ -381,6 +367,25 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  //Logout Function
+  const logout = async () => {
+    setIsLoggingOut(true);
+    try {
+      //remove token from local storage
+      await removeToken();
+
+      //remove user from local storage
+      await removeUserId();
+
+      //Redirect to landing page
+      window.location.href = "/";
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -405,6 +410,7 @@ const AuthProvider = ({ children }) => {
         verificationOtpError,
         setVerificationOtpError,
         resetPasswordEmail,
+        setResetPasswordId,
         setResetPasswordEmail,
         isSigningUp,
         isVerifyingEmail,

@@ -14,9 +14,8 @@ function LandingPage() {
       className="font-raleway w-full lg:flex lg:items-center"
       style={{
         minHeight: `${windowHeight}px`,
-        background: `linear-gradient(to bottom ${
-          windowWidth > 1200 ? "right" : ""
-        }, rgba(64, 94, 178, 1) 0%, rgba(17, 23, 37, 1) ${
+        backgroundImage: `linear-gradient(to bottom right
+        , rgba(64, 94, 178, 1) 0%, rgba(17, 23, 37, 1) ${
           windowWidth > 1200 ? "20%" : "10%"
         }, rgba(17, 23, 37, 1) ${
           windowWidth > 1200 ? "80%" : "90%"
@@ -51,13 +50,13 @@ function LandingPage() {
           {/***Buttons */}
           <section className="w-full mx-auto flex flex-wrap justify-center gap-3 font-semibold lg:justify-start">
             <Link className="w-full md:max-w-[210px]" to="/signin">
-              <button className="w-full h-[44px] p-2 border-2 border-electricBlue50 text-white text-base rounded-lg md:h-max md:text-lg">
+              <button className="w-full h-[44px] p-2 border-2 border-electricBlue50 text-white text-base rounded-lg md:hover:bg-blue800 md:h-max md:text-lg">
                 Sign In
               </button>
             </Link>
 
             <Link className="w-full md:max-w-[210px]" to="/createaccount">
-              <button className="w-full h-[44px] p-2 bg-[#3f71fd] border-2 border-[#3f71fd] text-white text-base rounded-lg md:h-max md:text-lg">
+              <button className="w-full h-[44px] p-2 bg-[#3f71fd] border-2 border-[#3f71fd] text-white text-base rounded-lg md:hover:bg-blue200 md:hover:border-blue200 md:h-max md:text-lg">
                 Create Account
               </button>
             </Link>
