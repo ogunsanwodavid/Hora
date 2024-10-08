@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 
 import Sidebar from "../ui/Sidebar";
+import MobileNavbar from "../ui/MobileNavbar";
 
 function AppLayout() {
   const { windowHeight } = useWindowDimensions();
@@ -22,10 +23,11 @@ function AppLayout() {
       >
         <Sidebar />
         <section className="w-full lg:p-[24px]">
-          <main className="px-6 py-10 pb-20 lg:h-full lg:pb-0 lg:px-0 lg:py-0 overflow-y-auto main-scrollbar">
+          <main className="px-6 py-10 pb-[100px] lg:h-full lg:pb-0 lg:px-0 lg:py-0 overflow-y-auto main-scrollbar">
             <Outlet />
           </main>
         </section>
+        <MobileNavbar />
       </main>
     </div>
   );

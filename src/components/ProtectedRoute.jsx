@@ -8,6 +8,7 @@ import LoadingPage from "../pages/entry/LoadingPage";
 
 import AccessDenied from "../pages/error/AccessDenied";
 import OnboardingPageLoader from "../pages/auth/OnboardingUserLoader";
+import LoggingOutLoader from "../pages/auth/LoggingOutLoader";
 
 function ProtectedRoute({ isAuthenticated }) {
   const { userId, onboardUser, isOnboardingUser, isLoggingOut } = useAuth();
@@ -24,10 +25,10 @@ function ProtectedRoute({ isAuthenticated }) {
   if (isOnboardingUser && isAuthenticated) return <OnboardingPageLoader />;
 
   //Displays Accessdenied page if user is not authenticated
-  if (isAuthenticated === false && !isLoggingOut) return <AccessDenied />;
+  if (!isAuthenticated && !isLoggingOut) return <AccessDenied />;
 
   //Show Spinner if user is logging out
-  if (isAuthenticated === false && isLoggingOut) return <LoadingPage />;
+  if (!isAuthenticated && isLoggingOut) return <LoggingOutLoader />;
 
   return isAuthenticated & !isOnboardingUser ? (
     <Outlet />

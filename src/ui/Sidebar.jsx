@@ -27,7 +27,7 @@ function Sidebar() {
   }
 
   return (
-    <div className="hidden w-[200px] h-full bg-blue800 rounded-3xl py-8 lg:flex lg:flex-col">
+    <div className="hidden w-[230px] h-full bg-blue800 rounded-3xl py-8 lg:flex lg:flex-col">
       {/**** Logo */}
       <img src={fullLogo} className="h-6 mx-auto" alt="" />
       {/**** Navlist */}
@@ -67,8 +67,13 @@ function Sidebar() {
 
           <main className="h-max flex items-center gap-x-3">
             <NotificationsIcon className="w-5 h-4" />
-            <p className="navtext h-max text-[#d5e2ff] font-semibold">
-              Notifications
+            <p className="navtext h-max text-[#d5e2ff] font-semibold flex items-center gap-x-1">
+              <span className="inline-block w-[100px]">Notifications</span>
+
+              {/**** Notification showcase */}
+              <div className="w-4 h-4 bg-errorRed text-white text-[11px] rounded-full flex items-center justify-center">
+                <span>3</span>
+              </div>
             </p>
           </main>
         </NavLink>
@@ -111,10 +116,10 @@ function Sidebar() {
           {/**** Username and email */}
           <section className="space-y-0">
             <p className="w-[100px] text-[14px] text-white font-semibold twhitespace-nowrap overflow-hidden text-ellipsis">
-              hoaxthegod
+              {username}
             </p>
             <p className="w-[100px] text-[14px] text-[#d5e2ff] font-regular whitespace-nowrap overflow-hidden text-ellipsis">
-              minuteone969@gmail.com
+              {userEmail}
             </p>
           </section>
         </div>

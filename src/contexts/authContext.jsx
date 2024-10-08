@@ -385,7 +385,7 @@ const AuthProvider = ({ children }) => {
       await removeUserId();
 
       //Redirect to landing page
-      window.location.href = "/";
+      navigate("/");
     } catch (error) {
       console.log(error.message);
     } finally {

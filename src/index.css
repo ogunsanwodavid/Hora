@@ -51,7 +51,7 @@ select {
   }
 }
 
-/**** Sidebar styling for desktop ****/
+/**** Sidebar and mobile Navbar stylings****/
 .sidebar a.active {
   background: rgba(12, 17, 28, 1);
 }
@@ -60,11 +60,13 @@ select {
   opacity: 1;
 }
 
-.sidebar a.active svg {
+.sidebar a.active svg,
+.mobile-navbar a.active svg {
   fill: #3f71fd !important;
 }
 
-.sidebar a.active .navtext {
+.sidebar a.active .navtext,
+.mobile-navbar a.active .navtext {
   color: #3f71fd;
 }
 
