@@ -174,10 +174,14 @@ const AuthProvider = ({ children }) => {
 
       // Check if the response is Ok
       if (response.ok) {
+        console.log(data);
         //set User to the fetched user information
         await setUser(data.get.user);
       } else {
         console.error(data.message);
+
+        //Toast error message
+        toast.error(data.message);
 
         return {
           success: false,
@@ -225,6 +229,9 @@ const AuthProvider = ({ children }) => {
         //await getUser(data.login.login._id);
 
         toast.success(loginMessage);
+
+        //Navigate to HOME page
+        navigate("/");
 
         return { success: true, loginMessage, user };
       } else {

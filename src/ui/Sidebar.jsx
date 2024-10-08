@@ -110,10 +110,10 @@ function Sidebar() {
 
           {/**** Username and email */}
           <section className="space-y-0">
-            <p className="text-[14px] text-white font-semibold text-ellipsis line-clamp-1">
+            <p className="w-[100px] text-[14px] text-white font-semibold twhitespace-nowrap overflow-hidden text-ellipsis">
               hoaxthegod
             </p>
-            <p className="max-w-[120px] text-[14px] text-[#d5e2ff] font-regular whitespace-nowrap overflow-hidden text-ellipsis">
+            <p className="w-[100px] text-[14px] text-[#d5e2ff] font-regular whitespace-nowrap overflow-hidden text-ellipsis">
               minuteone969@gmail.com
             </p>
           </section>

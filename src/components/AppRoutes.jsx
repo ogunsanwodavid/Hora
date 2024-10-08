@@ -1,29 +1,29 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import { useAuth } from "./contexts/authContext";
+import { useAuth } from "../contexts/authContext";
 
 import AppLayout from "./AppLayout";
 
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./ProtectedRoute";
 
-import LandingPage from "./pages/entry/LandingPage";
+import LandingPage from "../pages/entry/LandingPage";
 
-import PageNotFound from "./pages/error/PageNotFound";
+import PageNotFound from "../pages/error/PageNotFound";
 
-import CreateAccount from "./pages/auth/CreateAccount";
-import VerifyEmail from "./pages/auth/VerifyEmail";
-import SignIn from "./pages/auth/SignIn";
-import ForgotPassword from "./pages/auth/ForgotPassword";
-import ResetPassword from "./pages/auth/ResetPassword";
-import OnboardingUserLoader from "./pages/auth/OnboardingUserLoader";
+import CreateAccount from "../pages/auth/CreateAccount";
+import VerifyEmail from "../pages/auth/VerifyEmail";
+import SignIn from "../pages/auth/SignIn";
+import ForgotPassword from "../pages/auth/ForgotPassword";
+import ResetPassword from "../pages/auth/ResetPassword";
+import OnboardingUserLoader from "../pages/auth/OnboardingUserLoader";
 
-import Tasks from "./pages/tasks/Tasks";
+import Tasks from "../pages/tasks/Tasks";
 
-import Groups from "./pages/groups/Groups";
+import Groups from "../pages/groups/Groups";
 
-import Profile from "./pages/profile/Profile";
+import Profile from "../pages/profile/Profile";
 
-import Notifications from "./pages/notifications/Notifications";
+import Notifications from "../pages/notifications/Notifications";
 
 function AppRoutes() {
   const { token, userId, isLoggingOut } = useAuth();
@@ -56,7 +56,6 @@ function AppRoutes() {
       <Route path="/verifyemail" element={<VerifyEmail />} />
       <Route path="/forgotpassword" element={<ForgotPassword />} />
       <Route path="/resetpassword" element={<ResetPassword />} />
-      <Route path="/onboarding" element={<OnboardingUserLoader />} />
 
       <Route path="*" element={<PageNotFound />} />
     </Routes>

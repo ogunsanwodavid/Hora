@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { AuthProvider } from "./contexts/authContext";
 
-import AppRoutes from "./AppRoutes";
+import AppRoutes from "./components/AppRoutes";
 
 import LoadingPage from "./pages/entry/LoadingPage";
 
