@@ -6,6 +6,7 @@ import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { AuthProvider } from "./contexts/authContext";
+import { TasksProvider } from "./contexts/tasksContext";
 
 import AppRoutes from "./components/AppRoutes";
 
@@ -30,15 +31,17 @@ function App() {
   ) : (
     <BrowserRouter>
       <AuthProvider>
-        <AppRoutes />
+        <TasksProvider>
+          <AppRoutes />
 
-        {/*** This contains toasted information display */}
-        <ToastContainer
-          position="top-center"
-          theme="dark"
-          transition={Zoom}
-          autoClose={4000}
-        />
+          {/*** This contains toasted information display */}
+          <ToastContainer
+            position="top-center"
+            theme="dark"
+            transition={Zoom}
+            autoClose={4000}
+          />
+        </TasksProvider>
       </AuthProvider>
     </BrowserRouter>
   );

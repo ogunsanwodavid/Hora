@@ -11,7 +11,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const BASE_URL = "https://hora-1daj.onrender.com/user";
 
-  const [user, setUser] = useState(null, "user");
+  const [user, setUser] = useState(null);
   const [userId, setUserId, removeUserId] = useLocalStorageState("", "userId");
   const [token, setToken, removeToken] = useLocalStorageState("", "token");
 
