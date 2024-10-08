@@ -2,11 +2,15 @@ import { useState } from "react";
 import trianglePolygon from "../../../assets/trianglePolygon.svg";
 
 import plusIcon from "../../../icons/plusIcon.svg";
+import { Link } from "react-router-dom";
 
-function CreateTasksButton() {
+function CreateTaskButton() {
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   return (
-    <div className="fixed right-[24px] bottom-[100px] space-y-4 flex flex-col items-center lg:absolute lg:bottom-0 lg:right-0 group">
+    <Link
+      to="/tasks/createtask"
+      className="fixed right-[24px] bottom-[90px] space-y-4 flex flex-col items-center lg:absolute lg:bottom-[30px] lg:right-0 group"
+    >
       {/**** Modal */}
       <section
         className={`hidden relative bg-white px-[7px] py-[4px] rounded-[4px] items-center justify-center transition-opacity duration-300 lg:flex ${
@@ -30,8 +34,8 @@ function CreateTasksButton() {
       >
         <img src={plusIcon} className="h-[14px]" alt="" />
       </main>
-    </div>
+    </Link>
   );
 }
 
-export default CreateTasksButton;
+export default CreateTaskButton;

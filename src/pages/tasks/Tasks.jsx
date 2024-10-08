@@ -5,7 +5,7 @@ import useWindowDimensions from "../../hooks/useWindowDimensions";
 import TasksList from "./components/TasksList";
 
 import NoTasksError from "./components/NoTasksError";
-import CreateTasksButton from "./components/CreateTasksButton";
+import CreateTaskButton from "./components/CreateTaskButton";
 import SummaryBox from "./components/SummaryBox";
 
 function Tasks() {
@@ -29,7 +29,7 @@ function Tasks() {
       {tasks ? <TasksList /> : <NoTasksError />}
 
       {/**** Button to click and create new tasks */}
-      <CreateTasksButton />
+      <CreateTaskButton />
     </div>
   );
 }

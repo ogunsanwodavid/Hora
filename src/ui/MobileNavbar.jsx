@@ -7,7 +7,7 @@ import profilePicDefault from "../assets/dave.jpeg";
 
 function MobileNavbar() {
   return (
-    <nav className="mobile-navbar w-full bg-darkestBlue absolute bottom-0 left-0 border-t-[1.5px] border-[#303136] h-[90px] flex items-center lg:hidden">
+    <nav className="mobile-navbar w-full bg-darkestBlue fixed bottom-0 left-0 border-t-[1.5px] border-[#303136] h-[70px] flex items-center lg:hidden">
       {/***** Tasks navlink */}
       <NavLink
         to="/tasks"

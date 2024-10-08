@@ -4,6 +4,7 @@
 
 input,
 select,
+textarea,
 button {
   outline: 0;
 }

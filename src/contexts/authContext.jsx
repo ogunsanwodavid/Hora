@@ -82,7 +82,7 @@ const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       // Network or other errors
-      toast.error(error.message || "An unexpected error occurred");
+      toast.error("Something went wrong.");
 
       return {
         success: false,
@@ -146,7 +146,7 @@ const AuthProvider = ({ children }) => {
       //setVerificationOtpError(true);
 
       // Network or other errors
-      toast.error(error.message || "An unexpected error occurred");
+      toast.error("Something went wrong.");
 
       return {
         success: false,
@@ -174,9 +174,17 @@ const AuthProvider = ({ children }) => {
 
       // Check if the response is Ok
       if (response.ok) {
-        console.log(data);
+        const onboardedUser = data.get.user;
+
+        //remove password key from user object
+        const noPasswordOnboardedUser = Object.fromEntries(
+          Object.entries(onboardedUser).filter(([key]) => key !== "password")
+        );
+
+        //console.log(noPasswordOnboardedUser);
+
         //set User to the fetched user information
-        await setUser(data.get.user);
+        await setUser(noPasswordOnboardedUser);
       } else {
         console.error(data.message);
 
@@ -189,7 +197,7 @@ const AuthProvider = ({ children }) => {
         };
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
 
       //Toast error
       toast.error("Failed to onboard user");
@@ -238,7 +246,7 @@ const AuthProvider = ({ children }) => {
 
         //await getUser(data.login.login._id);
 
-        toast.success(loginMessage);
+        //toast.success(loginMessage);
 
         //Navigate to HOME page
         navigate("/");
@@ -256,7 +264,7 @@ const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       // Network or other errors
-      toast.error(error.message || "An unexpected error occurred");
+      toast.error("Something went wrong.");
 
       return {
         success: false,
@@ -314,7 +322,7 @@ const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       // Network or other errors
-      toast.error(error.message || "An unexpected error occurred");
+      toast.error("Something went wrong.");
 
       return {
         success: false,
@@ -373,7 +381,7 @@ const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       // Network or other errors
-      toast.error(error.message || "An unexpected error occurred");
+      toast.error("Something went wrong.");
 
       return {
         success: false,

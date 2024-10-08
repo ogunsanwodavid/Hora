@@ -15,9 +15,9 @@ import VerifyEmail from "../pages/auth/VerifyEmail";
 import SignIn from "../pages/auth/SignIn";
 import ForgotPassword from "../pages/auth/ForgotPassword";
 import ResetPassword from "../pages/auth/ResetPassword";
-import OnboardingUserLoader from "../pages/auth/OnboardingUserLoader";
 
 import Tasks from "../pages/tasks/Tasks";
+import CreateTask from "../pages/tasks/CreateTask";
 
 import Groups from "../pages/groups/Groups";
 
@@ -26,7 +26,7 @@ import Profile from "../pages/profile/Profile";
 import Notifications from "../pages/notifications/Notifications";
 
 function AppRoutes() {
-  const { token, userId, isLoggingOut } = useAuth();
+  const { token, userId } = useAuth();
 
   //set user authenticated if userId and token exists in local storage
   const isAuthenticated = Boolean(token && userId);
@@ -44,7 +44,10 @@ function AppRoutes() {
 
       <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
         <Route element={<AppLayout />}>
-          <Route path="/tasks" element={<Tasks />}></Route>
+          <Route path="/tasks">
+            <Route index element={<Tasks />} />
+            <Route path="createtask" element={<CreateTask />} />
+          </Route>
           <Route path="/groups" element={<Groups />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/notifications" element={<Notifications />} />
