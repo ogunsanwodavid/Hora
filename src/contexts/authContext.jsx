@@ -199,7 +199,6 @@ const AuthProvider = ({ children }) => {
 
       //Remove token and userId
       removeToken();
-
       removeUserId();
 
       return {
