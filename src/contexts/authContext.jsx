@@ -191,6 +191,17 @@ const AuthProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
 
+      //Toast error
+      toast.error("Failed to onboard user");
+
+      //Navigate ti sign in
+      navigate("/signin");
+
+      //Remove token and userId
+      removeToken();
+
+      removeUserId();
+
       return {
         success: false,
         error: error.message || "An unexpected error occurred",

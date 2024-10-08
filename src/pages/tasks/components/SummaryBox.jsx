@@ -15,20 +15,22 @@ function SummaryBox() {
 
   return (
     <section
-      className="w-full p-4 rounded-xl space-y-4"
+      className="w-full p-4 rounded-xl space-y-4 lg:p-8"
       style={{
         background: "linear-gradient(250.88deg, #1D2E61 2.69%, #172448 100%)",
       }}
     >
       <main className="w-full flex items-center justify-between">
         {/**** Profile Picture and username */}
-        <div className="flex items-center gap-x-2">
+        <div className="flex items-center gap-x-2 lg:gap-x-4">
           <img
             src={profilePicDefault}
-            className="h-[40px] w-[40px] rounded-full border-[1px] border-white object-cover"
+            className="h-[40px] w-[40px] rounded-full border-[1px] border-white object-cover lg:h-[43px] lg:w-[43px]"
             alt=""
           />
-          <p className="text-white text-[15px] font-regular">Hi, {username}</p>
+          <p className="text-white text-[15px] font-regular lg:text-[17px]">
+            Hi, {username}
+          </p>
         </div>
 
         <Link to="/notifications" className="relative lg:hidden">
@@ -45,10 +47,10 @@ function SummaryBox() {
       </main>
 
       <section>
-        <h3 className="text-white text-[20px] font-semibold">
+        <h3 className="text-white text-[20px] font-semibold lg:text-[24px]">
           Daily Progress bar
         </h3>
-        <h4 className="text-blue100 text-[14px]">
+        <h4 className="text-blue100 text-[14px] lg:text-base">
           Visualizing your memories to help you reach them.
         </h4>
 

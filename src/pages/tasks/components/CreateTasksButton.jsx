@@ -13,7 +13,7 @@ function CreateTasksButton() {
           isButtonHovered ? "opacity-100" : "opacity-0"
         }`}
       >
-        <p className="z-10 text-[10px] text-[#4D515B]">Tap to add a new task</p>
+        <p className="z-10 text-[12px] text-[#4D515B]">Tap to add a new task</p>
 
         <img
           src={trianglePolygon}

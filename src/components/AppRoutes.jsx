@@ -44,7 +44,7 @@ function AppRoutes() {
 
       <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
         <Route element={<AppLayout />}>
-          <Route path="/tasks" element={<Tasks />} />
+          <Route path="/tasks" element={<Tasks />}></Route>
           <Route path="/groups" element={<Groups />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/notifications" element={<Notifications />} />
