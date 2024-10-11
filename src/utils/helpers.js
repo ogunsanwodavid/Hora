@@ -62,11 +62,9 @@ export const isDateToday = (parsedDate) => {
 };
 
 export function formatTimeTo24Hour(date) {
-  let hours = date.getHours();
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-  hours = hours % 12;
-  hours = hours ? hours : 12; // the hour '0' should be '12'
-  return `${hours}:${minutes}`;
+  const hours = date.getHours().toString().padStart(2, "0"); // Get hours and pad with 0 if needed
+  const minutes = date.getMinutes().toString().padStart(2, "0"); // Get minutes and pad with 0 if needed
+  return `${hours}:${minutes}`; // Return in hh:mm format
 }
 
 export function isAfterCurrentTime(currentTime, compareTime) {

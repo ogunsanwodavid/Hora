@@ -24,10 +24,23 @@ function TaskDueDatePicker({
 
   //Set Date
   function handleSetDate() {
-    if (dateValue) setDueDate(formatDateToYYYYMMDD(dateValue));
-
-    setShowcaseTaskDueDatePicker(false);
+    if (!dateValue) return;
+    if (dateValue) {
+      setDueDate(formatDateToYYYYMMDD(dateValue));
+      setShowcaseTaskDueDatePicker(false);
+    }
   }
+
+  // Function to render day labels
+  const dayNames = document.getElementsByClassName(
+    "react-datepicker__day-name"
+  );
+
+  // Convert HTMLCollection to an array and update innerHTML
+  Array.from(dayNames).forEach((dayname, index) => {
+    const daysOfWeek = ["S", "M", "T", "W", "T", "F", "S"];
+    dayname.innerHTML = daysOfWeek[index];
+  });
 
   return (
     <div

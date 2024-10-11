@@ -68,13 +68,15 @@ function CreateTask() {
   }, [setShowcaseMobileNav]);
 
   //Create task queries
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [time, setTime] = useState("");
   const [repeat, setRepeat] = useState("");
   const [isAlarm, setIsAlarm] = useState(false);
 
-  const isAddTaskBtnClickable = description && dueDate && time && repeat;
+  const isAddTaskBtnClickable =
+    title && description && dueDate && time && repeat;
 
   //Date variables
   const month = getMonthName(parseDateFromYYYYMMDD(dueDate).getMonth());
@@ -100,6 +102,7 @@ function CreateTask() {
 
     //Form data
     const formData = {
+      title: title,
       description: description,
       time: time,
       dueDate: dueDate,
@@ -143,12 +146,26 @@ function CreateTask() {
 
       {/**** Create Task form */}
       <form>
+        {/**** Task title text input */}
+        <section className="w-full mt-6 space-y-1">
+          <p className="text-white ">Title</p>
+          <input
+            type="text"
+            placeholder="Enter your task title here."
+            className="w-full bg-blue900 h-[48px] px-4 py-3 text-base text-white outline-none rounded-[4px] lowercase placeholder:normal-case placeholder:text-[#B2B3BD]"
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </section>
+
         {/**** Task description text input */}
-        <textarea
-          placeholder="Enter your new task here."
-          className="w-full h-[200px] bg-blue900 rounded-[10px] p-4 mt-6 text-white resize-none placeholder:text-[#B2B3BD]"
-          onChange={(e) => setDescription(e.target.value)}
-        />
+        <section className="w-full mt-6 space-y-1">
+          <p className="text-white ">Description</p>
+          <textarea
+            placeholder="Enter your task description here."
+            className="w-full h-[200px] bg-blue900 rounded-[10px] p-4  text-white resize-none placeholder:text-[#B2B3BD]"
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </section>
 
         <section className="w-full mt-6">
           {/**** Due date setter */}

@@ -150,6 +150,10 @@ select {
   color: #fff !important;
 }
 
+.react-datepicker__day[aria-selected="false"]:hover {
+  background-color: transparent !important;
+}
+
 .react-datepicker__day--today {
   position: relative;
 }

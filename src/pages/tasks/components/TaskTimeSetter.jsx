@@ -49,7 +49,7 @@ function TaskTimeSetter({
   const isAM = amOrPm === "am";
   const isPM = amOrPm === "pm";
 
-  const [isSelectingHour, setIsSelectingHour] = useState(false);
+  const [isSelectingHour, setIsSelectingHour] = useState(true);
   const [isSelectingMinute, setIsSelectingMinute] = useState(false);
 
   const [notificationAlarm, setNotificationAlarm] = useState(isAlarm);
