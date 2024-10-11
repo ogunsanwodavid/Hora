@@ -5,6 +5,7 @@ export default {
     screens: { sm: "330px", md: "600px", lg: "1200px" },
     fontFamily: {
       raleway: "Raleway, sans-serif",
+      inter: "Inter , sans-serif",
     },
     listStyleType: {
       square: "square",

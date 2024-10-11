@@ -5,12 +5,26 @@ const TasksContext = createContext();
 const TasksProvider = ({ children }) => {
   const [tasks, setTasks] = useState(null);
 
+  const [isCreatingTask, setIsCreatingTask] = useState(false);
+
+  const [showcaseTaskDueDatePicker, setShowcaseTaskDueDatePicker] =
+    useState(false);
+  const [showcaseTaskTimeSetter, setShowcaseTaskTimeSetter] = useState(false);
   const [showcaseRepeatTaskSetter, setShowcaseRepeatTaskSetter] =
     useState(false);
 
   return (
     <TasksContext.Provider
-      value={{ tasks, showcaseRepeatTaskSetter, setShowcaseRepeatTaskSetter }}
+      value={{
+        tasks,
+        isCreatingTask,
+        showcaseTaskDueDatePicker,
+        setShowcaseTaskDueDatePicker,
+        showcaseTaskTimeSetter,
+        setShowcaseTaskTimeSetter,
+        showcaseRepeatTaskSetter,
+        setShowcaseRepeatTaskSetter,
+      }}
     >
       {children}
     </TasksContext.Provider>
