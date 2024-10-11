@@ -17,11 +17,15 @@ import { FiLogOut } from "react-icons/fi";
 import profilePicDefault from "../assets/dave.jpeg";
 
 function Sidebar() {
+  //Online status
   const isOnline = useOnlineStatus();
+
+  //User credentials
   const { user, logout } = useAuth();
   const username = user?.username;
   const userEmail = user?.email;
 
+  //Logout user
   function handleLogout() {
     logout();
   }

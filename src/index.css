@@ -117,7 +117,7 @@ select {
   height: 84px;
 }
 
-/* Custom styles for react-datepicker navigation buttons */
+/* Custom styles for react-datepicker */
 .react-datepicker,
 .react-datepicker__header {
   background: transparent !important;

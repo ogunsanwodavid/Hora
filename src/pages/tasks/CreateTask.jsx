@@ -93,7 +93,7 @@ function CreateTask() {
     }
   }
 
-  function handleAddTask(e) {
+  async function handleAddTask(e) {
     e.preventDefault();
 
     const isDueDateToday = isDateToday(parseDateFromYYYYMMDD(dueDate));
@@ -104,8 +104,9 @@ function CreateTask() {
     const formData = {
       title: title,
       description: description,
-      time: time,
       dueDate: dueDate,
+      time: time,
+
       repeatTask: repeat,
       createdBy: userId,
     };
@@ -119,7 +120,15 @@ function CreateTask() {
         )}`
       );
     } else {
-      console.log(formData);
+      //Add task
+      await console.log(formData);
+
+      //Reset all values
+      setTitle("");
+      setDescription("");
+      setDueDate("");
+      setTime("");
+      setRepeat("");
     }
   }
 
@@ -151,8 +160,9 @@ function CreateTask() {
           <p className="text-white ">Title</p>
           <input
             type="text"
+            value={title}
             placeholder="Enter your task title here."
-            className="w-full bg-blue900 h-[48px] px-4 py-3 text-base text-white outline-none rounded-[4px] lowercase placeholder:normal-case placeholder:text-[#B2B3BD]"
+            className="w-full bg-blue900 h-[48px] px-4 py-3 text-base text-white outline-none rounded-[4px] placeholder:normal-case placeholder:text-[#B2B3BD]"
             onChange={(e) => setTitle(e.target.value)}
           />
         </section>
@@ -161,6 +171,7 @@ function CreateTask() {
         <section className="w-full mt-6 space-y-1">
           <p className="text-white ">Description</p>
           <textarea
+            value={description}
             placeholder="Enter your task description here."
             className="w-full h-[200px] bg-blue900 rounded-[10px] p-4  text-white resize-none placeholder:text-[#B2B3BD]"
             onChange={(e) => setDescription(e.target.value)}
