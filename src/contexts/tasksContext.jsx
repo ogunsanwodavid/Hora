@@ -8,7 +8,7 @@ const TasksProvider = ({ children }) => {
       _id: "67065c3bd60343ec0707dc2c",
       title: "Start looking for jobs",
       description: "Have to work",
-      dueDate: "2024-10-15",
+      dueDate: "2024-09-22",
       time: "02:15",
       repeatTask: "daily",
       completed: false,
@@ -35,10 +35,10 @@ const TasksProvider = ({ children }) => {
       _id: "670782168774060eee22fcba",
       title: "Complete project report",
       description: "Finish writing the final project report and submit it.",
-      dueDate: "2024-12-02",
+      dueDate: "2024-08-10",
       time: "14:30",
       repeatTask: "none",
-      completed: true,
+      completed: false,
       createdBy: "6703d9cb0e71d411ae3e23f3",
       createdAt: "2024-10-10T07:28:22.825Z",
       updatedAt: "2024-10-10T07:28:22.825Z",
@@ -68,9 +68,6 @@ const TasksProvider = ({ children }) => {
     return Object.hasOwn(task, "completedBy");
   });
 
-  console.log(personalTasks);
-  console.log(groupTasks);
-
   const [currentTaskInfo, setCurrentTaskInfo] = useState(null);
 
   const [isCreatingTask, setIsCreatingTask] = useState(false);
@@ -87,6 +84,8 @@ const TasksProvider = ({ children }) => {
     <TasksContext.Provider
       value={{
         allTasks,
+        personalTasks,
+        groupTasks,
         currentTaskInfo,
         setCurrentTaskInfo,
         isCreatingTask,
