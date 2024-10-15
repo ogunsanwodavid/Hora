@@ -22,13 +22,13 @@ function AppLayout() {
       }}
     >
       <main
-        className="w-full h-max bg-darkestBlue lg:w-[1100px] lg:h-[640px] lg:mx-auto lg:flex lg:rounded-3xl lg:!min-h-0"
+        className="w-full h-max bg-darkestBlue overflow-hidden lg:w-[980px] lg:h-[600px] lg:mx-auto lg:flex lg:rounded-3xl lg:!min-h-0"
         style={{
           minHeight: `${windowHeight}px`,
         }}
       >
         <Sidebar />
-        <section className="w-full lg:p-[24px]">
+        <section className="w-full relative lg:p-[24px]">
           <main className="px-3 py-10 pb-[100px] lg:h-full lg:pb-0 lg:px-0 lg:py-0 overflow-y-auto main-scrollbar">
             <Outlet />
           </main>

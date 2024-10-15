@@ -18,6 +18,7 @@ import ResetPassword from "../pages/auth/ResetPassword";
 
 import Tasks from "../pages/tasks/Tasks";
 import CreateTask from "../pages/tasks/CreateTask";
+import TaskInfo from "../pages/tasks/TaskInfo";
 
 import Groups from "../pages/groups/Groups";
 
@@ -47,6 +48,7 @@ function AppRoutes() {
           <Route path="/tasks">
             <Route index element={<Tasks />} />
             <Route path="createtask" element={<CreateTask />} />
+            <Route path=":taskId" element={<TaskInfo />} />
           </Route>
           <Route path="/groups" element={<Groups />} />
           <Route path="/profile" element={<Profile />} />

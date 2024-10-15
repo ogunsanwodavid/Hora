@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
 
@@ -37,14 +37,16 @@ function TaskDueDatePicker({
   );
 
   // Convert HTMLCollection to an array and update innerHTML
-  Array.from(dayNames).forEach((dayname, index) => {
-    const daysOfWeek = ["S", "M", "T", "W", "T", "F", "S"];
-    dayname.innerHTML = daysOfWeek[index];
+  useEffect(() => {
+    Array.from(dayNames).forEach((dayname, index) => {
+      const daysOfWeek = ["S", "M", "T", "W", "T", "F", "S"];
+      dayname.innerHTML = daysOfWeek[index];
+    });
   });
 
   return (
     <div
-      className="absolute top-0 left-0 w-full bg-[rgba(12,17,28,0.2)] backdrop-blur-[2px] flex items-center justify-center cursor-pointer lg:!min-h-full"
+      className="fixed top-0 left-0 w-full bg-[rgba(12,17,28,0.2)] backdrop-blur-[2px] flex items-center justify-center cursor-pointer lg:absolute lg:!min-h-full"
       style={{
         minHeight: `${windowHeight}px`,
       }}

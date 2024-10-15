@@ -13,11 +13,11 @@ function Tasks() {
   const { windowHeight } = useWindowDimensions();
 
   //Tasks information
-  const { tasks } = useTasks();
+  const { allTasks } = useTasks();
 
   return (
     <div
-      className="w-full relative flex flex-col lg:!min-h-[592px]"
+      className="w-full relative flex flex-col lg:!min-h-[552px]"
       style={{
         minHeight: `${windowHeight - 130}px`,
       }}
@@ -26,7 +26,7 @@ function Tasks() {
       <SummaryBox />
 
       {/**** Showcase list of tasks if there is a task*/}
-      {tasks ? <TasksList /> : <NoTasksError />}
+      {allTasks ? <TasksList /> : <NoTasksError />}
 
       {/**** Button to click and create new tasks */}
       <CreateTaskButton />

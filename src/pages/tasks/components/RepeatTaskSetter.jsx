@@ -20,7 +20,7 @@ function RepeatTaskSetter({ repeat, setRepeat, setShowcaseRepeatTaskSetter }) {
 
   return (
     <div
-      className="absolute top-0 left-0 w-full bg-[rgba(12,17,28,0.2)] backdrop-blur-[2px] flex items-center justify-center lg:!min-h-full"
+      className="fixed top-0 left-0 w-full bg-[rgba(12,17,28,0.2)] backdrop-blur-[2px] flex items-center justify-center lg:absolute lg:!min-h-full"
       style={{
         minHeight: `${windowHeight}px`,
       }}
