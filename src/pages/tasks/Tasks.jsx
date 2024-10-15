@@ -17,7 +17,7 @@ function Tasks() {
 
   return (
     <div
-      className="w-full relative flex flex-col lg:!min-h-[552px]"
+      className="w-full  max-w-[700px] mx-auto relative flex flex-col lg:!min-h-[552px]"
       style={{
         minHeight: `${windowHeight - 130}px`,
       }}
@@ -26,7 +26,7 @@ function Tasks() {
       <SummaryBox />
 
       {/**** Showcase list of tasks if there is a task*/}
-      {allTasks ? <TasksList /> : <NoTasksError />}
+      {allTasks.length ? <TasksList /> : <NoTasksError />}
 
       {/**** Button to click and create new tasks */}
       <CreateTaskButton />

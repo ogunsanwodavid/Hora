@@ -9,7 +9,7 @@ function CreateTaskButton() {
   return (
     <Link
       to="/tasks/createtask"
-      className="fixed right-[24px] bottom-[90px] space-y-4 flex flex-col items-center lg:absolute lg:bottom-[30px] lg:right-0 group"
+      className="fixed right-[24px] bottom-[90px] space-y-4 flex flex-col items-center md:right-[calc((100%_-_700px)_/_2)] lg:absolute lg:bottom-[30px] lg:right-0 group"
     >
       {/**** Modal */}
       <section

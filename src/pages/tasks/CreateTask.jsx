@@ -135,7 +135,7 @@ function CreateTask() {
   return (
     <>
       <div
-        className="w-full relative px-3 lg:!min-h-0"
+        className="w-full relative max-w-[700px] mx-auto px-3 lg:!min-h-0"
         style={{
           minHeight: `${windowHeight}px`,
         }}

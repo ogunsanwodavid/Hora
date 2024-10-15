@@ -52,17 +52,14 @@ function TaskInfo() {
     };
   }, [setShowcaseMobileNav]);
 
-  {
-    /**** Variables from params */
-  }
+  //Route params
   const { taskId } = useParams();
 
-  {
-    /**** Variables from task context */
-  }
+  //Variables from task context
   const { currentTaskInfo, isGettingCurrentTask, isCompletingTask } =
     useTasks();
 
+  //Variables of current task info on display
   const title = currentTaskInfo?.title;
   const description = currentTaskInfo?.description;
   const dueDate = currentTaskInfo?.dueDate;
@@ -89,6 +86,7 @@ function TaskInfo() {
     }
   }
 
+  //States to display dropdown and modals
   const [showcaseDropdown, setShowcaseDropdown] = useState(false);
   const [
     showcaseDeleteTaskConfirmationModal,
@@ -97,11 +95,13 @@ function TaskInfo() {
   const [showcaseTaskCompletedModal, setShowcaseTaskCompletedModal] =
     useState(false);
 
+  //Delete task function
   function handleDeleteTask() {
     setShowcaseDeleteTaskConfirmationModal(true);
     setShowcaseDropdown(false);
   }
 
+  //Complete task function
   function handleCompleteTask(e) {
     e.preventDefault();
     setShowcaseDropdown(false);
@@ -111,7 +111,7 @@ function TaskInfo() {
   return (
     <>
       <div
-        className="w-full relative px-3 lg:!min-h-0"
+        className="w-full relative max-w-[700px] mx-auto px-3 lg:!min-h-0"
         style={{
           minHeight: `${windowHeight}px`,
         }}
