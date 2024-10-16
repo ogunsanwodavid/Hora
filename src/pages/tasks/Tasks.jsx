@@ -39,7 +39,7 @@ function Tasks() {
       </div>
 
       {/**** Button to click and create new tasks */}
-      <CreateTaskButton />
+      {!isGettingTasks && <CreateTaskButton />}
     </>
   );
 }

@@ -32,7 +32,6 @@ import clockIcon from "../../icons/clockIcon.svg";
 import redAlarmIcon from "../../icons/redAlarmIcon.svg";
 
 import repeatIcon from "../../icons/repeatIcon.svg";
-import rightCaretIcon from "../../icons/rightCaretIcon.svg";
 import alarmIcon from "../../icons/alarmIcon.svg";
 
 function TaskInfo() {
