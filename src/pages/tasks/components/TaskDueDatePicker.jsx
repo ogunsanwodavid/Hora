@@ -63,7 +63,7 @@ function TaskDueDatePicker({
         </section>
 
         {/**** Buttons */}
-        <div className="w-max ml-auto flex gap-x-3 items-center mt-2 px-6">
+        <div className="w-max ml-auto flex gap-x-3 items-center mt-2 px-6 md:text-[18px]">
           {/**** Cancel button */}
           <button
             className="w-[85px] h-[46px] px-4 py-3 text-[#EEEEF0]"

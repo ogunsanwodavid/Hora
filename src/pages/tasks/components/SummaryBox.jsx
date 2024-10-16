@@ -7,11 +7,25 @@ import ProgressBar from "../components/ProgressBar";
 import NotificationsIcon from "../../../icons/NotificationsIcon";
 
 import profilePicDefault from "../../../assets/dave.jpeg";
+import { useEffect } from "react";
 
 function SummaryBox() {
   //User credentials
-  const { user } = useAuth();
+  const {
+    user,
+    isCalculatingUserProgress,
+    userProgress,
+    calculateUserProgress,
+  } = useAuth();
+  const userId = user?._id;
   const username = user?.username;
+
+  //Calculate progress only once on mount hence empty dependency array
+  useEffect(() => {
+    if (userId) {
+      calculateUserProgress(userId);
+    }
+  }, []);
 
   return (
     <section
@@ -25,10 +39,10 @@ function SummaryBox() {
         <div className="flex items-center gap-x-2 lg:gap-x-4">
           <img
             src={profilePicDefault}
-            className="h-[40px] w-[40px] rounded-full border-[1px] border-white object-cover lg:h-[43px] lg:w-[43px]"
+            className="h-[40px] w-[40px] rounded-full border-[1px] border-white object-cover md:h-[43px] md:w-[43px]"
             alt=""
           />
-          <p className="text-white text-[15px] font-regular lg:text-[17px]">
+          <p className="text-white text-[15px] font-regular md:text-[17px]">
             Hi, {username}
           </p>
         </div>
@@ -47,16 +61,16 @@ function SummaryBox() {
       </main>
 
       <section>
-        <h3 className="text-white text-[20px] font-semibold lg:text-[24px]">
+        <h3 className="text-white text-[20px] font-semibold md:text-[24px]">
           Daily Progress bar
         </h3>
-        <h4 className="text-blue100 text-[14px] lg:text-base">
+        <h4 className="text-blue100 text-[14px] md:text-base">
           Visualizing your memories to help you reach them.
         </h4>
 
         {/**** Progress bar and value */}
         <main className="w-full mt-1">
-          <ProgressBar progress={40} />
+          <ProgressBar progress={userProgress} />
         </main>
       </section>
     </section>

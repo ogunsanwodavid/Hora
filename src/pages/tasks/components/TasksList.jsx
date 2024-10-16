@@ -85,7 +85,7 @@ function TasksList() {
       <section className="w-full flex flex-wrap gap-3">
         {/**** All tasks selector */}
         <div
-          className={`px-[20px] py-[10px] border-[1px] border-[#5F606A] text-[#B2B3BD] rounded-full ${
+          className={`px-[20px] py-[10px] border-[1px] border-[#5F606A] text-[#B2B3BD] rounded-full md:text-[18px] ${
             isAllTasksDisplayed && "border-blue500 bg-blue500 text-white"
           }`}
           onClick={handleSelectAll}
@@ -96,7 +96,7 @@ function TasksList() {
         {/**** Personal tasks selector */}
         {personalTasks.length && (
           <div
-            className={`px-[20px] py-[10px] border-[1px] border-[#5F606A] text-[#B2B3BD] rounded-full ${
+            className={`px-[20px] py-[10px] border-[1px] border-[#5F606A] text-[#B2B3BD] rounded-full md:text-[18px] ${
               isPersonalTasksDisplayed && "border-blue500 bg-blue500 text-white"
             }`}
             onClick={handleSelectPersonal}
@@ -108,7 +108,7 @@ function TasksList() {
         {/**** Group tasks selector */}
         {groupTasks.length && (
           <div
-            className={`px-[20px] py-[10px] border-[1px] border-[#5F606A] text-[#B2B3BD] rounded-full ${
+            className={`px-[20px] py-[10px] border-[1px] border-[#5F606A] text-[#B2B3BD] rounded-full md:text-[18px] ${
               isGroupTasksDisplayed && "border-blue500 bg-blue500 text-white"
             }`}
             onClick={handleSelectGroup}
@@ -128,7 +128,7 @@ function TasksList() {
                 className="flex items-center gap-x-3"
                 onClick={() => setShowcasePreviousTasks((show) => !show)}
               >
-                <p className="text-[18px] text-[#B2B3BD] font-semibold">
+                <p className="text-[18px] text-[#B2B3BD] font-semibold md:text-[20px]">
                   Previous
                 </p>
                 <img
@@ -167,7 +167,7 @@ function TasksList() {
                 className="flex items-center gap-x-3"
                 onClick={() => setShowcaseTodayTasks((show) => !show)}
               >
-                <p className="text-[18px] text-[#B2B3BD] font-semibold">
+                <p className="text-[18px] text-[#B2B3BD] font-semibold md:text-[20px]">
                   Today
                 </p>
                 <img
@@ -206,7 +206,7 @@ function TasksList() {
                 className="flex items-center gap-x-3"
                 onClick={() => setShowcaseCompletedTasks((show) => !show)}
               >
-                <p className="text-[18px] text-[#B2B3BD] font-semibold">
+                <p className="text-[18px] text-[#B2B3BD] font-semibold md:text-[20px]">
                   Completed
                 </p>
                 <img

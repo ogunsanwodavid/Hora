@@ -24,6 +24,8 @@ const AuthProvider = ({ children }) => {
   const [resetPasswordId, setResetPasswordId] = useState("");
   const [resetPasswordEmail, setResetPasswordEmail] = useState("");
 
+  const [userProgress, setUserProgress] = useState(0);
+
   const [isSigningUp, setIsSigningUp] = useState(false);
   const [isVerifyingEmail, setIsVerifyingEmail] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -31,6 +33,8 @@ const AuthProvider = ({ children }) => {
   const [isRequestingReset, setIsRequestingReset] = useState(false);
   const [isResettingPassword, setIsResettingPassword] = useState(false);
   const [isOnboardingUser, setIsOnboardingUser] = useState(false);
+  const [isCalculatingUserProgress, setIsCalculatingUserProgress] =
+    useState(false);
 
   const navigate = useNavigate();
 
@@ -392,6 +396,52 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  //Calculate user progress function
+  const calculateUserProgress = async (userId) => {
+    setIsCalculatingUserProgress(true);
+    try {
+      const response = await fetch(`${BASE_URL}/progress/${userId}`, {
+        /* method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        redirect: "follow", */
+      });
+
+      const data = await response.json();
+
+      // Check if the response is Ok
+      if (response.ok) {
+        console.log(data);
+        const progressNumber = Number(data.progress.progress.slice(0, -1));
+        setUserProgress(progressNumber);
+      } else {
+        console.error(data.message);
+
+        //Toast error message
+        toast.error(data.message);
+
+        return {
+          success: false,
+          error: data.message || "An unexpected error occurred",
+        };
+      }
+    } catch (error) {
+      console.error(error);
+
+      //Toast error
+      toast.error("Failed to calculate progress");
+
+      return {
+        success: false,
+        error: error.message || "An unexpected error occurred",
+      };
+    } finally {
+      setIsCalculatingUserProgress(false);
+    }
+  };
+
   //Logout Function
   const logout = async () => {
     setIsLoggingOut(true);
@@ -425,7 +475,7 @@ const AuthProvider = ({ children }) => {
         signup,
         login,
         onboardUser,
-        isOnboardingUser,
+        calculateUserProgress,
         logout,
         verifyEmail,
         requestReset,
@@ -433,6 +483,7 @@ const AuthProvider = ({ children }) => {
         verificationOtp,
         setVerificationOtp,
         verificationOtpError,
+        userProgress,
         setVerificationOtpError,
         resetPasswordEmail,
         setResetPasswordId,
@@ -443,6 +494,8 @@ const AuthProvider = ({ children }) => {
         isLoggingOut,
         isRequestingReset,
         isResettingPassword,
+        isOnboardingUser,
+        isCalculatingUserProgress,
       }}
     >
       {children}

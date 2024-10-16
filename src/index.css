@@ -100,7 +100,7 @@ select {
   }
 }
 
-/**** Remove scrollbar for large screen widths */
+/**** Remove scrollbar for small screen widths */
 @media screen and (max-width: 1200px) {
   .main-scrollbar::-webkit-scrollbar {
     width: 0px !important;
@@ -184,4 +184,37 @@ select {
 
 .react-datepicker__day--disabled {
   color: #797b86 !important;
+}
+
+@media screen and (min-width: 700px) {
+  .react-datepicker {
+    width: 250px !important;
+  }
+
+  .react-datepicker__month-container {
+    width: 100% !important;
+  }
+
+  .react-datepicker__current-month {
+    font-size: 18px;
+  }
+
+  .react-datepicker__navigation-icon {
+    left: 0 !important;
+    right: 0 !important;
+  }
+
+  .react-datepicker__navigation-icon::before {
+    border-width: 2.5px 2.5px 0 0 !important;
+    height: 9px;
+    width: 9px;
+  }
+
+  .react-datepicker__month {
+    font-size: 18px;
+  }
+
+  .react-datepicker__day-name {
+    font-size: 18px;
+  }
 }

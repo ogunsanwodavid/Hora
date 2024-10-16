@@ -123,7 +123,7 @@ function TaskTimeSetter({
       }}
     >
       <main className="w-full max-w-[345px] mx-5 rounded-[10px] bg-blue900 py-6">
-        <h3 className="w-max mx-auto text-white text-[18px] font-semibold">
+        <h3 className="w-max mx-auto text-white text-[18px] font-semibold md:text-[20px]">
           Set Time
         </h3>
 
@@ -313,7 +313,7 @@ function TaskTimeSetter({
               onClick={() => setAmOrPm("am")}
             >
               <p
-                className="text-[20px] text-[#B2B3BD] font-semibold"
+                className="text-[20px] text-[#B2B3BD] font-semibold md:text-[22px]"
                 style={{ color: isAM && "#3D63DD" }}
               >
                 AM
@@ -327,7 +327,7 @@ function TaskTimeSetter({
               onClick={() => setAmOrPm("pm")}
             >
               <p
-                className="text-[20px] text-[#B2B3BD] font-semibold"
+                className="text-[20px] text-[#B2B3BD] font-semibold md:text-[22px]"
                 style={{ color: isPM && "#3D63DD" }}
               >
                 PM
@@ -345,14 +345,20 @@ function TaskTimeSetter({
             borderColor: "#111725",
           }}
         >
-          <div className="flex gap-x-2 items-center">
+          <div className="flex gap-x-2 items-center md:gap-x-3">
             {/**** Alarm icon */}
-            <img src={alarmIcon} className="w-[16px]" alt="alarm icon" />
+            <img
+              src={alarmIcon}
+              className="w-[16px] md:w-[18px]"
+              alt="alarm icon"
+            />
 
             {/**** Texts */}
             <div>
-              <p className="text-white font-semibold">Notification Alarm</p>
-              <p className="text-white text-[12px]">
+              <p className="text-white font-semibold md:text-[18px]">
+                Notification Alarm
+              </p>
+              <p className="text-white text-[12px] md:text-[14px]">
                 Get Notified 5 minutes ahead.
               </p>
             </div>
@@ -380,10 +386,10 @@ function TaskTimeSetter({
         </section>
 
         {/**** Buttons */}
-        <div className="w-max ml-auto flex gap-x-3 items-center mt-2 px-6">
+        <div className="w-max ml-auto flex gap-x-3 items-center mt-2 px-6 md:text-[18px]">
           {/**** Cancel button */}
           <button
-            className="w-[85px] h-[46px] px-4 py-3 text-[#EEEEF0]"
+            className="w-[85px] h-[46px] px-4 py-3 text-[#EEEEF0] "
             onClick={() => setShowcaseTaskTimeSetter(false)}
           >
             Cancel

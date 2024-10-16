@@ -4,8 +4,6 @@ import { Navigate, Outlet } from "react-router-dom";
 
 import { useAuth } from "../contexts/authContext";
 
-import LoadingPage from "../pages/entry/LoadingPage";
-
 import AccessDenied from "../pages/error/AccessDenied";
 import OnboardingPageLoader from "../pages/auth/OnboardingUserLoader";
 import LoggingOutLoader from "../pages/auth/LoggingOutLoader";

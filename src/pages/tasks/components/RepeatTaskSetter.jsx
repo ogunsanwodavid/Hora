@@ -26,7 +26,9 @@ function RepeatTaskSetter({ repeat, setRepeat, setShowcaseRepeatTaskSetter }) {
       }}
     >
       <main className="w-full max-w-[345px] mx-5 rounded-[10px] bg-blue900 p-6">
-        <h3 className="text-white text-[18px] font-semibold">Repeat Task</h3>
+        <h3 className="text-white text-[18px] font-semibold md:text-[20px]">
+          Repeat Task
+        </h3>
 
         {/**** Radio select */}
         <div className="w-full space-y-2 mt-2">
@@ -50,7 +52,7 @@ function RepeatTaskSetter({ repeat, setRepeat, setShowcaseRepeatTaskSetter }) {
 
             {/**** Radio label */}
             <p
-              className={`${
+              className={`md:text-[18px] ${
                 isRepeatDaily ? "text-white font-semibold" : "text-[#B2B3BD]"
               }`}
             >
@@ -78,7 +80,7 @@ function RepeatTaskSetter({ repeat, setRepeat, setShowcaseRepeatTaskSetter }) {
 
             {/**** Radio label */}
             <p
-              className={`${
+              className={`md:text-[18px] ${
                 isRepeatWeekly ? "text-white font-semibold" : "text-[#B2B3BD]"
               }`}
             >
@@ -106,7 +108,7 @@ function RepeatTaskSetter({ repeat, setRepeat, setShowcaseRepeatTaskSetter }) {
 
             {/**** Radio label */}
             <p
-              className={`${
+              className={`md:text-[18px] ${
                 isRepeatNone ? "text-white font-semibold" : "text-[#B2B3BD]"
               }`}
             >
@@ -116,7 +118,7 @@ function RepeatTaskSetter({ repeat, setRepeat, setShowcaseRepeatTaskSetter }) {
         </div>
 
         {/**** Buttons */}
-        <div className="w-max ml-auto flex gap-x-3 items-center mt-2">
+        <div className="w-max ml-auto flex gap-x-3 items-center mt-2 md:text-[18px]">
           {/**** Cancel button */}
           <button
             className="w-[85px] h-[46px] px-4 py-3 text-[#EEEEF0]"

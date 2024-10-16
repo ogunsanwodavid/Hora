@@ -8,7 +8,7 @@ function CreatingTaskLoader() {
 
   return (
     <div
-      className="creatingtaskloader absolute top-0 left-0  w-full bg-darkestBlue flex flex-col items-center justify-center gap-y-3"
+      className="creatingtaskloader fixed top-0 left-0  w-full bg-darkestBlue flex flex-col items-center justify-center gap-y-3 lg:absolute lg:!min-h-full"
       style={{ minHeight: `${windowHeight}px` }}
     >
       <p className="text-[18px] text-white ">Adding Task</p>

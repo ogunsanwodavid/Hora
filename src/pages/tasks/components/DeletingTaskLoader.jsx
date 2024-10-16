@@ -2,16 +2,16 @@ import useWindowDimensions from "../../../hooks/useWindowDimensions";
 
 import { CircleSpinner } from "react-spinners-kit";
 
-function GettingCurrentTaskLoader() {
+function DeletingTaskLoader() {
   //Window size info
   const { windowHeight } = useWindowDimensions();
 
   return (
     <div
-      className="creatingtaskloader absolute top-0 left-0  w-full bg-darkestBlue flex flex-col items-center justify-center gap-y-3"
+      className="creatingtaskloader fixed top-0 left-0  w-full bg-darkestBlue flex flex-col items-center justify-center gap-y-3 lg:absolute lg:!min-h-full"
       style={{ minHeight: `${windowHeight}px` }}
     >
-      <p className="text-[18px] text-white ">Getting Task</p>
+      <p className="text-[18px] text-white ">Deleting Task</p>
 
       {/**** Loader spinner */}
       <CircleSpinner color={"#3D63DD"} size={60} />
@@ -19,4 +19,4 @@ function GettingCurrentTaskLoader() {
   );
 }
 
-export default GettingCurrentTaskLoader;
+export default DeletingTaskLoader;
