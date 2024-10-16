@@ -114,7 +114,7 @@ const TasksProvider = ({ children }) => {
     useState(false);
 
   //Function to get all tasks
-  const getTasks = async ({
+  const getAllTasks = async ({
     title,
     description,
     dueDate,
@@ -406,6 +406,8 @@ const TasksProvider = ({ children }) => {
         groupTasks,
         currentTaskInfo,
         setCurrentTaskInfo,
+        getAllTasks,
+        getCurrentTask,
         createTask,
         deleteTask,
         completeTask,

@@ -23,7 +23,7 @@ function SummaryBox() {
   //Calculate progress only once on mount hence empty dependency array
   useEffect(() => {
     if (userId) {
-      calculateUserProgress(userId);
+      //calculateUserProgress(userId);
     }
   }, []);
 

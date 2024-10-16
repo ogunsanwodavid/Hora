@@ -1,3 +1,5 @@
+import { useTasks } from "../../../contexts/tasksContext";
+
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
 
 import grayCloseIcon from "../../../icons/grayCloseIcon.svg";
@@ -10,8 +12,11 @@ function DeleteTaskConfirmationModal({
   //Window size info
   const { windowHeight } = useWindowDimensions();
 
+  //Variables from task context
+  const { deleteTask } = useTasks();
+
   function handleDeleteTask() {
-    console.log(taskId);
+    //await deleteTask(taskId)
   }
 
   return (
@@ -39,19 +44,19 @@ function DeleteTaskConfirmationModal({
 
         {/**** Texts */}
         <section className="w-full">
-          <h3 className="text-[20px] text-white font-semibold text-center">
+          <h3 className="text-[20px] text-white font-semibold text-center md:text-[22px]">
             Delete Task
           </h3>
-          <p className="text-[14px] text-[#EEEEF0] text-center">
+          <p className="text-[14px] text-[#EEEEF0] text-center md:text-base">
             Are you sure you want to delete?
           </p>
         </section>
 
         {/**** Buttons */}
-        <section className="w-full flex gap-3">
+        <section className="w-full flex gap-3 ">
           {/**** Cancel button */}
           <button
-            className="w-1/2 px-6 py-3 rounded-full border-[1px] border-errorRed text-[12px] text-errorRed font-semibold"
+            className="w-1/2 px-6 py-3 rounded-full border-[1px] border-errorRed text-[12px] text-errorRed font-semibold md:text-[14px]"
             onClick={() => setShowcaseDeleteTaskConfirmationModal(false)}
           >
             Cancel
@@ -59,7 +64,7 @@ function DeleteTaskConfirmationModal({
 
           {/**** Delete button */}
           <button
-            className="w-1/2 px-6 py-3 rounded-full border-[1px] border-errorRed bg-errorRed text-[12px] text-white font-semibold"
+            className="w-1/2 px-6 py-3 rounded-full border-[1px] border-errorRed bg-errorRed text-[12px] text-white font-semibold md:text-[14px]"
             onClick={handleDeleteTask}
           >
             Delete

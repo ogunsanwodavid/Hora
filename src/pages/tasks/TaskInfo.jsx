@@ -7,9 +7,9 @@ import { useTasks } from "../../contexts/tasksContext";
 
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 
-import GettingCurrentTaskLoader from "./components/GettingCurrentTaskLoader";
 import DeleteTaskConfirmationModal from "./components/DeleteTaskConfirmationModal";
 import TaskCompletedModal from "./components/TaskCompletedModal";
+import DeletingTaskLoader from "./components/DeletingTaskLoader";
 
 import { ClassicSpinner } from "react-spinners-kit";
 
@@ -34,7 +34,6 @@ import redAlarmIcon from "../../icons/redAlarmIcon.svg";
 import repeatIcon from "../../icons/repeatIcon.svg";
 import rightCaretIcon from "../../icons/rightCaretIcon.svg";
 import alarmIcon from "../../icons/alarmIcon.svg";
-import DeletingTaskLoader from "./components/DeletingTaskLoader";
 
 function TaskInfo() {
   //Window size info
@@ -60,6 +59,8 @@ function TaskInfo() {
 
   //Variables from task context
   const {
+    getCurrentTask,
+    completeTask,
     currentTaskInfo,
     isGettingCurrentTask,
     isDeletingTask,
@@ -102,6 +103,11 @@ function TaskInfo() {
     setShowcaseDeleteTaskConfirmationModal,
   ] = useState(false);
 
+  //Get current task on mount
+  useEffect(() => {
+    //getCurrentTask(taskId)
+  }, []);
+
   //Delete task function
   function handleDeleteTask() {
     setShowcaseDeleteTaskConfirmationModal(true);
@@ -113,13 +119,15 @@ function TaskInfo() {
     e.preventDefault();
     setShowcaseDropdown(false);
 
+    //await completeTask(taskId)
+
     await console.log(taskId);
   }
 
   return (
     <>
       <div
-        className="w-full relative max-w-[700px] mx-auto px-3 pb-[40px] lg:!min-h-0"
+        className="w-full relative max-w-[700px] mx-auto px-3 pb-[40px] lg:!min-h-0 lg:max-w-none"
         style={{
           minHeight: `${windowHeight}px`,
         }}
@@ -146,7 +154,7 @@ function TaskInfo() {
 
           {/**** Dropdown */}
           {showcaseDropdown && (
-            <section className="w-[160px] rounded-[8px] overflow-hidden absolute top-full mt-3 right-0 text-white">
+            <section className="w-[160px] rounded-[8px] overflow-hidden absolute top-full mt-3 right-0 text-white cursor-pointer">
               {!isCompleted && (
                 <div
                   className="w-full p-3 bg-blue700"
@@ -330,7 +338,7 @@ function TaskInfo() {
       {isDeletingTask && <DeletingTaskLoader />}
 
       {/**** Show Delete Task Modal */}
-      {showcaseDeleteTaskConfirmationModal && (
+      {showcaseDeleteTaskConfirmationModal && !isDeletingTask && (
         <DeleteTaskConfirmationModal
           taskId={taskId}
           setShowcaseDeleteTaskConfirmationModal={
