@@ -11,6 +11,7 @@ import { useGroups } from "../../contexts/groupsContext";
 import { useAuth } from "../../contexts/authContext";
 
 import CreatingGroupLoader from "./components/CreatingGroupLoader";
+import CreateGroupSuccessModal from "./components/CreateGroupSuccessModal";
 
 import backButton from "../../icons/leftArrowIcon.svg";
 import FormInput from "../../ui/FormInput";
@@ -39,7 +40,7 @@ function CreateGroup() {
   }, [setShowcaseMobileNav]);
 
   //Variables from groups context
-  const { isCreatingGroup } = useGroups();
+  const { isCreatingGroup, showcaseCreateGroupSuccessModal } = useGroups();
 
   //React hook form functions and variables
   const { register, formState, watch, handleSubmit } = useForm();
@@ -133,6 +134,9 @@ function CreateGroup() {
 
       {/**** Show creating group loader when creating group */}
       {isCreatingGroup && <CreatingGroupLoader />}
+
+      {/**** Showcase CreatSuccessGroupLoader */}
+      {showcaseCreateGroupSuccessModal && <CreateGroupSuccessModal />}
     </>
   );
 }

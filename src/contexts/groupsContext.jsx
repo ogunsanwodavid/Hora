@@ -9,12 +9,34 @@ import { toast } from "react-toastify";
 const GroupsContext = createContext();
 
 const GroupsProvider = ({ children }) => {
+  //Group variables
   const [groups, setGroups] = useState(null);
 
+  //Loading states
   const [isCreatingGroup, setIsCreatingGroup] = useState(false);
 
+  //Variables related to the created group success modal
+  const [showcaseCreateGroupSuccessModal, setShowcaseCreateGroupSuccessModal] =
+    useState(false);
+  const [createGroupSuccessName, setCreateGroupSuccessName] = useState(
+    "Designers in Group 9"
+  );
+  const [createGroupSuccessCode, setCreateGroupSuccessCode] =
+    useState("9697XZ");
+  const [createGroupSuccessInviteLink, setCreateGroupSuccessInviteLink] =
+    useState("https://hora-student-app.vercel.app");
+
   return (
-    <GroupsContext.Provider value={{ groups, isCreatingGroup }}>
+    <GroupsContext.Provider
+      value={{
+        groups,
+        isCreatingGroup,
+        createGroupSuccessCode,
+        createGroupSuccessName,
+        createGroupSuccessInviteLink,
+        showcaseCreateGroupSuccessModal,
+      }}
+    >
       {children}
     </GroupsContext.Provider>
   );
