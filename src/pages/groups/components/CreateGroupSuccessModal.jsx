@@ -100,7 +100,8 @@ function CreateGroupSuccessModal() {
               <img src={grayInfoIcon} className="w-4" alt="" />
 
               <p className=" text-[#EEEEF0]">
-                Your Group Code is {createGroupSuccessCode}
+                Your Group Code is{" "}
+                <span className="font-inter">{createGroupSuccessCode}</span>
               </p>
             </main>
 
@@ -129,8 +130,12 @@ function CreateGroupSuccessModal() {
               Share Invite
             </h2>
             <p className="text-[15px] text-white text-center md:text-base">
-              Share Invite or Group code {createGroupSuccessCode} to three
-              friends to start keeping streaks and competing on the leaderboard.
+              Share Invite or Group code{" "}
+              <span className="font-semibold font-inter">
+                {createGroupSuccessCode}
+              </span>{" "}
+              to three friends to start keeping streaks and competing on the
+              leaderboard.
             </p>
           </div>
 

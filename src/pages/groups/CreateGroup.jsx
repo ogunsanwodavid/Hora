@@ -62,7 +62,7 @@ function CreateGroup() {
   return (
     <>
       <div
-        className="w-full relative max-w-[500px] mx-auto px-3 pb-[40px] flex flex-col lg:!min-h-full"
+        className="w-full relative max-w-[500px] mx-auto px-3 pb-[40px] flex flex-col lg:!min-h-full lg:max-w-none"
         style={{
           minHeight: `${windowHeight}px`,
         }}
@@ -87,9 +87,12 @@ function CreateGroup() {
           </main>
         </header>
 
-        <form className="w-full mt-6" onSubmit={handleSubmit(createGroup)}>
+        <form
+          className="w-full mt-6 lg:max-w-[500px] lg:mx-auto"
+          onSubmit={handleSubmit(createGroup)}
+        >
           {/**** Group name input */}
-          <FormInput errors={errors?.groupName?.message}>
+          <FormInput error={errors?.groupName?.message}>
             <input
               type="text"
               name="groupName"

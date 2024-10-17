@@ -14,10 +14,11 @@ const GroupsProvider = ({ children }) => {
 
   //Loading states
   const [isCreatingGroup, setIsCreatingGroup] = useState(false);
+  const [isJoiningGroup, setIsJoiningGroup] = useState(false);
 
   //Variables related to the created group success modal
   const [showcaseCreateGroupSuccessModal, setShowcaseCreateGroupSuccessModal] =
-    useState(false);
+    useState(true);
   const [createGroupSuccessName, setCreateGroupSuccessName] = useState(
     "Designers in Group 9"
   );
@@ -26,11 +27,16 @@ const GroupsProvider = ({ children }) => {
   const [createGroupSuccessInviteLink, setCreateGroupSuccessInviteLink] =
     useState("https://hora-student-app.vercel.app");
 
+  //Variables related to the joinGroup page
+  const [joinGroupError, setJoinGroupError] = useState("Some error");
+
   return (
     <GroupsContext.Provider
       value={{
         groups,
         isCreatingGroup,
+        isJoiningGroup,
+        joinGroupError,
         createGroupSuccessCode,
         createGroupSuccessName,
         createGroupSuccessInviteLink,
