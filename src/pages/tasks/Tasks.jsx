@@ -1,4 +1,7 @@
+import { useEffect } from "react";
+
 import { useTasks } from "../../contexts/tasksContext";
+import { useAuth } from "../../contexts/authContext";
 
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 
@@ -13,8 +16,19 @@ function Tasks() {
   //Window size info
   const { windowHeight } = useWindowDimensions();
 
+  //User credentials
+  const { user } = useAuth();
+  const userId = user?._id;
+
   //Tasks information
-  const { isGettingTasks, allTasks } = useTasks();
+  const { isGettingAllTasks, getAllTasks, allTasks } = useTasks();
+
+  //Get all tasks on mount
+  useEffect(() => {
+    if (userId) {
+      //getAllTasks(userId);
+    }
+  }, []);
 
   return (
     <>
@@ -22,16 +36,16 @@ function Tasks() {
         className="w-full  max-w-[700px] mx-auto relative flex flex-col pb-[40px] lg:!min-h-[552px] lg:max-w-none"
         style={{
           minHeight: `${windowHeight - 130}px`,
-          paddingBottom: isGettingTasks ? "0px" : "40px",
+          paddingBottom: isGettingAllTasks ? "0px" : "40px",
         }}
       >
         {/**** User summary box */}
         <SummaryBox />
 
         {/**** Showcase list of tasks if there is a task or a skeleton loader is loading tasks*/}
-        {isGettingTasks ? (
+        {isGettingAllTasks ? (
           <TasksSkeletonLoader />
-        ) : !isGettingTasks && allTasks.length ? (
+        ) : !isGettingAllTasks && allTasks ? (
           <TasksList />
         ) : (
           <NoTasksError />
@@ -39,7 +53,7 @@ function Tasks() {
       </div>
 
       {/**** Button to click and create new tasks */}
-      {!isGettingTasks && <CreateTaskButton />}
+      {!isGettingAllTasks && <CreateTaskButton />}
     </>
   );
 }

@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./contexts/authContext";
 import { AppDesignProvider } from "./contexts/appDesignContext";
 import { TasksProvider } from "./contexts/tasksContext";
+import { GroupsProvider } from "./contexts/groupsContext";
 
 import AppRoutes from "./components/AppRoutes";
 
@@ -34,15 +35,17 @@ function App() {
       <AuthProvider>
         <AppDesignProvider>
           <TasksProvider>
-            <AppRoutes />
+            <GroupsProvider>
+              <AppRoutes />
 
-            {/*** This contains toasted information display */}
-            <ToastContainer
-              position="top-center"
-              theme="dark"
-              transition={Zoom}
-              autoClose={4000}
-            />
+              {/*** This contains toasted information display */}
+              <ToastContainer
+                position="top-center"
+                theme="dark"
+                transition={Zoom}
+                autoClose={4000}
+              />
+            </GroupsProvider>
           </TasksProvider>
         </AppDesignProvider>
       </AuthProvider>

@@ -21,6 +21,9 @@ import CreateTask from "../pages/tasks/CreateTask";
 import TaskInfo from "../pages/tasks/TaskInfo";
 
 import Groups from "../pages/groups/Groups";
+import NewGroup from "../pages/groups/NewGroup";
+import JoinGroup from "../pages/groups/JoinGroup";
+import CreateGroup from "../pages/groups/CreateGroup";
 
 import Profile from "../pages/profile/Profile";
 
@@ -50,7 +53,12 @@ function AppRoutes() {
             <Route path="createtask" element={<CreateTask />} />
             <Route path=":taskId" element={<TaskInfo />} />
           </Route>
-          <Route path="/groups" element={<Groups />} />
+          <Route path="/groups">
+            <Route index element={<Groups />}></Route>
+            <Route path="newgroup" element={<NewGroup />} />
+            <Route path="joingroup" element={<JoinGroup />} />
+            <Route path="creategroup" element={<CreateGroup />} />
+          </Route>
           <Route path="/profile" element={<Profile />} />
           <Route path="/notifications" element={<Notifications />} />
         </Route>

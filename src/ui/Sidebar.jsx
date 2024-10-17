@@ -75,7 +75,7 @@ function Sidebar() {
               <span className="inline-block w-[100px]">Notifications</span>
 
               {/**** Notification showcase */}
-              <div className="w-4 h-4 bg-errorRed text-white text-[11px] rounded-full flex items-center justify-center">
+              <div className="font-inter w-4 h-4 bg-errorRed text-white text-[9px] rounded-full flex items-center justify-center">
                 <span>3</span>
               </div>
             </p>

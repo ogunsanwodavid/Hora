@@ -31,7 +31,7 @@ const TasksProvider = ({ children }) => {
       _id: "67065c3bd60343ed1807dc2c",
       title: "SIWES Report",
       description: "Begin writing my SIWES report everyday",
-      dueDate: "2024-10-16",
+      dueDate: "2024-10-17",
       time: "20:15",
       completedBy: [],
       repeatTask: "weekly",
@@ -85,21 +85,25 @@ const TasksProvider = ({ children }) => {
     },
   ]);
 
-  const personalTasks = allTasks.filter((task) => {
-    return !Object.hasOwn(task, "completedBy");
-  });
+  const personalTasks =
+    allTasks &&
+    allTasks.filter((task) => {
+      return !Object.hasOwn(task, "completedBy");
+    });
 
-  const groupTasks = allTasks.filter((task) => {
-    return Object.hasOwn(task, "completedBy");
-  });
+  const groupTasks =
+    allTasks &&
+    allTasks.filter((task) => {
+      return Object.hasOwn(task, "completedBy");
+    });
 
   const [currentTaskInfo, setCurrentTaskInfo] = useState(null);
 
   //Loading states
-  const [isGettingTasks, setIsGettingTasks] = useState(false);
+  const [isGettingAllTasks, setIsGettingAllTasks] = useState(false);
   const [isCreatingTask, setIsCreatingTask] = useState(false);
   const [isDeletingTask, setIsDeletingTask] = useState(false);
-  const [isGettingCurrentTask, setIsGettingCurrentTask] = useState(true);
+  const [isGettingCurrentTask, setIsGettingCurrentTask] = useState(false);
   const [isCompletingTask, setIsCompletingTask] = useState(false);
 
   //Showcase time query setters
@@ -114,29 +118,11 @@ const TasksProvider = ({ children }) => {
     useState(false);
 
   //Function to get all tasks
-  const getAllTasks = async ({
-    title,
-    description,
-    dueDate,
-    time,
-    repeatTask,
-    createdBy,
-  }) => {
-    setIsCreatingTask(true);
+  const getAllTasks = async (userId) => {
+    setIsGettingAllTasks(true);
     try {
-      const response = await fetch(`${BASE_URL}/create`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title,
-          description,
-          dueDate,
-          time,
-          repeatTask,
-          createdBy,
-        }),
+      const response = await fetch(`${BASE_URL}/${userId}`, {
+        method: "GET",
         redirect: "follow",
       });
 
@@ -145,20 +131,23 @@ const TasksProvider = ({ children }) => {
       if (response.ok) {
         console.log(data);
 
-        // Task creation successful
-        const { message: createTaskMesssage } = data;
+        // All tasks gotten successful
+        const { message: getAllTasksMessage } = data;
 
         //Toast message
-        toast.success(createTaskMesssage);
+        toast.success(getAllTasksMessage);
 
-        //Navigate to task page
-        navigate("/tasks");
+        //set all tasks
+        await setAllTasks(data.task);
 
-        return { success: true, createTaskMesssage };
+        return { success: true, getAllTasksMessage };
       } else {
         console.log(data);
         // toast error
         toast.error(data.message || "An unexpected error occurred");
+
+        //set all tasks empty
+        setAllTasks(null);
 
         return {
           success: false,
@@ -174,7 +163,7 @@ const TasksProvider = ({ children }) => {
         error: error.message || "An unexpected error occurred",
       };
     } finally {
-      setIsCreatingTask(false);
+      setIsGettingAllTasks(false);
     }
   };
 
@@ -411,7 +400,7 @@ const TasksProvider = ({ children }) => {
         createTask,
         deleteTask,
         completeTask,
-        isGettingTasks,
+        isGettingAllTasks,
         isCreatingTask,
         isGettingCurrentTask,
         isDeletingTask,

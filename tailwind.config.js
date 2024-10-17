@@ -2,7 +2,7 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    screens: { sm: "330px", md: "700px", lg: "1200px" },
+    screens: { sm: "400px", md: "700px", lg: "1200px" },
     fontFamily: {
       raleway: "Raleway, sans-serif",
       inter: "Inter , sans-serif",
