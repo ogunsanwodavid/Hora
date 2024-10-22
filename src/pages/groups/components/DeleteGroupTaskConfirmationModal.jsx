@@ -1,23 +1,21 @@
-import { useGroups } from "../../../contexts/groupsContext";
+import { useTasks } from "../../../contexts/tasksContext";
 
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
 
 import grayCloseIcon from "../../../icons/grayCloseIcon.svg";
-import deleteGroupModalImg from "../../../assets/deleteTaskModal.svg";
+import deleteTaskModalImg from "../../../assets/deleteTaskModal.svg";
 
-function DeleteGroupConfirmationModal({
+function DeleteGroupTaskConfirmationModal({
   groupId,
-  setShowcaseDeleteGroupConfirmationModal,
+  taskId,
+  setShowcaseDeleteGroupTaskConfirmationModal,
 }) {
   //Window size info
   const { windowHeight } = useWindowDimensions();
 
-  //Variables from groups context
-  //const { deleteGroup } = useGroups();
-
-  function handleDeleteGroup() {
-    console.log(groupId);
-    //await deleteGroup(GroupId)
+  function handleDeleteTask() {
+    console.log(groupId, taskId);
+    //await deleteTask(taskId)
   }
 
   return (
@@ -33,12 +31,12 @@ function DeleteGroupConfirmationModal({
           src={grayCloseIcon}
           className="w-[20px] h-[20px] ml-auto"
           alt="gray close icon"
-          onClick={() => setShowcaseDeleteGroupConfirmationModal(false)}
+          onClick={() => setShowcaseDeleteGroupTaskConfirmationModal(false)}
         />
 
         {/**** Image */}
         <img
-          src={deleteGroupModalImg}
+          src={deleteTaskModalImg}
           className="w-full max-w-[140px] mx-auto"
           alt=""
         />
@@ -46,10 +44,10 @@ function DeleteGroupConfirmationModal({
         {/**** Texts */}
         <section className="w-full">
           <h3 className="text-[20px] text-white font-semibold text-center md:text-[22px]">
-            Delete Group
+            Delete Group Task
           </h3>
           <p className="text-[14px] text-[#EEEEF0] text-center md:text-base">
-            Are you sure you want to delete this group?
+            Are you sure you want to delete this group task?
           </p>
         </section>
 
@@ -58,7 +56,7 @@ function DeleteGroupConfirmationModal({
           {/**** Cancel button */}
           <button
             className="w-1/2 px-6 py-3 rounded-full border-[1px] border-errorRed text-[12px] text-errorRed font-semibold md:text-[14px]"
-            onClick={() => setShowcaseDeleteGroupConfirmationModal(false)}
+            onClick={() => setShowcaseDeleteGroupTaskConfirmationModal(false)}
           >
             Cancel
           </button>
@@ -66,7 +64,7 @@ function DeleteGroupConfirmationModal({
           {/**** Delete button */}
           <button
             className="w-1/2 px-6 py-3 rounded-full border-[1px] border-errorRed bg-errorRed text-[12px] text-white font-semibold md:text-[14px]"
-            onClick={handleDeleteGroup}
+            onClick={handleDeleteTask}
           >
             Delete
           </button>
@@ -76,4 +74,4 @@ function DeleteGroupConfirmationModal({
   );
 }
 
-export default DeleteGroupConfirmationModal;
+export default DeleteGroupTaskConfirmationModal;

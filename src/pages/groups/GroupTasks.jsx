@@ -14,9 +14,6 @@ import CreateGroupTaskButton from "./components/CreateGroupTaskButton";
 
 import backButton from "../../icons/leftArrowIcon.svg";
 
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-
 function GroupTasks() {
   //Window size info
   const { windowHeight } = useWindowDimensions();
@@ -94,76 +91,72 @@ function GroupTasks() {
           minHeight: `${windowHeight - 40}px`,
         }}
       >
-        <SkeletonTheme baseColor="#202020" highlightColor="#444">
-          {/*** Header */}
-          <header className="relative w-full flex items-center gap-x-4 md:mt-4 md:gap-x-8">
-            {/*** Back button */}
-            <img
-              src={backButton}
-              className="w-4"
-              alt="Back button"
-              onClick={() => navigate(-1)}
-            />
+        {/*** Header */}
+        <header className="relative w-full flex items-center gap-x-4 md:mt-4 md:gap-x-8">
+          {/*** Back button */}
+          <img
+            src={backButton}
+            className="w-4"
+            alt="Back button"
+            onClick={() => navigate(-1)}
+          />
 
-            {/**** Group info */}
-            <section className="w-full relative flex flex-col">
-              <h3 className="text-white text-lg font-semibold line-clamp-1 overflow-hidden text-ellipsis md:text-[20px]">
-                {groupName}
-              </h3>
+          {/**** Group info */}
+          <section className="w-full relative flex flex-col">
+            <h3 className="text-white text-lg font-semibold line-clamp-1 overflow-hidden text-ellipsis md:text-[20px]">
+              {groupName}
+            </h3>
 
-              {/***** Group members */}
-              <p className="w-full text-white text-[14px] line-clamp-1 overflow-hidden text-ellipsis md:text-base">
-                {groupMembers.map((member) => member.username).join(", ")}
+            {/***** Group members */}
+            <p className="w-full text-white text-[14px] line-clamp-1 overflow-hidden text-ellipsis md:text-base">
+              {groupMembers.map((member) => member.username).join(", ")}
+            </p>
+          </section>
+        </header>
+
+        {/**** Scroll */}
+        {!isGettingCurrentGroupTasks && (
+          <nav className="grouptasks-nav-scroll w-full flex mt-6 cursor-pointer md:mt-8">
+            <div
+              to="/groups/group/tasks/grouptasks/:id"
+              className={`w-1/2 border-b-[0.8px] border-[#393A40] pb-1 md:pb-2 ${
+                isScrollDisplayGroupTasks && "!border-blue200 !border-b-[1.4px]"
+              }`}
+              onClick={() => setScrollDisplay("grouptasks")}
+            >
+              <p
+                className={`text-[#828282] text-center md:text-lg ${
+                  isScrollDisplayGroupTasks && "!text-blue200 font-semibold"
+                }`}
+              >
+                Group Tasks
               </p>
-            </section>
-          </header>
+            </div>
 
-          {/**** Scroll */}
-          {!isGettingCurrentGroupTasks && (
-            <nav className="grouptasks-nav-scroll w-full flex mt-6 cursor-pointer md:mt-8">
-              <div
-                to="/groups/group/tasks/grouptasks/:id"
-                className={`w-1/2 border-b-[0.8px] border-[#393A40] pb-1 md:pb-2 ${
-                  isScrollDisplayGroupTasks &&
-                  "!border-blue200 !border-b-[1.4px]"
+            <div
+              className={`w-1/2 border-b-[0.8px] border-[#393A40] pb-1 md:pb-2 ${
+                isScrollDisplayTasksTable && "!border-blue200 !border-b-[1.4px]"
+              }`}
+              onClick={() => setScrollDisplay("taskstable")}
+            >
+              <p
+                className={`text-[#828282] text-center md:text-lg ${
+                  isScrollDisplayTasksTable && "!text-blue200 font-semibold"
                 }`}
-                onClick={() => setScrollDisplay("grouptasks")}
               >
-                <p
-                  className={`text-[#828282] text-center md:text-lg ${
-                    isScrollDisplayGroupTasks && "!text-blue200 font-semibold"
-                  }`}
-                >
-                  Group Tasks
-                </p>
-              </div>
+                Task Table
+              </p>
+            </div>
+          </nav>
+        )}
 
-              <div
-                className={`w-1/2 border-b-[0.8px] border-[#393A40] pb-1 md:pb-2 ${
-                  isScrollDisplayTasksTable &&
-                  "!border-blue200 !border-b-[1.4px]"
-                }`}
-                onClick={() => setScrollDisplay("taskstable")}
-              >
-                <p
-                  className={`text-[#828282] text-center md:text-lg ${
-                    isScrollDisplayTasksTable && "!text-blue200 font-semibold"
-                  }`}
-                >
-                  Task Table
-                </p>
-              </div>
-            </nav>
-          )}
-
-          {/**** Main content */}
-          {!isGettingCurrentGroupTasks && (
-            <main className="w-full mt-4 md:mt-6">
-              {isScrollDisplayGroupTasks && <GroupTasksList />}
-              {isScrollDisplayTasksTable && <GroupTasksTable />}
-            </main>
-          )}
-        </SkeletonTheme>
+        {/**** Main content */}
+        {!isGettingCurrentGroupTasks && (
+          <main className="w-full mt-4 md:mt-6">
+            {isScrollDisplayGroupTasks && <GroupTasksList />}
+            {isScrollDisplayTasksTable && <GroupTasksTable />}
+          </main>
+        )}
 
         {isGettingCurrentGroupTasks && <GettingCurrentGroupTasksLoader />}
       </div>

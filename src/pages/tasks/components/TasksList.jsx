@@ -16,8 +16,7 @@ import {
 
 function TasksList() {
   //Variables from tasks context
-  const { allTasks, personalTasks, groupTasks, setCurrentTaskInfo } =
-    useTasks();
+  const { allTasks, personalTasks, groupTasks } = useTasks();
 
   //The current type of tasks being displayed
   const [currentTasksDisplayed, setCurrentTasksDisplayed] = useState("all");
@@ -145,11 +144,7 @@ function TasksList() {
                   {previousTasks.map((task) => {
                     const taskId = task?._id;
                     return (
-                      <Link
-                        to={`/tasks/task/${taskId}`}
-                        key={taskId}
-                        onClick={() => setCurrentTaskInfo(task)}
-                      >
+                      <Link to={`/tasks/task/${taskId}`} key={taskId}>
                         <TaskCard task={task} />{" "}
                       </Link>
                     );
@@ -184,11 +179,7 @@ function TasksList() {
                   {todayTasks.map((task) => {
                     const taskId = task?._id;
                     return (
-                      <Link
-                        to={`/tasks/task/${taskId}`}
-                        key={taskId}
-                        onClick={() => setCurrentTaskInfo(task)}
-                      >
+                      <Link to={`/tasks/task/${taskId}`} key={taskId}>
                         <TaskCard task={task} />{" "}
                       </Link>
                     );
@@ -223,11 +214,7 @@ function TasksList() {
                   {completedTasks.map((task) => {
                     const taskId = task?._id;
                     return (
-                      <Link
-                        to={`/tasks/task/${taskId}`}
-                        key={taskId}
-                        onClick={() => setCurrentTaskInfo(task)}
-                      >
+                      <Link to={`/tasks/task/${taskId}`} key={taskId}>
                         <TaskCard task={task} />{" "}
                       </Link>
                     );

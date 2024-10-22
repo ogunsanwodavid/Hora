@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import TaskCard from "../../../pages/tasks/components/TaskCard";
 
@@ -13,6 +13,10 @@ import {
 } from "../../../utils/helpers";
 
 function GroupTasksList() {
+  //Route parameters
+  const { groupId } = useParams();
+
+  //Group tasks
   const groupTasks = [
     {
       _id: "67065c3bd60343ec0707dc2c",
@@ -143,7 +147,10 @@ function GroupTasksList() {
                   {previousTasks.map((task) => {
                     const taskId = task?._id;
                     return (
-                      <Link to={`/tasks/task/${taskId}`} key={taskId}>
+                      <Link
+                        to={`/groups/group/task/${groupId}/${taskId}`}
+                        key={taskId}
+                      >
                         <TaskCard task={task} />{" "}
                       </Link>
                     );
@@ -178,7 +185,10 @@ function GroupTasksList() {
                   {todayTasks.map((task) => {
                     const taskId = task?._id;
                     return (
-                      <Link to={`/tasks/task/${taskId}`} key={taskId}>
+                      <Link
+                        to={`/groups/group/task/${groupId}/${taskId}`}
+                        key={taskId}
+                      >
                         <TaskCard task={task} />{" "}
                       </Link>
                     );
@@ -213,7 +223,10 @@ function GroupTasksList() {
                   {completedTasks.map((task) => {
                     const taskId = task?._id;
                     return (
-                      <Link to={`/tasks/task/${taskId}`} key={taskId}>
+                      <Link
+                        to={`/groups/group/task/${groupId}/${taskId}`}
+                        key={taskId}
+                      >
                         <TaskCard task={task} />{" "}
                       </Link>
                     );

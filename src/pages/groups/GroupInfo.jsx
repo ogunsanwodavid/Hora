@@ -122,6 +122,7 @@ function GroupInfo() {
 
   function handleDeleteGroup() {
     setShowcaseDeleteGroupConfirmationModal(true);
+    setShowcaseDropdown(false);
   }
 
   return (
@@ -156,7 +157,10 @@ function GroupInfo() {
             {/**** Dropdown */}
             {showcaseDropdown && (
               <section className="w-[160px] rounded-[8px] overflow-hidden absolute top-full mt-3 right-0 text-white cursor-pointer">
-                <Link className="block w-full p-3 bg-blue700">
+                <Link
+                  to={`/groups/group/tasks/${groupId}`}
+                  className="block w-full p-3 bg-blue700"
+                >
                   <p>Tasks</p>
                 </Link>
 
@@ -212,7 +216,10 @@ function GroupInfo() {
 
             {/**** Add members */}
             {isGroupCreatedByUser && !isGettingCurrentGroup && (
-              <Link className="flex items-center gap-x-3 md:gap-x-5">
+              <Link
+                to={`/groups/group/addmember/${groupId}`}
+                className="flex items-center gap-x-3 md:gap-x-5"
+              >
                 {/**** User plus icon */}
                 <div className="h-[40px] w-[40px] bg-blue200 rounded-full flex items-center justify-center md:h-[45px] md:w-[45px]">
                   <img

@@ -102,7 +102,22 @@ const TasksProvider = ({ children }) => {
       })
     : null;
 
-  const [currentTaskInfo, setCurrentTaskInfo] = useState(null);
+  const [currentTaskInfo, setCurrentTaskInfo] = useState({
+    _id: "670782168774060eefe22gggha",
+    title: "Read Gulag Archipelago",
+    description:
+      "Time to study my favourite history book and jot down unknown words",
+    type: "Personal",
+    dueDate: "2024-09-11",
+    time: "09:30",
+    completedBy: [],
+    repeatTask: "none",
+    completed: true,
+    createdBy: "6703d9cb0e71d411ae3e23f3",
+    createdAt: "2024-10-10T07:28:22.825Z",
+    updatedAt: "2024-10-10T07:28:22.825Z",
+    __v: 0,
+  });
 
   //Loading states
   const [isGettingAllTasks, setIsGettingAllTasks] = useState(false);

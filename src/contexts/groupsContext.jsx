@@ -41,6 +41,20 @@ const GroupsProvider = ({ children }) => {
       __v: 4,
     },
   ]);
+  const [currentGroupTaskInfo, setCurrentGroupTaskInfo] = useState({
+    _id: "67065c3bd60343ec0707dc2c",
+    title: "Start looking for jobs",
+    type: "Group",
+    description: "Have to work",
+    dueDate: "2024-09-22",
+    time: "02:15",
+    repeatTask: "daily",
+    completed: false,
+    createdBy: "6703d9cb0e71d411ae3e23f3",
+    createdAt: "2024-10-09T10:34:35.131Z",
+    updatedAt: "2024-10-09T10:34:35.131Z",
+    __v: 0,
+  });
 
   //Loading states
   const [isGettingAllGroups, setIsGettingAllGroups] = useState(false);
@@ -51,7 +65,11 @@ const GroupsProvider = ({ children }) => {
   const [isDeletingGroup, setIsDeletingGroup] = useState(false);
   const [isGettingCurrentGroupTasks, setIsGettingCurrentGroupTasks] =
     useState(false);
+  const [isGettingCurrentGroupTask, setIsGettingCurrentGroupTask] =
+    useState(false);
   const [isCreatingGroupTask, setIsCreatingGroupTask] = useState(false);
+  const [isCompletingGroupTask, setIsCompletingGroupTask] = useState(false);
+  const [isDeletingGroupTask, setIsDeletingGroupTask] = useState(false);
 
   //Variables related to the created group success modal
   const [showcaseCreateGroupSuccessModal, setShowcaseCreateGroupSuccessModal] =
@@ -67,10 +85,15 @@ const GroupsProvider = ({ children }) => {
   //Variables related to the joinGroup page
   const [joinGroupError, setJoinGroupError] = useState("Some error");
 
+  //Showcase modal after completing group task
+  const [showcaseGroupTaskCompletedModal, setShowcaseGroupTaskCompletedModal] =
+    useState(false);
+
   return (
     <GroupsContext.Provider
       value={{
         groups,
+        currentGroupTaskInfo,
         isGettingAllGroups,
         isGettingCurrentGroup,
         isCreatingGroup,
@@ -78,7 +101,10 @@ const GroupsProvider = ({ children }) => {
         isExitingGroup,
         isDeletingGroup,
         isGettingCurrentGroupTasks,
+        isGettingCurrentGroupTask,
         isCreatingGroupTask,
+        isCompletingGroupTask,
+        isDeletingGroupTask,
         joinGroupError,
         setJoinGroupError,
         createGroupSuccessCode,
