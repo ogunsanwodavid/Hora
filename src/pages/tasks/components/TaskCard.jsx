@@ -15,7 +15,7 @@ import completedGroupIcon from "../../../icons/completedGroupIcon.svg";
 
 function TaskCard({ task }) {
   const isCompleted = task.completed;
-  const isGroupTask = Object.hasOwn(task, "completedBy");
+  const isGroupTask = task.type.replace(/\s+/g, "").toLowerCase() === "group";
   const isRepeatTaskNone = task.repeatTask === "none";
   const isAlarm = true;
 
@@ -28,10 +28,10 @@ function TaskCard({ task }) {
         alt={isCompleted ? "tick circle icon" : "plain circle icon"}
       />
 
-      <main className="w-full">
+      <main className="w-full flex flex-col">
         {/**** Task title */}
         <p
-          className={`w-full text-white font-semibold whitespace-nowrap overflow-hidden text-ellipsis md:text-[18px] ${
+          className={` text-white font-semibold line-clamp-1 overflow-hidden text-ellipsis md:text-[18px] ${
             isCompleted && "!text-[#797B86] line-through"
           }`}
         >
@@ -40,7 +40,7 @@ function TaskCard({ task }) {
 
         {/**** Task description */}
         <p
-          className={`w-full text-white text-[14px] font-semibold whitespace-nowrap overflow-hidden text-ellipsis md:text-base  ${
+          className={` text-white text-[14px] font-semibold line-clamp-1 overflow-hidden text-ellipsis md:text-base   ${
             isCompleted && "!text-[#797B86] line-through"
           }`}
         >
@@ -49,21 +49,19 @@ function TaskCard({ task }) {
 
         {/**** Task info */}
         <section
-          className={`w-full flex items-center space-x-3 text-[14px] text-[#B2B3BD] md:text-base ${
+          className={`flex flex-wrap items-center gap-3 text-[14px] text-[#B2B3BD] md:text-base  ${
             isCompleted && "!text-[#797B86]"
           }`}
         >
           {/*** Due date */}
           <p>
-            {getMonthName(parseDateFromYYYYMMDD(task.dueDate).getMonth()).slice(
-              0,
-              3
-            )}{" "}
-            {String(parseDateFromYYYYMMDD(task.dueDate).getDate()).padStart(
-              2,
-              "0"
-            )}{" "}
-            {parseDateFromYYYYMMDD(task.dueDate).getFullYear()}
+            {getMonthName(
+              parseDateFromYYYYMMDD(task.dueDate.substring(0, 10)).getMonth()
+            ).slice(0, 3)}{" "}
+            {String(
+              parseDateFromYYYYMMDD(task.dueDate.substring(0, 10)).getDate()
+            ).padStart(2, "0")}{" "}
+            {parseDateFromYYYYMMDD(task.dueDate.substring(0, 10)).getFullYear()}
           </p>
 
           {/*** Dot */}

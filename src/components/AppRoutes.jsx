@@ -24,6 +24,9 @@ import Groups from "../pages/groups/Groups";
 import NewGroup from "../pages/groups/NewGroup";
 import JoinGroup from "../pages/groups/JoinGroup";
 import CreateGroup from "../pages/groups/CreateGroup";
+import GroupInfo from "../pages/groups/GroupInfo";
+import GroupTasks from "../pages/groups/GroupTasks";
+import CreateGroupTask from "../pages/groups/CreateGroupTask";
 
 import Profile from "../pages/profile/Profile";
 
@@ -33,8 +36,8 @@ function AppRoutes() {
   const { token, userId } = useAuth();
 
   //set user authenticated if userId and token exists in local storage
-  const isAuthenticated = Boolean(token && userId);
-  //const isAuthenticated = true;
+  //const isAuthenticated = Boolean(token && userId);
+  const isAuthenticated = true;
 
   return (
     <Routes>
@@ -48,27 +51,41 @@ function AppRoutes() {
 
       <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
         <Route element={<AppLayout />}>
-          <Route path="/tasks">
+          <Route path="tasks">
             <Route index element={<Tasks />} />
             <Route path="createtask" element={<CreateTask />} />
-            <Route path=":taskId" element={<TaskInfo />} />
+            <Route path="task">
+              <Route path=":taskId" element={<TaskInfo />} />
+            </Route>
           </Route>
-          <Route path="/groups">
-            <Route index element={<Groups />}></Route>
+          <Route path="groups">
+            <Route index element={<Groups />} />
             <Route path="newgroup" element={<NewGroup />} />
             <Route path="joingroup" element={<JoinGroup />} />
             <Route path="creategroup" element={<CreateGroup />} />
+            <Route path="group">
+              <Route path=":groupId" element={<GroupInfo />}></Route>
+              <Route path="tasks">
+                <Route path=":groupId" element={<GroupTasks />} />
+                <Route path="createtask">
+                  <Route path=":groupId" element={<CreateGroupTask />} />
+                </Route>
+              </Route>
+              <Route path="task">
+                <Route path=":taskId" />
+              </Route>
+            </Route>
           </Route>
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/notifications" element={<Notifications />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="notifications" element={<Notifications />} />
         </Route>
       </Route>
 
-      <Route path="/createaccount" element={<CreateAccount />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/verifyemail" element={<VerifyEmail />} />
-      <Route path="/forgotpassword" element={<ForgotPassword />} />
-      <Route path="/resetpassword" element={<ResetPassword />} />
+      <Route path="createaccount" element={<CreateAccount />} />
+      <Route path="signin" element={<SignIn />} />
+      <Route path="verifyemail" element={<VerifyEmail />} />
+      <Route path="forgotpassword" element={<ForgotPassword />} />
+      <Route path="resetpassword" element={<ResetPassword />} />
 
       <Route path="*" element={<PageNotFound />} />
     </Routes>

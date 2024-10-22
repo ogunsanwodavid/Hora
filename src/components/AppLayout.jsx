@@ -29,7 +29,7 @@ function AppLayout() {
       >
         <Sidebar />
         <section className="w-full relative lg:p-[24px]">
-          <main className="px-5 py-10 pb-[100px] lg:h-full lg:pb-0 lg:px-[8px] lg:py-0 overflow-y-auto main-scrollbar">
+          <main className="px-5 pt-10 pb-[0px] lg:h-full lg:pb-0 lg:px-[8px] lg:py-0 overflow-y-auto main-scrollbar">
             <Outlet />
           </main>
         </section>

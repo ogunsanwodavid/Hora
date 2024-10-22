@@ -2,9 +2,7 @@ import { useState } from "react";
 
 import { Link } from "react-router-dom";
 
-import { useTasks } from "../../../contexts/tasksContext";
-
-import TaskCard from "./TaskCard";
+import TaskCard from "../../../pages/tasks/components/TaskCard";
 
 import blue50CaretIcon from "../../../icons/blue50CaretIcon.svg";
 
@@ -14,25 +12,86 @@ import {
   parseDateFromYYYYMMDD,
 } from "../../../utils/helpers";
 
-function TasksList() {
-  //Variables from tasks context
-  const { allTasks, personalTasks, groupTasks, setCurrentTaskInfo } =
-    useTasks();
-
-  //The current type of tasks being displayed
-  const [currentTasksDisplayed, setCurrentTasksDisplayed] = useState("all");
-  const isAllTasksDisplayed = currentTasksDisplayed === "all";
-  const isPersonalTasksDisplayed = currentTasksDisplayed === "personal";
-  const isGroupTasksDisplayed = currentTasksDisplayed === "group";
-
-  const currentTasks = isAllTasksDisplayed
-    ? allTasks
-    : isPersonalTasksDisplayed
-    ? personalTasks
-    : groupTasks;
+function GroupTasksList() {
+  const groupTasks = [
+    {
+      _id: "67065c3bd60343ec0707dc2c",
+      title: "Start looking for jobs",
+      type: "Group",
+      description: "Have to work",
+      dueDate: "2024-09-22",
+      time: "02:15",
+      repeatTask: "daily",
+      completed: false,
+      createdBy: "6703d9cb0e71d411ae3e23f3",
+      createdAt: "2024-10-09T10:34:35.131Z",
+      updatedAt: "2024-10-09T10:34:35.131Z",
+      __v: 0,
+    },
+    {
+      _id: "67065c3bd60343ed1807dc2c",
+      title: "SIWES Report",
+      description: "Begin writing my SIWES report everyday",
+      type: "Group",
+      dueDate: "2024-10-17",
+      time: "20:15",
+      completedBy: [],
+      repeatTask: "weekly",
+      completed: false,
+      createdBy: "6703d9cb0e71d411ae3e23f3",
+      createdAt: "2024-10-09T10:34:35.131Z",
+      updatedAt: "2024-10-09T10:34:35.131Z",
+      __v: 0,
+    },
+    {
+      _id: "670782168774060eee22fcba",
+      title: "Complete project report",
+      description: "Finish writing the final project report and submit it.",
+      type: "Group",
+      dueDate: "2024-08-10",
+      time: "14:30",
+      repeatTask: "none",
+      completed: false,
+      createdBy: "6703d9cb0e71d411ae3e23f3",
+      createdAt: "2024-10-10T07:28:22.825Z",
+      updatedAt: "2024-10-10T07:28:22.825Z",
+      __v: 0,
+    },
+    {
+      _id: "670782168774060eee22gggba",
+      title: "Go Skydiving",
+      description: "Take a trip to Ibadan and go skydiving with friends",
+      type: "Group",
+      dueDate: "2025-11-22",
+      time: "04:45",
+      completedBy: [],
+      repeatTask: "none",
+      completed: true,
+      createdBy: "6703d9cb0e71d411ae3e23f3",
+      createdAt: "2024-10-10T07:28:22.825Z",
+      updatedAt: "2024-10-10T07:28:22.825Z",
+      __v: 0,
+    },
+    {
+      _id: "670782168774060eefe22gggha",
+      title: "Read Gulag Archipelago",
+      description:
+        "Time to study my favourite history book and jot down unknown words",
+      type: "Group",
+      dueDate: "2024-10-22",
+      time: "09:30",
+      completedBy: [],
+      repeatTask: "none",
+      completed: true,
+      createdBy: "6703d9cb0e71d411ae3e23f3",
+      createdAt: "2024-10-10T07:28:22.825Z",
+      updatedAt: "2024-10-10T07:28:22.825Z",
+      __v: 0,
+    },
+  ];
 
   //Tasks before current day
-  const previousTasks = currentTasks.filter((task) => {
+  const previousTasks = groupTasks.filter((task) => {
     const isTaskDueDatePrevious = isDatePrevious(
       parseDateFromYYYYMMDD(task.dueDate)
     );
@@ -42,7 +101,7 @@ function TasksList() {
   const [showcasePreviousTasks, setShowcasePreviousTasks] = useState(false);
 
   //Today's tasks
-  const todayTasks = currentTasks.filter((task) => {
+  const todayTasks = groupTasks.filter((task) => {
     const isTaskDueDateToday = isDateToday(parseDateFromYYYYMMDD(task.dueDate));
 
     return isTaskDueDateToday;
@@ -50,76 +109,15 @@ function TasksList() {
   const [showcaseTodayTasks, setShowcaseTodayTasks] = useState(false);
 
   //Completed tasks
-  const completedTasks = currentTasks.filter((task) => {
+  const completedTasks = groupTasks.filter((task) => {
     return task.completed;
   });
   const [showcaseCompletedTasks, setShowcaseCompletedTasks] = useState(false);
 
-  //Function to show all tasks
-  function handleSelectAll() {
-    setCurrentTasksDisplayed("all");
-    setShowcaseTodayTasks(false);
-    setShowcasePreviousTasks(false);
-    setShowcaseCompletedTasks(false);
-  }
-
-  //Function to show personal tasks
-  function handleSelectPersonal() {
-    setCurrentTasksDisplayed("personal");
-    setShowcaseTodayTasks(false);
-    setShowcasePreviousTasks(false);
-    setShowcaseCompletedTasks(false);
-  }
-
-  //Function to show group tasks
-  function handleSelectGroup() {
-    setCurrentTasksDisplayed("group");
-    setShowcaseTodayTasks(false);
-    setShowcasePreviousTasks(false);
-    setShowcaseCompletedTasks(false);
-  }
-
   return (
-    <div className="w-full mt-4 cursor-pointer">
-      {/*** Task list Navigator */}
-      <section className="w-full flex flex-wrap gap-3">
-        {/**** All tasks selector */}
-        <div
-          className={`px-[20px] py-[10px] border-[1px] border-[#5F606A] text-[#B2B3BD] rounded-full md:text-[18px] ${
-            isAllTasksDisplayed && "border-blue500 bg-blue500 text-white"
-          }`}
-          onClick={handleSelectAll}
-        >
-          All
-        </div>
-
-        {/**** Personal tasks selector */}
-        {personalTasks.length && (
-          <div
-            className={`px-[20px] py-[10px] border-[1px] border-[#5F606A] text-[#B2B3BD] rounded-full md:text-[18px] ${
-              isPersonalTasksDisplayed && "border-blue500 bg-blue500 text-white"
-            }`}
-            onClick={handleSelectPersonal}
-          >
-            Personal
-          </div>
-        )}
-
-        {/**** Group tasks selector */}
-        {groupTasks.length && (
-          <div
-            className={`px-[20px] py-[10px] border-[1px] border-[#5F606A] text-[#B2B3BD] rounded-full md:text-[18px] ${
-              isGroupTasksDisplayed && "border-blue500 bg-blue500 text-white"
-            }`}
-            onClick={handleSelectGroup}
-          >
-            Group
-          </div>
-        )}
-      </section>
-
+    <div className="w-full cursor-pointer">
       {/**** Tasks list display */}
-      <main className="w-full mt-6 space-y-4">
+      <main className="w-full space-y-4">
         {/**** Previous Tasks */}
         {Boolean(previousTasks.length) &&
           !(showcaseTodayTasks || showcaseCompletedTasks) && (
@@ -145,11 +143,7 @@ function TasksList() {
                   {previousTasks.map((task) => {
                     const taskId = task?._id;
                     return (
-                      <Link
-                        to={`/tasks/task/${taskId}`}
-                        key={taskId}
-                        onClick={() => setCurrentTaskInfo(task)}
-                      >
+                      <Link to={`/tasks/task/${taskId}`} key={taskId}>
                         <TaskCard task={task} />{" "}
                       </Link>
                     );
@@ -184,11 +178,7 @@ function TasksList() {
                   {todayTasks.map((task) => {
                     const taskId = task?._id;
                     return (
-                      <Link
-                        to={`/tasks/task/${taskId}`}
-                        key={taskId}
-                        onClick={() => setCurrentTaskInfo(task)}
-                      >
+                      <Link to={`/tasks/task/${taskId}`} key={taskId}>
                         <TaskCard task={task} />{" "}
                       </Link>
                     );
@@ -223,11 +213,7 @@ function TasksList() {
                   {completedTasks.map((task) => {
                     const taskId = task?._id;
                     return (
-                      <Link
-                        to={`/tasks/task/${taskId}`}
-                        key={taskId}
-                        onClick={() => setCurrentTaskInfo(task)}
-                      >
+                      <Link to={`/tasks/task/${taskId}`} key={taskId}>
                         <TaskCard task={task} />{" "}
                       </Link>
                     );
@@ -241,4 +227,4 @@ function TasksList() {
   );
 }
 
-export default TasksList;
+export default GroupTasksList;

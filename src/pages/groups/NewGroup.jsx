@@ -9,16 +9,17 @@ import useWindowDimensions from "../../hooks/useWindowDimensions";
 import newGroupImg from "../../assets/newGroup.svg";
 
 import backButton from "../../icons/leftArrowIcon.svg";
+import { useGroups } from "../../contexts/groupsContext";
 
 function NewGroup() {
   //Window size info
   const { windowHeight } = useWindowDimensions();
 
-  //App design info
-  const { setShowcaseMobileNav } = useAppDesign();
-
   //Navigate
   const navigate = useNavigate();
+
+  //App design info
+  const { setShowcaseMobileNav } = useAppDesign();
 
   //Dont show mobile navbar on mount
   useEffect(() => {
@@ -28,11 +29,20 @@ function NewGroup() {
       setShowcaseMobileNav(true);
     };
   }, [setShowcaseMobileNav]);
+
+  //Variables from groups context
+  const { setJoinGroupError } = useGroups();
+
+  //set join group error empty on mount
+  useEffect(() => {
+    setJoinGroupError("");
+  });
+
   return (
     <div
-      className="w-full relative max-w-[700px] mx-auto px-3 pb-[40px] flex flex-col lg:!min-h-full lg:max-w-none"
+      className="w-full relative max-w-[700px] mx-auto px-3 pb-[0px] flex flex-col lg:!min-h-full lg:max-w-none"
       style={{
-        minHeight: `${windowHeight}px`,
+        minHeight: `${windowHeight - 40}px`,
       }}
     >
       {/*** Header */}

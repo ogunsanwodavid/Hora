@@ -43,7 +43,7 @@ function App() {
                 position="top-center"
                 theme="dark"
                 transition={Zoom}
-                autoClose={4000}
+                autoClose={2000}
               />
             </GroupsProvider>
           </TasksProvider>

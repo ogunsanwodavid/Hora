@@ -64,7 +64,7 @@ function CreateGroup() {
       <div
         className="w-full relative max-w-[500px] mx-auto px-3 pb-[40px] flex flex-col lg:!min-h-full lg:max-w-none"
         style={{
-          minHeight: `${windowHeight}px`,
+          minHeight: `${windowHeight - 40}px`,
         }}
       >
         {/*** Header */}
@@ -76,63 +76,67 @@ function CreateGroup() {
             alt="Back button"
             onClick={() => navigate(-1)}
           />
+        </header>
 
-          <main className="space-y-3 text-white text-center">
+        {/**** Main content */}
+        <main className="w-full flex-grow lg:flex lg:flex-col lg:items-center lg:justify-center">
+          <section className="space-y-3 text-white text-center mt-4">
             <h2 className="font-semibold text-2xl md:text-[26px]">
               Create Group
             </h2>
             <h3 className="font-regular text-base md:text-lg">
               Enter the name of your new accountability Group.
             </h3>
-          </main>
-        </header>
+          </section>
 
-        <form
-          className="w-full mt-6 lg:max-w-[500px] lg:mx-auto"
-          onSubmit={handleSubmit(createGroup)}
-        >
-          {/**** Group name input */}
-          <FormInput error={errors?.groupName?.message}>
-            <input
-              type="text"
-              name="groupName"
-              id="groupName"
-              placeholder="Enter your group name"
-              {...register("groupName", {
-                required: "This field is required",
-              })}
-              className={`w-full bg-black700 h-[48px] px-4 py-3 text-base text-white  transition-all duration-500 border-[1.2px] border-black300 outline-none rounded-[4px] placeholder:text-black150 ${
-                errors?.groupName?.message ? "border-errorRed" : ""
-              } ${!errors?.groupName?.message && "focus:border-white"}`}
-              disabled={isCreatingGroup}
-              onKeyDown={(e) => {
-                const key = e.key;
-
-                // Allow only letters, spaces, and backspace
-                if (
-                  !/^[a-zA-Z]$/.test(key) &&
-                  key !== "Backspace" &&
-                  key !== " "
-                ) {
-                  e.preventDefault();
-                }
-              }}
-            />
-          </FormInput>
-
-          {/**** Create group button */}
-          <button
-            className="w-full bg-blue200 h-[46px] rounded-[50px] text-white text-base font-semibold flex items-center justify-center mt-16 md:h-[52px] md:text-[18px]"
-            style={{
-              backgroundColor: !isCreateGroupBtnClickable && "#303136",
-              boxShadow: "0px 4px 8px 0px #14080014",
-              opacity: !isCreateGroupBtnClickable && 0.4,
-            }}
-            disabled={!isCreateGroupBtnClickable}
+          {/***** Form */}
+          <form
+            className="w-full mt-6 lg:max-w-[500px] lg:mx-auto"
+            onSubmit={handleSubmit(createGroup)}
           >
-            Create Group
-          </button>
-        </form>
+            {/**** Group name input */}
+            <FormInput error={errors?.groupName?.message}>
+              <input
+                type="text"
+                name="groupName"
+                id="groupName"
+                placeholder="Enter your group name"
+                {...register("groupName", {
+                  required: "This field is required",
+                })}
+                className={`w-full bg-black700 h-[48px] px-4 py-3 text-base text-white  transition-all duration-500 border-[1.2px] border-black300 outline-none rounded-[4px] placeholder:text-black150 ${
+                  errors?.groupName?.message ? "border-errorRed" : ""
+                } ${!errors?.groupName?.message && "focus:border-white"}`}
+                disabled={isCreatingGroup}
+                onKeyDown={(e) => {
+                  const key = e.key;
+
+                  // Allow only letters, spaces, and backspace
+                  if (
+                    !/^[a-zA-Z]$/.test(key) &&
+                    key !== "Backspace" &&
+                    key !== " "
+                  ) {
+                    e.preventDefault();
+                  }
+                }}
+              />
+            </FormInput>
+
+            {/**** Create group button */}
+            <button
+              className="w-full bg-blue200 h-[46px] rounded-[50px] text-white text-base font-semibold flex items-center justify-center mt-16 md:h-[52px] md:text-[18px]"
+              style={{
+                backgroundColor: !isCreateGroupBtnClickable && "#303136",
+                boxShadow: "0px 4px 8px 0px #14080014",
+                opacity: !isCreateGroupBtnClickable && 0.4,
+              }}
+              disabled={!isCreateGroupBtnClickable}
+            >
+              Create Group
+            </button>
+          </form>
+        </main>
       </div>
 
       {/**** Show creating group loader when creating group */}

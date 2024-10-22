@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useAppDesign } from "../../contexts/appDesignContext";
 import { useTasks } from "../../contexts/tasksContext";
 import { useAuth } from "../../contexts/authContext";
+import { useGroups } from "../../contexts/groupsContext";
 
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 import { toast } from "react-toastify";
 
-import CreatingTaskLoader from "./components/CreatingTaskLoader";
-import TaskDueDatePicker from "./components/TaskDueDatePicker";
+import CreatingTaskLoader from "../../pages/tasks/components/CreatingTaskLoader";
+import TaskDueDatePicker from "../../pages/tasks/components/TaskDueDatePicker";
 
-import TaskTimeSetter from "./components/TaskTimeSetter";
-import RepeatTaskSetter from "./components/RepeatTaskSetter";
+import TaskTimeSetter from "../../pages/tasks/components/TaskTimeSetter";
+import RepeatTaskSetter from "../../pages/tasks/components/RepeatTaskSetter";
 
 import {
   convertTo12HourFormat,
@@ -32,7 +33,7 @@ import repeatIcon from "../../icons/repeatIcon.svg";
 import rightCaretIcon from "../../icons/rightCaretIcon.svg";
 import alarmIcon from "../../icons/alarmIcon.svg";
 
-function CreateTask() {
+function CreateGroupTask() {
   //Window size info
   const { windowHeight } = useWindowDimensions();
 
@@ -46,6 +47,9 @@ function CreateTask() {
   //App design info
   const { setShowcaseMobileNav } = useAppDesign();
 
+  //Route parameters
+  const { groupId } = useParams();
+
   //Values from task Context
   const {
     showcaseTaskDueDatePicker,
@@ -54,9 +58,10 @@ function CreateTask() {
     setShowcaseTaskTimeSetter,
     showcaseRepeatTaskSetter,
     setShowcaseRepeatTaskSetter,
-    createTask,
-    isCreatingTask,
   } = useTasks();
+
+  //Values from groups context
+  const { isCreatingGroupTask } = useGroups();
 
   //Dont show mobile navbar on mount
   useEffect(() => {
@@ -102,6 +107,7 @@ function CreateTask() {
 
     //Form data
     const formData = {
+      groupId: groupId,
       title: title,
       description: description,
       dueDate: dueDate,
@@ -120,7 +126,8 @@ function CreateTask() {
       );
     } else {
       //Add task
-      await createTask(formData);
+      //await createTask(formData);
+      console.log(formData);
 
       //Reset all values
       setTitle("");
@@ -279,7 +286,7 @@ function CreateTask() {
       </div>
 
       {/**** Show CreatingTaskLoader when creating task */}
-      {isCreatingTask && <CreatingTaskLoader />}
+      {isCreatingGroupTask && <CreatingTaskLoader />}
 
       {/***** Showcase query setters only when triggered */}
       {showcaseRepeatTaskSetter && (
@@ -311,4 +318,4 @@ function CreateTask() {
   );
 }
 
-export default CreateTask;
+export default CreateGroupTask;

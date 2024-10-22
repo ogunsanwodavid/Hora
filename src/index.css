@@ -21,6 +21,44 @@ select {
   --toastify-font-family: "Raleway", sans-serif !important;
 }
 
+.Toastify__progress-bar--wrp {
+  height: 0 !important;
+}
+
+.Toastify__toast {
+  border: 2px solid #3d63dd !important;
+  border-radius: 15px !important;
+  align-items: center !important;
+}
+
+.Toastify__close-button {
+  display: none;
+}
+
+.Toastify__toast-body {
+  padding: 4px;
+  gap: 5px;
+}
+
+.Toastify__toast-theme--dark {
+  background-color: #111725 !important;
+}
+
+@media only screen and (max-width: 480px) {
+  .Toastify__toast-container {
+    top: 0;
+    left: 0;
+    transform: none;
+    margin-top: 1rem;
+    padding: 0 20px;
+  }
+
+  .Toastify__toast {
+    max-width: 320px !important;
+    margin: 0.5rem auto;
+  }
+}
+
 /**** Style for the loading page logo scaling transition ****/
 .logo-scale {
   animation: logo-scale-animation 2s infinite ease-in-out;
@@ -217,4 +255,16 @@ select {
   .react-datepicker__day-name {
     font-size: 18px;
   }
+}
+
+/*** Skeleton loader **/
+.skeleton__loader-parent-1 span[aria-busy="true"] {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+.skeleton__loader-parent-2 span[aria-busy="true"]:nth-of-type(2) {
+  display: block;
+  width: 100%;
 }

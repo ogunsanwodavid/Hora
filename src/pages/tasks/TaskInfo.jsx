@@ -71,7 +71,7 @@ function TaskInfo() {
   //Variables of current task info on display
   const title = currentTaskInfo?.title;
   const description = currentTaskInfo?.description;
-  const dueDate = currentTaskInfo?.dueDate;
+  const dueDate = currentTaskInfo?.dueDate.substring(0, 10);
   const time = currentTaskInfo?.time;
   const repeat = currentTaskInfo?.repeatTask;
   const isCompleted = currentTaskInfo?.completed;

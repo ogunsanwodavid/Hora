@@ -414,13 +414,22 @@ const AuthProvider = ({ children }) => {
       // Check if the response is Ok
       if (response.ok) {
         console.log(data);
-        const progressNumber = Number(data.progress.progress.slice(0, -1));
+
+        //round up progress and remove % symbol
+        const progressNumber = Math.round(
+          Number(data.progress.progress.replace("%", ""))
+        );
+
+        //set user progress
         setUserProgress(progressNumber);
       } else {
         console.error(data.message);
 
         //Toast error message
         toast.error(data.message);
+
+        //set user progress to 0
+        setUserProgress(0);
 
         return {
           success: false,
@@ -432,6 +441,9 @@ const AuthProvider = ({ children }) => {
 
       //Toast error
       toast.error("Failed to calculate progress");
+
+      //set user progress to 0
+      setUserProgress(0);
 
       return {
         success: false,

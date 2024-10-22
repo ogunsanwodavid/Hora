@@ -1,14 +1,19 @@
 import { useState } from "react";
+
+import { Link, useParams } from "react-router-dom";
+
 import trianglePolygon from "../../../assets/trianglePolygon.svg";
 
 import plusIcon from "../../../icons/plusIcon.svg";
-import { Link } from "react-router-dom";
 
-function CreateTaskButton() {
+function CreateGroupTaskButton() {
+  //Route parameter
+  const { groupId } = useParams();
+
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   return (
     <Link
-      to="/tasks/createtask"
+      to={`/groups/group/tasks/createtask/${groupId}`}
       className="fixed right-[24px] bottom-[90px] space-y-4 flex flex-col items-center md:right-[calc((100%_-_700px)_/_2)] lg:absolute lg:bottom-[60px] lg:right-[32px] group"
     >
       {/**** Modal */}
@@ -38,4 +43,4 @@ function CreateTaskButton() {
   );
 }
 
-export default CreateTaskButton;
+export default CreateGroupTaskButton;

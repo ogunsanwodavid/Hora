@@ -17,6 +17,7 @@ const TasksProvider = ({ children }) => {
     {
       _id: "67065c3bd60343ec0707dc2c",
       title: "Start looking for jobs",
+      type: "Personal",
       description: "Have to work",
       dueDate: "2024-09-22",
       time: "02:15",
@@ -31,6 +32,7 @@ const TasksProvider = ({ children }) => {
       _id: "67065c3bd60343ed1807dc2c",
       title: "SIWES Report",
       description: "Begin writing my SIWES report everyday",
+      type: "Group",
       dueDate: "2024-10-17",
       time: "20:15",
       completedBy: [],
@@ -45,6 +47,7 @@ const TasksProvider = ({ children }) => {
       _id: "670782168774060eee22fcba",
       title: "Complete project report",
       description: "Finish writing the final project report and submit it.",
+      type: "Personal",
       dueDate: "2024-08-10",
       time: "14:30",
       repeatTask: "none",
@@ -58,6 +61,7 @@ const TasksProvider = ({ children }) => {
       _id: "670782168774060eee22gggba",
       title: "Go Skydiving",
       description: "Take a trip to Ibadan and go skydiving with friends",
+      type: "Group",
       dueDate: "2025-11-22",
       time: "04:45",
       completedBy: [],
@@ -73,6 +77,7 @@ const TasksProvider = ({ children }) => {
       title: "Read Gulag Archipelago",
       description:
         "Time to study my favourite history book and jot down unknown words",
+      type: "Personal",
       dueDate: "2024-09-11",
       time: "09:30",
       completedBy: [],
@@ -85,17 +90,17 @@ const TasksProvider = ({ children }) => {
     },
   ]);
 
-  const personalTasks =
-    allTasks &&
-    allTasks.filter((task) => {
-      return !Object.hasOwn(task, "completedBy");
-    });
+  const personalTasks = allTasks
+    ? allTasks.filter((task) => {
+        return task.type.replace(/\s+/g, "").toLowerCase() === "personal";
+      })
+    : null;
 
-  const groupTasks =
-    allTasks &&
-    allTasks.filter((task) => {
-      return Object.hasOwn(task, "completedBy");
-    });
+  const groupTasks = allTasks
+    ? allTasks.filter((task) => {
+        return task.type.replace(/\s+/g, "").toLowerCase() === "group";
+      })
+    : null;
 
   const [currentTaskInfo, setCurrentTaskInfo] = useState(null);
 
@@ -121,7 +126,7 @@ const TasksProvider = ({ children }) => {
   const getAllTasks = async (userId) => {
     setIsGettingAllTasks(true);
     try {
-      const response = await fetch(`${BASE_URL}/${userId}`, {
+      const response = await fetch(`${BASE_URL}/alltasks/${userId}`, {
         method: "GET",
         redirect: "follow",
       });
