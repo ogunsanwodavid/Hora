@@ -56,6 +56,65 @@ const GroupsProvider = ({ children }) => {
     __v: 0,
   });
 
+  const [searchNewMemberResult, setSearchNewMemberResult] = useState([
+    {
+      _id: "01",
+      username: "desire007",
+      email: "destinydesire@gmail.com",
+    },
+    {
+      _id: "02",
+      username: "boluwatife010",
+      email: "ojoboluwatife@gmail.com",
+    },
+    {
+      _id: "03",
+      username: "hoaxthagod",
+      email: "hoaxgod777@gmail.com",
+    },
+    {
+      _id: "04",
+      username: "00xdave",
+      email: "ogunsanwodavid123@gmail.com",
+    },
+    {
+      _id: "05",
+      username: "incognito_lord",
+      email: "lordincognito54@gmail.com",
+    },
+    {
+      _id: "06",
+      username: "Redemptionsync",
+      email: "syncredeems66@gmail.com",
+    },
+    {
+      _id: "07",
+      username: "Beatthemyth",
+      email: "mythbeaterrocks@gmail.com",
+    },
+    {
+      _id: "08",
+      username: "blink200",
+      email: "idoblink200@gmail.com",
+    },
+  ]);
+
+  //Search result ordered alphabetically by username
+  const orderedSearchNewMemberResult = searchNewMemberResult.length
+    ? searchNewMemberResult.sort((userA, userB) =>
+        userA.username.localeCompare(userB.username)
+      )
+    : [];
+
+  const [selectedUsers, setSelectedUsers] = useState([]);
+
+  //Selected users ordered alphabetically by username
+  const orderedSelectedUsers = selectedUsers.length
+    ? selectedUsers.sort((userA, userB) =>
+        userA.username.localeCompare(userB.username)
+      )
+    : [];
+
   //Loading states
   const [isGettingAllGroups, setIsGettingAllGroups] = useState(false);
   const [isGettingCurrentGroup, setIsGettingCurrentGroup] = useState(false);
@@ -70,6 +129,7 @@ const GroupsProvider = ({ children }) => {
   const [isCreatingGroupTask, setIsCreatingGroupTask] = useState(false);
   const [isCompletingGroupTask, setIsCompletingGroupTask] = useState(false);
   const [isDeletingGroupTask, setIsDeletingGroupTask] = useState(false);
+  const [isSearchingNewMember, setIsSearchingNewMember] = useState(false);
 
   //Variables related to the created group success modal
   const [showcaseCreateGroupSuccessModal, setShowcaseCreateGroupSuccessModal] =
@@ -94,6 +154,10 @@ const GroupsProvider = ({ children }) => {
       value={{
         groups,
         currentGroupTaskInfo,
+        searchNewMemberResult,
+        orderedSearchNewMemberResult,
+        selectedUsers,
+        orderedSelectedUsers,
         isGettingAllGroups,
         isGettingCurrentGroup,
         isCreatingGroup,
@@ -105,12 +169,14 @@ const GroupsProvider = ({ children }) => {
         isCreatingGroupTask,
         isCompletingGroupTask,
         isDeletingGroupTask,
+        isSearchingNewMember,
         joinGroupError,
         setJoinGroupError,
         createGroupSuccessCode,
         createGroupSuccessName,
         createGroupSuccessInviteLink,
         showcaseCreateGroupSuccessModal,
+        setSelectedUsers,
       }}
     >
       {children}

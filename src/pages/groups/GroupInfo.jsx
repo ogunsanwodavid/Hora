@@ -13,8 +13,6 @@ import ExitingGroupLoader from "./components/ExitingGroupLoader";
 import DeleteGroupConfirmationModal from "./components/DeleteGroupConfirmationModal";
 import DeletingGroupLoader from "./components/DeletingGroupLoader";
 
-import defaultProfilePic from "../../assets/dave.jpeg";
-
 import backButton from "../../icons/leftArrowIcon.svg";
 import kebabIcon from "../../icons/kebabIcon.svg";
 import whiteUserPlusIcon from "../../icons/whiteUserPlusIcon.svg";
@@ -217,7 +215,7 @@ function GroupInfo() {
             {/**** Add members */}
             {isGroupCreatedByUser && !isGettingCurrentGroup && (
               <Link
-                to={`/groups/group/addmember/${groupId}`}
+                to={`/groups/group/invitemembers/${groupId}`}
                 className="flex items-center gap-x-3 md:gap-x-5"
               >
                 {/**** User plus icon */}
@@ -230,7 +228,7 @@ function GroupInfo() {
                 </div>
 
                 <h5 className="text-white font-semibold md:text-lg">
-                  Add Group Members
+                  Invite members
                 </h5>
               </Link>
             )}

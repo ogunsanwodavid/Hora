@@ -4,22 +4,19 @@ import { Link } from "react-router-dom";
 
 import trianglePolygon from "../../../assets/trianglePolygon.svg";
 
-import plusIcon from "../../../icons/plusIcon.svg";
+import whiteUserPlusIcon from "../../../icons/whiteUserPlusIcon.svg";
 
-function CreateTaskButton() {
+function InviteMembersButton() {
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   return (
-    <Link
-      to="/tasks/createtask"
-      className="fixed right-[24px] bottom-[90px] space-y-4 flex flex-col items-center md:right-[calc((100%_-_700px)_/_2)] lg:absolute lg:bottom-[60px] lg:right-[34px] group"
-    >
+    <div className="fixed right-[36px] bottom-[90px] space-y-4 flex flex-col items-center  md:right-[calc((100%_-_700px)_/_2)] lg:absolute lg:bottom-[60px] lg:right-[34px] group">
       {/**** Modal */}
       <section
         className={`hidden relative bg-white px-[7px] py-[4px] rounded-[4px] items-center justify-center transition-opacity duration-300 lg:flex ${
           isButtonHovered ? "opacity-100" : "opacity-0"
         }`}
       >
-        <p className="z-10 text-[12px] text-[#4D515B]">Tap to add a new task</p>
+        <p className="z-10 text-[12px] text-[#4D515B]">Tap to invite members</p>
 
         <img
           src={trianglePolygon}
@@ -34,10 +31,10 @@ function CreateTaskButton() {
         onMouseOver={() => setIsButtonHovered(true)}
         onMouseLeave={() => setIsButtonHovered(false)}
       >
-        <img src={plusIcon} className="h-[14px]" alt="" />
+        <img src={whiteUserPlusIcon} className="h-[14px]" alt="" />
       </main>
-    </Link>
+    </div>
   );
 }
 
-export default CreateTaskButton;
+export default InviteMembersButton;
