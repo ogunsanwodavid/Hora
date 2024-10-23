@@ -61,7 +61,7 @@ function SummaryBox() {
       </main>
 
       <section>
-        <h3 className="text-white text-[20px] font-semibold md:text-[24px]">
+        <h3 className="text-white text-[19px] font-semibold md:text-[21px]">
           Daily Progress bar
         </h3>
         <h4 className="text-blue100 text-[14px] md:text-base">
