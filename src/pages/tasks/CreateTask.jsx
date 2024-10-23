@@ -120,7 +120,7 @@ function CreateTask() {
       );
     } else {
       //Add task
-      await createTask(formData);
+      //await createTask(formData);
 
       //Reset all values
       setTitle("");
