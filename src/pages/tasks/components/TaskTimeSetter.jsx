@@ -16,9 +16,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/css/mousewheel";
+import "swiper/css/free-mode";
 
 // import required modules
-import { Mousewheel, Navigation } from "swiper/modules";
+import { Mousewheel, Navigation, FreeMode } from "swiper/modules";
 
 function TaskTimeSetter({
   setShowcaseTaskTimeSetter,
@@ -154,7 +156,7 @@ function TaskTimeSetter({
                   direction={"vertical"}
                   slidesPerView={1}
                   mousewheel={true}
-                  modules={[Mousewheel, Navigation]}
+                  modules={[Mousewheel, Navigation, FreeMode]}
                   onInit={(swiper) => {
                     // Assign refs to navigation buttons after swiper initialization
                     swiper.params.navigation.prevEl =
@@ -242,7 +244,7 @@ function TaskTimeSetter({
                   direction={"vertical"}
                   slidesPerView={1}
                   mousewheel={true}
-                  modules={[Mousewheel, Navigation]}
+                  modules={[Mousewheel, Navigation, FreeMode]}
                   onInit={(swiper) => {
                     // Assign refs to navigation buttons after swiper initialization
                     swiper.params.navigation.prevEl =
