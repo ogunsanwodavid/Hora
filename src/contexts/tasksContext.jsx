@@ -19,7 +19,7 @@ const TasksProvider = ({ children }) => {
       title: "Start looking for jobs",
       type: "Personal",
       description: "Have to work",
-      dueDate: "2024-09-22",
+      dueDate: "2024-10-23",
       time: "02:15",
       repeatTask: "daily",
       completed: false,
