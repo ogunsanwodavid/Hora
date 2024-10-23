@@ -112,7 +112,7 @@ const TasksProvider = ({ children }) => {
     time: "09:30",
     completedBy: [],
     repeatTask: "none",
-    completed: true,
+    completed: false,
     createdBy: "6703d9cb0e71d411ae3e23f3",
     createdAt: "2024-10-10T07:28:22.825Z",
     updatedAt: "2024-10-10T07:28:22.825Z",
