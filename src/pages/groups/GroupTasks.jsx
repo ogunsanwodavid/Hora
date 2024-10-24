@@ -89,7 +89,7 @@ function GroupTasks() {
   return (
     <>
       <div
-        className="w-full relative max-w-[700px] mx-auto px-3 pb-[40px] flex flex-col lg:!min-h-full lg:max-w-none"
+        className="w-full relative max-w-[700px] mx-auto px-3 pb-[80px] flex flex-col lg:!min-h-full lg:max-w-[747.52px]"
         style={{
           minHeight: `${windowHeight - 40}px`,
         }}

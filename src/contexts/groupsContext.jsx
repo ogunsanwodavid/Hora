@@ -43,6 +43,23 @@ const GroupsProvider = ({ children }) => {
   ]);
   const [currentGroupTasks, setCurrentGroupTasks] = useState([
     {
+      _id: "670782168774060eefe22gggha",
+      title: "Gymming",
+      description: "Spend more time for my gym sessions",
+      type: "Group",
+      dueDate: "2024-10-24",
+      time: "18:35",
+      completedBy: [],
+      repeatTask: "none",
+      completed: true,
+      createdBy: {
+        username: "000xdave",
+      },
+      createdAt: "2024-10-10T07:28:22.825Z",
+      updatedAt: "2024-10-10T07:28:22.825Z",
+      __v: 0,
+    },
+    {
       _id: "67065c3bd60343ec0707dc2c",
       title: "Start looking for jobs",
       type: "Group",
@@ -121,23 +138,6 @@ const GroupsProvider = ({ children }) => {
       completed: true,
       createdBy: {
         username: "blink200",
-      },
-      createdAt: "2024-10-10T07:28:22.825Z",
-      updatedAt: "2024-10-10T07:28:22.825Z",
-      __v: 0,
-    },
-    {
-      _id: "670782168774060eefe22gggha",
-      title: "Gymming",
-      description: "Spend more time for my gym sessions",
-      type: "Group",
-      dueDate: "2024-10-24",
-      time: "18:35",
-      completedBy: [],
-      repeatTask: "none",
-      completed: true,
-      createdBy: {
-        username: "000xdave",
       },
       createdAt: "2024-10-10T07:28:22.825Z",
       updatedAt: "2024-10-10T07:28:22.825Z",

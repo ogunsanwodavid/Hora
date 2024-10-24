@@ -123,6 +123,7 @@ select {
 
   .main-scrollbar::-webkit-scrollbar {
     width: 9px;
+    height: 8px;
   }
 
   .main-scrollbar::-webkit-scrollbar-track {
