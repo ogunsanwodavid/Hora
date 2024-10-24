@@ -36,7 +36,11 @@ function DailyProgressBox() {
       }}
     >
       {/*** Yellow star icon */}
-      <img src={yellowStarIcon} className="w-[20px]" alt="yellow star icon" />
+      <img
+        src={yellowStarIcon}
+        className="w-[20px] md:w-[22px]"
+        alt="yellow star icon"
+      />
 
       {/**** Texts */}
       <h3 className="text-white text-[19px] font-semibold mt-2 md:text-[21px]">

@@ -37,10 +37,10 @@ function Profile() {
 
         {/**** Username and email */}
         <div className="flex-grow overflow-hidden text-ellipsis">
-          <p className=" text-white text-[17px] font-semibold  overflow-hidden text-ellipsis">
+          <p className=" text-white text-[17px] font-semibold  overflow-hidden text-ellipsis md:text-[19px]">
             hoaxthagod
           </p>
-          <p className="text-[#B2B3BD] text-[14px] overflow-hidden text-ellipsis">
+          <p className="text-[#B2B3BD] text-[14px] overflow-hidden text-ellipsis md:text-base">
             ogunsanwodavid123@gmail.com
           </p>
         </div>

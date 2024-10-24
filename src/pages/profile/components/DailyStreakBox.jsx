@@ -10,54 +10,100 @@ function DailyStreakBox() {
         {/*** Yellow lightning icon */}
         <img
           src={yellowLightningIcon}
-          className="w-[17px]"
+          className="w-[17px] md:w-[19px]"
           alt="yellow lightning icon"
         />
 
-        <p className="text-[#B2B3BD]">Current Streak</p>
+        <p className="text-[#B2B3BD] md:text-lg">Current Streak</p>
 
         {/**** Current streak days */}
-        <p className="ml-auto text-white font-semibold">24 days</p>
+        <p className="font-inter ml-auto text-white font-semibold md:text-lg">
+          24 days
+        </p>
       </section>
 
       {/***** Streak display by week days */}
       <section className="dashed-bottom-border py-5  flex items-center justify-between">
         <div className="flex flex-col items-center gap-y-2">
-          <img src={tickCircleIcon} className="w-[24px]" alt="icon" />
-          <p className="text-lg text-[#B2B3BD] font-semibold">S</p>
+          <img
+            src={tickCircleIcon}
+            className="w-[24px] md:w-[26px]"
+            alt="icon"
+          />
+          <p className="text-lg text-[#B2B3BD] font-semibold md:text-[20px]">
+            S
+          </p>
         </div>
         <div className="flex flex-col items-center gap-y-2">
-          <img src={tickCircleIcon} className="w-[24px]" alt="icon" />
-          <p className="text-lg text-[#B2B3BD] font-semibold">M</p>
+          <img
+            src={tickCircleIcon}
+            className="w-[24px] md:w-[26px]"
+            alt="icon"
+          />
+          <p className="text-lg text-[#B2B3BD] font-semibold md:text-[20px]">
+            M
+          </p>
         </div>
         <div className="flex flex-col items-center gap-y-2">
-          <img src={tickCircleIcon} className="w-[24px]" alt="icon" />
-          <p className="text-lg text-[#B2B3BD] font-semibold">T</p>
+          <img
+            src={tickCircleIcon}
+            className="w-[24px] md:w-[26px]"
+            alt="icon"
+          />
+          <p className="text-lg text-[#B2B3BD] font-semibold md:text-[20px]">
+            T
+          </p>
         </div>
         <div className="flex flex-col items-center gap-y-2">
-          <img src={tickCircleIcon} className="w-[24px]" alt="icon" />
-          <p className="text-lg text-[#B2B3BD] font-semibold">W</p>
+          <img
+            src={tickCircleIcon}
+            className="w-[24px] md:w-[26px]"
+            alt="icon"
+          />
+          <p className="text-lg text-[#B2B3BD] font-semibold md:text-[20px]">
+            W
+          </p>
         </div>
         <div className="flex flex-col items-center gap-y-2">
-          <img src={plainCircleIcon} className="w-[24px]" alt="icon" />
-          <p className="text-lg text-[#B2B3BD] font-semibold">T</p>
+          <img
+            src={plainCircleIcon}
+            className="w-[24px] md:w-[26px]"
+            alt="icon"
+          />
+          <p className="text-lg text-[#B2B3BD] font-semibold md:text-[20px]">
+            T
+          </p>
         </div>
         <div className="flex flex-col items-center gap-y-2">
-          <img src={plainCircleIcon} className="w-[24px]" alt="icon" />
-          <p className="text-lg text-[#B2B3BD] font-semibold">F</p>
+          <img
+            src={plainCircleIcon}
+            className="w-[24px] md:w-[26px]"
+            alt="icon"
+          />
+          <p className="text-lg text-[#B2B3BD] font-semibold md:text-[20px]">
+            F
+          </p>
         </div>
         <div className="flex flex-col items-center gap-y-2">
-          <img src={plainCircleIcon} className="w-[24px]" alt="icon" />
-          <p className="text-lg text-[#B2B3BD] font-semibold">S</p>
+          <img
+            src={plainCircleIcon}
+            className="w-[24px] md:w-[26px]"
+            alt="icon"
+          />
+          <p className="text-lg text-[#B2B3BD] font-semibold md:text-[20px]">
+            S
+          </p>
         </div>
       </section>
 
       {/***** Longest streak */}
       <section className="flex items-center justify-between gap-x-4 mt-4">
-        <p className="text-[#B2B3BD]">Longest Streak</p>
+        <p className="text-[#B2B3BD] md:text-lg">Longest Streak</p>
 
         {/**** Current streak days */}
-        <p className=" text-white font-semibold">31 days</p>
+        <p className="font-inter text-white font-semibold md:text-lg">
+          31 days
+        </p>
       </section>
     </div>
   );
