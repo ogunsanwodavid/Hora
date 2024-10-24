@@ -171,10 +171,14 @@ function GroupTasks() {
           </main>
         )}
 
+        {/**** Loader when getting current group tasks */}
         {isGettingCurrentGroupTasks && <GettingCurrentGroupTasksLoader />}
       </div>
 
-      {!isGettingCurrentGroupTasks && <CreateGroupTaskButton />}
+      {/**** Show create group task button  */}
+      {!isGettingCurrentGroupTasks && !isScrollDisplayTasksTable && (
+        <CreateGroupTaskButton />
+      )}
     </>
   );
 }

@@ -53,7 +53,7 @@ const GroupsProvider = ({ children }) => {
       repeatTask: "none",
       completed: true,
       createdBy: {
-        username: "000xdave",
+        username: "00xdave",
       },
       createdAt: "2024-10-10T07:28:22.825Z",
       updatedAt: "2024-10-10T07:28:22.825Z",
