@@ -9,7 +9,9 @@ const ProgressBar = ({ progress }) => {
           }}
         ></div>
       </main>
-      <p className=" text-blue50 md:text-[18px]">{progress}%</p>
+      <p className="font-inter text-[15px] text-blue50 md:text-[17px]">
+        {progress}%
+      </p>
     </div>
   );
 };

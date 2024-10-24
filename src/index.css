@@ -109,6 +109,10 @@ select {
   color: #3f71fd;
 }
 
+.mobile-navbar a.active img.profile-pic {
+  border: 0.8px solid #3f71fd;
+}
+
 /***** STyles for the scrollbar in the app *****/
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
@@ -268,4 +272,23 @@ select {
 .skeleton__loader-parent-2 span[aria-busy="true"]:nth-of-type(2) {
   display: block;
   width: 100%;
+}
+
+/*** Dashed bottom border in profile page */
+.dashed-bottom-border {
+  position: relative;
+  padding-bottom: 20px; /* Adjust as needed */
+  border: none; /* Remove default borders */
+}
+
+.dashed-bottom-border::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1.5px; /* Border thickness */
+  background-image: linear-gradient(to right, #46484f 10px, transparent 5px);
+  background-size: 15px 4px; /* Adjust dash length and gap */
+  background-repeat: repeat-x;
 }

@@ -49,7 +49,7 @@ function MobileNavbar() {
           >
             <img
               src={profilePicDefault}
-              className="w-5 h-5 rounded-full object-cover md:w-6 md:h-6"
+              className="profile-pic w-6 h-6 rounded-full object-cover md:w-7 md:h-7"
             />
           </section>
           <p className="navtext text-[14px] text-[#EEEEF0] font-semibold md:text-base">
