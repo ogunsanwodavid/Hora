@@ -4,7 +4,7 @@ function NoTasksError() {
   return (
     <div className="w-full flex-grow flex flex-col items-center justify-center gap-y-6">
       <img src={noTasksErrorImg} className="w-[180px] lg:w-[220px]" alt="" />
-      <p className="text-white text-center font-semibold lg:text-lg">
+      <p className="text-white text-[14px] text-center font-semibold lg:text-base">
         You currently have no tasks
       </p>
     </div>

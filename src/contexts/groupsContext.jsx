@@ -41,6 +41,109 @@ const GroupsProvider = ({ children }) => {
       __v: 4,
     },
   ]);
+  const [currentGroupTasks, setCurrentGroupTasks] = useState([
+    {
+      _id: "67065c3bd60343ec0707dc2c",
+      title: "Start looking for jobs",
+      type: "Group",
+      description: "Have to work",
+      dueDate: "2024-09-22",
+      time: "02:15",
+      repeatTask: "daily",
+      completed: false,
+      createdBy: {
+        username: "hoaxthagod",
+      },
+      createdAt: "2024-10-09T10:34:35.131Z",
+      updatedAt: "2024-10-09T10:34:35.131Z",
+      __v: 0,
+    },
+    {
+      _id: "67065c3bd60343ed1807dc2c",
+      title: "SIWES Report",
+      description: "Begin writing my SIWES report everyday",
+      type: "Group",
+      dueDate: "2024-10-17",
+      time: "20:15",
+      completedBy: [],
+      repeatTask: "weekly",
+      completed: false,
+      createdBy: {
+        username: "boluwatife010",
+      },
+      createdAt: "2024-10-09T10:34:35.131Z",
+      updatedAt: "2024-10-09T10:34:35.131Z",
+      __v: 0,
+    },
+    {
+      _id: "670782168774060eee22fcba",
+      title: "Complete project report",
+      description: "Finish writing the final project report and submit it.",
+      type: "Group",
+      dueDate: "2024-08-10",
+      time: "14:30",
+      repeatTask: "none",
+      completed: false,
+      createdBy: {
+        username: "desire007",
+      },
+      createdAt: "2024-10-10T07:28:22.825Z",
+      updatedAt: "2024-10-10T07:28:22.825Z",
+      __v: 0,
+    },
+    {
+      _id: "670782168774060eee22gggba",
+      title: "Go Skydiving",
+      description: "Take a trip to Ibadan and go skydiving with friends",
+      type: "Group",
+      dueDate: "2025-11-22",
+      time: "04:45",
+      completedBy: [],
+      repeatTask: "none",
+      completed: true,
+      createdBy: {
+        username: "00xdave",
+      },
+      createdAt: "2024-10-10T07:28:22.825Z",
+      updatedAt: "2024-10-10T07:28:22.825Z",
+      __v: 0,
+    },
+    {
+      _id: "670782168774060eefe22gggha",
+      title: "Read Gulag Archipelago",
+      description:
+        "Time to study my favourite history book and jot down unknown words",
+      type: "Group",
+      dueDate: "2024-10-24",
+      time: "09:30",
+      completedBy: [],
+      repeatTask: "none",
+      completed: true,
+      createdBy: {
+        username: "blink200",
+      },
+      createdAt: "2024-10-10T07:28:22.825Z",
+      updatedAt: "2024-10-10T07:28:22.825Z",
+      __v: 0,
+    },
+    {
+      _id: "670782168774060eefe22gggha",
+      title: "Gymming",
+      description: "Spend more time for my gym sessions",
+      type: "Group",
+      dueDate: "2024-10-24",
+      time: "18:35",
+      completedBy: [],
+      repeatTask: "none",
+      completed: true,
+      createdBy: {
+        username: "000xdave",
+      },
+      createdAt: "2024-10-10T07:28:22.825Z",
+      updatedAt: "2024-10-10T07:28:22.825Z",
+      __v: 0,
+    },
+  ]);
   const [currentGroupTaskInfo, setCurrentGroupTaskInfo] = useState({
     _id: "67065c3bd60343ec0707dc2c",
     title: "Start looking for jobs",
@@ -55,7 +158,6 @@ const GroupsProvider = ({ children }) => {
     updatedAt: "2024-10-09T10:34:35.131Z",
     __v: 0,
   });
-
   const [searchNewMemberResult, setSearchNewMemberResult] = useState([
     {
       _id: "01",
@@ -154,6 +256,7 @@ const GroupsProvider = ({ children }) => {
       value={{
         groups,
         currentGroupTaskInfo,
+        currentGroupTasks,
         searchNewMemberResult,
         orderedSearchNewMemberResult,
         selectedUsers,

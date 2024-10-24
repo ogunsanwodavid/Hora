@@ -11,6 +11,9 @@ import GroupTasksList from "./components/GroupTasksList";
 import GroupTasksTable from "./components/GroupTasksTable";
 import GettingCurrentGroupTasksLoader from "./components/GettingCurrentGroupTasksLoader";
 import CreateGroupTaskButton from "./components/CreateGroupTaskButton";
+import NoTasksTableError from "./components/NoTasksTableError";
+
+import NoTasksError from "../../pages/tasks/components/NoTasksError";
 
 import backButton from "../../icons/leftArrowIcon.svg";
 
@@ -33,11 +36,11 @@ function GroupTasks() {
     };
   }, [setShowcaseMobileNav]);
 
-  //Variables from groups context
-  const { isGettingCurrentGroupTasks } = useGroups();
-
   //Route parameters
   const { groupId } = useParams();
+
+  //Variables from groups context
+  const { isGettingCurrentGroupTasks, currentGroupTasks } = useGroups();
 
   //Group information
   const groupName = "Designers in Group 8";
@@ -152,9 +155,19 @@ function GroupTasks() {
 
         {/**** Main content */}
         {!isGettingCurrentGroupTasks && (
-          <main className="w-full mt-4 md:mt-6">
-            {isScrollDisplayGroupTasks && <GroupTasksList />}
-            {isScrollDisplayTasksTable && <GroupTasksTable />}
+          <main className="w-full mt-4 flex flex-col flex-grow md:mt-6">
+            {isScrollDisplayGroupTasks &&
+              (currentGroupTasks.length ? (
+                <GroupTasksList />
+              ) : (
+                <NoTasksError />
+              ))}
+            {isScrollDisplayTasksTable &&
+              (currentGroupTasks.length ? (
+                <GroupTasksTable />
+              ) : (
+                <NoTasksTableError />
+              ))}
           </main>
         )}
 

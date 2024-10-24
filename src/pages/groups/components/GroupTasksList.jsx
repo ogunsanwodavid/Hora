@@ -11,13 +11,17 @@ import {
   isDateToday,
   parseDateFromYYYYMMDD,
 } from "../../../utils/helpers";
+import { useGroups } from "../../../contexts/groupsContext";
 
 function GroupTasksList() {
   //Route parameters
   const { groupId } = useParams();
 
+  //Variables from groups context
+  const { currentGroupTasks } = useGroups();
+
   //Group tasks
-  const groupTasks = [
+  /*  const groupTasks = [
     {
       _id: "67065c3bd60343ec0707dc2c",
       title: "Start looking for jobs",
@@ -92,10 +96,10 @@ function GroupTasksList() {
       updatedAt: "2024-10-10T07:28:22.825Z",
       __v: 0,
     },
-  ];
+  ]; */
 
   //Tasks before current day
-  const previousTasks = groupTasks.filter((task) => {
+  const previousTasks = currentGroupTasks.filter((task) => {
     const isTaskDueDatePrevious = isDatePrevious(
       parseDateFromYYYYMMDD(task.dueDate)
     );
@@ -105,7 +109,7 @@ function GroupTasksList() {
   const [showcasePreviousTasks, setShowcasePreviousTasks] = useState(false);
 
   //Today's tasks
-  const todayTasks = groupTasks.filter((task) => {
+  const todayTasks = currentGroupTasks.filter((task) => {
     const isTaskDueDateToday = isDateToday(parseDateFromYYYYMMDD(task.dueDate));
 
     return isTaskDueDateToday;
@@ -113,13 +117,13 @@ function GroupTasksList() {
   const [showcaseTodayTasks, setShowcaseTodayTasks] = useState(false);
 
   //Completed tasks
-  const completedTasks = groupTasks.filter((task) => {
+  const completedTasks = currentGroupTasks.filter((task) => {
     return task.completed;
   });
   const [showcaseCompletedTasks, setShowcaseCompletedTasks] = useState(false);
 
   return (
-    <div className="w-full cursor-pointer">
+    <div className="w-full flex-grow flex flex-col cursor-pointer">
       {/**** Tasks list display */}
       <main className="w-full space-y-4">
         {/**** Previous Tasks */}
