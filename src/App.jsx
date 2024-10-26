@@ -44,6 +44,7 @@ function App() {
                 theme="dark"
                 transition={Zoom}
                 autoClose={2000}
+                limit={1}
               />
             </GroupsProvider>
           </TasksProvider>
