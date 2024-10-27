@@ -59,6 +59,7 @@ function UserSearchList() {
             setSelectedUsers([...selectedUsers, newMember]);
           } else {
             //Toast error
+            toast.dismiss();
             toast.error("Max of 4 users can be added");
             return;
           }
