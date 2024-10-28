@@ -33,10 +33,9 @@ function Tasks() {
   return (
     <>
       <div
-        className="w-full  max-w-[700px] mx-auto relative flex flex-col lg:!min-h-[552px] lg:max-w-none"
+        className="w-full relative max-w-[700px] mx-auto px-3 flex flex-col lg:pb-0 lg:!min-h-[552px] lg:max-w-none"
         style={{
-          minHeight: `${windowHeight - 130}px`,
-          paddingBottom: isGettingAllTasks ? "0px" : "100px",
+          minHeight: `${windowHeight - 70}px`,
         }}
       >
         {/**** User summary box */}
