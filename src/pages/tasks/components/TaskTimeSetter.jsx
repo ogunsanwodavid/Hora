@@ -20,7 +20,7 @@ import "swiper/css/mousewheel";
 import "swiper/css/free-mode";
 
 // import required modules
-import { Mousewheel, Navigation, FreeMode } from "swiper/modules";
+import { Mousewheel, Navigation } from "swiper/modules";
 
 function TaskTimeSetter({
   setShowcaseTaskTimeSetter,
@@ -62,10 +62,10 @@ function TaskTimeSetter({
   const prevMinuteSelectorRef = useRef(null);
   const nextMinuteSelectorRef = useRef(null);
 
-  //Hour options of 01 to 11
+  // Hour options of 01 to 12
   const hourOptions = Array.from({ length: 12 }, (_, index) =>
     String(index + 1).padStart(2, "0")
-  ); // Create an array [01, 02, ..., 11]
+  ); // Creates an array [01, 02, ..., 12]
 
   //Minute options from 00 to 59
   const minuteOptions = Array.from({ length: 60 }, (_, index) =>
@@ -87,20 +87,20 @@ function TaskTimeSetter({
 
   //Set hour value on hour selector swipe
   const handleHourSwiperChange = (swiper) => {
-    // Get the active slide index
-    const activeIndex = swiper.activeIndex;
+    //Inner HTML of current active hour slide
+    const activeHourSlideText = swiper.slides[swiper.activeIndex].innerText;
 
-    // Update the state with the content of the active slide
-    setHourValue(hourOptions[activeIndex]);
+    //Set hour value
+    setHourValue(activeHourSlideText);
   };
 
   //Set minute value on minute selector swipe
   const handleMinuteSwiperChange = (swiper) => {
-    // Get the active slide index
-    const activeIndex = swiper.activeIndex;
+    //Inner HTML of current active minute slide
+    const activeMinuteSlideText = swiper.slides[swiper.activeIndex].innerText;
 
-    // Update the state with the content of the active slide
-    setMinuteValue(minuteOptions[activeIndex]);
+    //Set minute value
+    setMinuteValue(activeMinuteSlideText);
   };
 
   //Set time value in 12hour format
@@ -151,12 +151,14 @@ function TaskTimeSetter({
                   allowSlideNext={isSelectingHour}
                   allowSlidePrev={isSelectingHour}
                   onSlideChange={handleHourSwiperChange}
+                  //onNavigationNext={handleHourNavigationNext}
+                  //onNavigationPrev={handleHourNavigationPrev}
                   initialSlide={hourValue - 1}
                   loop={true}
                   direction={"vertical"}
                   slidesPerView={1}
                   mousewheel={true}
-                  modules={[Mousewheel, Navigation, FreeMode]}
+                  modules={[Mousewheel, Navigation]}
                   onInit={(swiper) => {
                     // Assign refs to navigation buttons after swiper initialization
                     swiper.params.navigation.prevEl =
@@ -166,7 +168,7 @@ function TaskTimeSetter({
                     swiper.navigation.init();
                     swiper.navigation.update();
                   }}
-                  className="time-selector relative w-full h-[100px] bg-[#171C27] p-2 flex items-center justify-center font-inter text-[#EEEEF0] text-[60px] rounded-[10px] font-semibold"
+                  className="time-selector relative w-full h-[100px] bg-[#171C27] p-2 flex items-center justify-center font-inter text-[#EEEEF0] text-[60px] rounded-[10px] font-semibold hour-selector-swiper"
                   style={{
                     color: isSelectingHour && "#3D63DD",
                     backgroundColor: isSelectingHour && "#3D63DD1A",
@@ -244,7 +246,7 @@ function TaskTimeSetter({
                   direction={"vertical"}
                   slidesPerView={1}
                   mousewheel={true}
-                  modules={[Mousewheel, Navigation, FreeMode]}
+                  modules={[Mousewheel, Navigation]}
                   onInit={(swiper) => {
                     // Assign refs to navigation buttons after swiper initialization
                     swiper.params.navigation.prevEl =

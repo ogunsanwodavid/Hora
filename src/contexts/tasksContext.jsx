@@ -94,13 +94,13 @@ const TasksProvider = ({ children }) => {
 
   const personalTasks = allTasks
     ? allTasks.filter((task) => {
-        return task.type.replace(/\s+/g, "").toLowerCase() === "personal";
+        return task.type.at(0).replace(/\s+/g, "").toLowerCase() === "personal";
       })
     : null;
 
   const groupTasks = allTasks
     ? allTasks.filter((task) => {
-        return task.type.replace(/\s+/g, "").toLowerCase() === "group";
+        return task.type.at(0).replace(/\s+/g, "").toLowerCase() === "group";
       })
     : null;
 
@@ -151,20 +151,20 @@ const TasksProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
 
         // All tasks gotten successful
         const { message: getAllTasksMessage } = data;
 
         //Toast message
-        toast.success(getAllTasksMessage);
+        //toast.success(getAllTasksMessage);
 
         //set all tasks
         await setAllTasks(data.task);
 
         return { success: true, getAllTasksMessage };
       } else {
-        console.log(data);
+        //console.log(data);
         // toast error
         toast.error(data.message || "An unexpected error occurred");
 
@@ -193,7 +193,7 @@ const TasksProvider = ({ children }) => {
   const getCurrentTask = async (taskId) => {
     setIsGettingCurrentTask(true);
     try {
-      const response = await fetch(`${BASE_URL}/status/${taskId}`, {
+      const response = await fetch(`${BASE_URL}/${taskId}`, {
         method: "GET",
         redirect: "follow",
       });
@@ -201,20 +201,20 @@ const TasksProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        // console.log(data);
 
         // Current task gotten successful
         const { message: getCurrentTaskMessage } = data;
 
         //Toast message
-        toast.success(getCurrentTaskMessage);
+        // toast.success(getCurrentTaskMessage);
 
         //set current task info
         await setCurrentTaskInfo(data.getTask);
 
         return { success: true, getCurrentTaskMessage };
       } else {
-        console.log(data);
+        //console.log(data);
         // toast error
         toast.error(data.message || "An unexpected error occurred");
 
@@ -272,20 +272,20 @@ const TasksProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
 
         // Task creation successful
         const { message: createTaskMessage } = data;
 
         //Toast message
-        toast.success(createTaskMessage);
+        //toast.success(createTaskMessage);
 
         //Navigate to task page
         navigate("/tasks");
 
         return { success: true, createTaskMessage };
       } else {
-        console.log(data);
+        //console.log(data);
         // toast error
         toast.error(data.message || "An unexpected error occurred");
 
@@ -319,20 +319,20 @@ const TasksProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
 
         // Task deletion successful
         const { message: deleteTaskMessage } = data;
 
         //Toast message
-        toast.success(deleteTaskMessage);
+        //toast.success(deleteTaskMessage);
 
         //Navigate to task page
         navigate("/tasks");
 
         return { success: true, deleteTaskMessage };
       } else {
-        console.log(data);
+        //console.log(data);
         // toast error
         toast.error(data.message || "An unexpected error occurred");
 
@@ -374,20 +374,20 @@ const TasksProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
 
         // Task completion successful
         const { message: completeTaskMessage } = data;
 
         //Toast message
-        toast.success(completeTaskMessage);
+        //toast.success(completeTaskMessage);
 
         //show task completed modal
         setShowcaseTaskCompletedModal(true);
 
         return { success: true, completeTaskMessage };
       } else {
-        console.log(data);
+        //console.log(data);
         // toast error
         toast.error(data.message || "An unexpected error occurred");
 

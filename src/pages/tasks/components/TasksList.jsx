@@ -33,7 +33,7 @@ function TasksList() {
   //Tasks before current day
   const previousTasks = currentTasks.filter((task) => {
     const isTaskDueDatePrevious = isDatePrevious(
-      parseDateFromYYYYMMDD(task.dueDate)
+      parseDateFromYYYYMMDD(task.dueDate.substring(0, 10))
     );
 
     return isTaskDueDatePrevious;
@@ -42,10 +42,13 @@ function TasksList() {
 
   //Today's tasks
   const todayTasks = currentTasks.filter((task) => {
-    const isTaskDueDateToday = isDateToday(parseDateFromYYYYMMDD(task.dueDate));
+    const isTaskDueDateToday = isDateToday(
+      parseDateFromYYYYMMDD(task.dueDate.substring(0, 10))
+    );
 
     return isTaskDueDateToday;
   });
+
   const [showcaseTodayTasks, setShowcaseTodayTasks] = useState(false);
 
   //Completed tasks

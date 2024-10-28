@@ -15,7 +15,8 @@ import completedGroupIcon from "../../../icons/completedGroupIcon.svg";
 
 function TaskCard({ task }) {
   const isCompleted = task.completed;
-  const isGroupTask = task.type.replace(/\s+/g, "").toLowerCase() === "group";
+  const isGroupTask =
+    task.type.at(0).replace(/\s+/g, "").toLowerCase() === "group";
   const isRepeatTaskNone = task.repeatTask === "none";
   const isAlarm = true;
 

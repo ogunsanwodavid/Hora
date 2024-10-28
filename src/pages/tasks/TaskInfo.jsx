@@ -104,7 +104,7 @@ function TaskInfo() {
 
   //Get current task on mount
   useEffect(() => {
-    //getCurrentTask(taskId)
+    getCurrentTask(taskId);
   }, []);
 
   //Delete task function
@@ -118,9 +118,9 @@ function TaskInfo() {
     e.preventDefault();
     setShowcaseDropdown(false);
 
-    //await completeTask(taskId)
+    await completeTask(taskId);
 
-    await console.log(taskId);
+    //await console.log(taskId);
   }
 
   return (

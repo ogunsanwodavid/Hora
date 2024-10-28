@@ -17,6 +17,7 @@ import backButton from "../../icons/leftArrowIcon.svg";
 
 import { FiSearch } from "react-icons/fi";
 import { TfiClose } from "react-icons/tfi";
+import InvitingNewMembersLoader from "./components/InvitingNewMembersLoader";
 
 function InviteGroupMember() {
   //Window size info
@@ -41,8 +42,12 @@ function InviteGroupMember() {
   const { groupId } = useParams();
 
   //Variables from groups context
-  const { isSearchingNewMember, orderedSearchNewMemberResult, selectedUsers } =
-    useGroups();
+  const {
+    isSearchingNewMember,
+    orderedSearchNewMemberResult,
+    selectedUsers,
+    isInvitingNewMembers,
+  } = useGroups();
 
   //Group information
   const groupName = "Designers in Group 8";
@@ -90,6 +95,7 @@ function InviteGroupMember() {
             placeholder="Search username..."
             className="w-full outline-none bg-transparent text-white text-[15px] placeholder:text-black150 placeholder:text-[15px] md:text-[17px] md:placeholder:text-[17px]"
             onChange={(e) => setSearchInputValue(e.target.value)}
+            disabled={isInvitingNewMembers}
           />
 
           {/*** Clear icon */}
@@ -104,16 +110,21 @@ function InviteGroupMember() {
         </section>
 
         {/**** List of users or skeleton if loading */}
-        {!isSearchingNewMember ? (
-          orderedSearchNewMemberResult.length && searchInputValue.length ? (
-            <UserSearchList />
-          ) : searchInputValue.length ? (
-            <NoUserSearchResult />
+        {/*** Show loader if inviting new members */}
+        {!isInvitingNewMembers ? (
+          !isSearchingNewMember ? (
+            orderedSearchNewMemberResult.length && searchInputValue.length ? (
+              <UserSearchList />
+            ) : searchInputValue.length ? (
+              <NoUserSearchResult />
+            ) : (
+              <WaitingToSearchUser />
+            )
           ) : (
-            <WaitingToSearchUser />
+            <UserSearchSkeletonLoader />
           )
         ) : (
-          <UserSearchSkeletonLoader />
+          <InvitingNewMembersLoader />
         )}
       </div>
 

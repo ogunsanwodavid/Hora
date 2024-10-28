@@ -7,8 +7,15 @@ import DailyStreakBox from "./components/DailyStreakBox";
 import defaultProfilePic from "../../assets/dave.jpeg";
 
 import rightCaretIcon from "../../icons/rightCaretIcon.svg";
+import { FaUserCircle } from "react-icons/fa";
+import { useAuth } from "../../contexts/authContext";
 
 function Profile() {
+  //User credentials
+  const { user } = useAuth();
+  const username = user?.username;
+  const userEmail = user?.email;
+
   //Window size info
   const { windowHeight } = useWindowDimensions();
 
@@ -29,19 +36,20 @@ function Profile() {
       {/**** User details */}
       <section className="w-full flex items-center gap-x-3 mt-4">
         {/**** Profile picture */}
-        <img
+        {/* <img
           src={defaultProfilePic}
           className="h-[40px] w-[40px] flex-shrink-0 md:h-[43px] md:w-[43px] rounded-full object-cover"
           alt="user profile picture"
-        />
+        /> */}
+        <FaUserCircle className="h-[40px] w-[40px] flex-shrink-0 md:h-[43px] md:w-[43px] rounded-full object-cover fill-blue700" />
 
         {/**** Username and email */}
         <div className="flex-grow overflow-hidden text-ellipsis">
           <p className=" text-white text-[17px] font-semibold  overflow-hidden text-ellipsis md:text-[19px]">
-            hoaxthagod
+            {username}
           </p>
           <p className="text-[#B2B3BD] text-[14px] overflow-hidden text-ellipsis md:text-base">
-            ogunsanwodavid123@gmail.com
+            {userEmail}
           </p>
         </div>
 

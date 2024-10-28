@@ -5,13 +5,18 @@ import { Link } from "react-router-dom";
 import { capitalizeWords } from "../../../utils/helpers";
 
 import kebabIcon from "../../../icons/kebabIcon.svg";
+import { useAuth } from "../../../contexts/authContext";
 
 function GroupListItem({ group }) {
+  //Variables from user context
+  const { user } = useAuth();
+  const userId = user?._id;
+
   //Group id
   const groupId = group._id;
 
   //Check if group was created by user
-  const isGroupCreatedByUser = false;
+  const isGroupCreatedByUser = group?.createdBy?._id === userId;
 
   const [showcaseDropdown, setShowcaseDropdown] = useState(false);
 

@@ -26,7 +26,7 @@ function Tasks() {
   //Get all tasks on mount
   useEffect(() => {
     if (userId) {
-      //getAllTasks(userId);
+      getAllTasks(userId);
     }
   }, []);
 

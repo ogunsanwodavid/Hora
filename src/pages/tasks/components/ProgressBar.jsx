@@ -1,7 +1,7 @@
 const ProgressBar = ({ progress }) => {
   return (
     <div className="w-full flex gap-x-3 items-center">
-      <main className="w-full bg-blue50 h-2 rounded-[4px] overflow-hidden md:h-[10px] md:rounded-[5px]">
+      <main className="w-full bg-blue50 h-[6px] rounded-[4px] overflow-hidden md:h-[8px] md:rounded-[5px]">
         <div
           className="h-full bg-blue200 rounded-[4px] md:rounded-[5px]"
           style={{

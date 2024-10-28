@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import defaultProfilePic from "../../../assets/dave.jpeg";
+import { FaUserCircle } from "react-icons/fa";
 
 const GroupMembersList = ({ groupMembers }) => {
   const [visibleMembers, setVisibleMembers] = useState(5); // Start by showing 5 members
@@ -23,11 +24,12 @@ const GroupMembersList = ({ groupMembers }) => {
         return (
           <div className="flex items-center gap-x-3 md:gap-x-5" key={memberId}>
             {/**** Profile picture of member */}
-            <img
+            {/* <img
               src={defaultProfilePic}
               className="h-[40px] w-[40px] object-cover rounded-full md:h-[45px] md:w-[45px]"
               alt=""
-            />
+            /> */}
+            <FaUserCircle className="h-[40px] w-[40px] object-cover rounded-full md:h-[45px] md:w-[45px] fill-blue600 " />
 
             {/**** Member username */}
             <h5 className="text-white font-semibold md:text-lg">

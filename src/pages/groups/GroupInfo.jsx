@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { useAppDesign } from "../../contexts/appDesignContext";
+import { useAuth } from "../../contexts/authContext";
 import { useGroups } from "../../contexts/groupsContext";
 
 import useWindowDimensions from "../../hooks/useWindowDimensions";
@@ -43,22 +44,30 @@ function GroupInfo() {
     };
   }, [setShowcaseMobileNav]);
 
+  //Variables from user context
+  const { user } = useAuth();
+  const userId = user?._id;
+
   //Route parameters
   const { groupId } = useParams();
 
   //Variables from groups context
-  const { isGettingCurrentGroup, isExitingGroup, isDeletingGroup } =
-    useGroups();
+  const {
+    currentGroup,
+    isGettingCurrentGroup,
+    isExitingGroup,
+    isDeletingGroup,
+  } = useGroups();
 
   //State of dropdown
   const [showcaseDropdown, setShowcaseDropdown] = useState(false);
 
   //Group information
-  const groupName = "Designers in Group 8";
-  const groupCreator = "Desire Destiny";
+  const groupName = currentGroup?.name || "Designers in Group 8";
+  const groupCreator = currentGroup?.createdBy?.username || "Desire Destiny";
 
   //Group date of creation info
-  const dateOfGroupCreation = "2024-09-11";
+  const dateOfGroupCreation = currentGroup?.createdAt || "2024-09-11";
   const yearofGroupCreation = parseDateFromYYYYMMDD(
     dateOfGroupCreation.substring(0, 10)
   ).getFullYear();
@@ -70,7 +79,7 @@ function GroupInfo() {
   ).getDate();
 
   //Group members info
-  const groupMembers = [
+  const groupMembers = currentGroup?.members || [
     {
       _id: "01",
       username: "desire007",
@@ -106,7 +115,7 @@ function GroupInfo() {
   ];
 
   //Check if group was created by user
-  const isGroupCreatedByUser = true;
+  const isGroupCreatedByUser = true || currentGroup?.createdBy?._id === userId;
 
   //state to showcase delete confirm modal
   const [

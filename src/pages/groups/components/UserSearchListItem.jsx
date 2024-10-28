@@ -1,4 +1,5 @@
 import DefaultProfilePic from "../../../assets/dave.jpeg";
+import { FaUserCircle } from "react-icons/fa";
 
 import { FaCheck } from "react-icons/fa6";
 
@@ -20,11 +21,12 @@ function UserSearchListItem({ newMember, isUserSelected, onClick }) {
       </div>
 
       {/**** User profile picture */}
-      <img
+      {/* <img
         src={DefaultProfilePic}
         className="h-[35px] w-[35px] flex-shrink-0 rounded-full object-cover md:h-[40px] md:w-[40px]"
         alt="user profile picture"
-      />
+      /> */}
+      <FaUserCircle className="h-[35px] w-[35px] flex-shrink-0 rounded-full object-cover md:h-[40px] md:w-[40px] fill-blue600" />
 
       {/**** User details */}
       <section className="w-full flex-grow">

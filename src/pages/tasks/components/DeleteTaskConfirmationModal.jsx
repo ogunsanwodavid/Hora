@@ -15,8 +15,8 @@ function DeleteTaskConfirmationModal({
   //Variables from task context
   const { deleteTask } = useTasks();
 
-  function handleDeleteTask() {
-    //await deleteTask(taskId)
+  async function handleDeleteTask() {
+    await deleteTask(taskId);
   }
 
   return (

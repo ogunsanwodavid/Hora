@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { Link } from "react-router-dom";
 
 import { useAuth } from "../../../contexts/authContext";
@@ -6,24 +8,18 @@ import ProgressBar from "../components/ProgressBar";
 
 import NotificationsIcon from "../../../icons/NotificationsIcon";
 
-import profilePicDefault from "../../../assets/dave.jpeg";
-import { useEffect } from "react";
+import { FaUserCircle } from "react-icons/fa";
 
 function SummaryBox() {
   //User credentials
-  const {
-    user,
-    isCalculatingUserProgress,
-    userProgress,
-    calculateUserProgress,
-  } = useAuth();
+  const { user, userProgress, calculateUserProgress } = useAuth();
   const userId = user?._id;
   const username = user?.username;
 
   //Calculate progress only once on mount hence empty dependency array
   useEffect(() => {
     if (userId) {
-      //calculateUserProgress(userId);
+      calculateUserProgress(userId);
     }
   }, []);
 
@@ -37,11 +33,9 @@ function SummaryBox() {
       <main className="w-full flex items-center justify-between">
         {/**** Profile Picture and username */}
         <div className="flex items-center gap-x-2 lg:gap-x-4">
-          <img
-            src={profilePicDefault}
-            className="h-[40px] w-[40px] rounded-full border-[1px] border-white object-cover md:h-[43px] md:w-[43px]"
-            alt=""
-          />
+          {/**** Default profile picture */}
+          <FaUserCircle className="h-[40px] w-[40px] rounded-full border-[0px] border-white object-cover md:h-[43px] md:w-[43px] fill-blue900 " />
+
           <p className="text-white text-[15px] font-regular md:text-[17px]">
             Hi, {username}
           </p>

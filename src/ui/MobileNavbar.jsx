@@ -5,7 +5,7 @@ import useOnlineStatus from "../hooks/useOnlineStatus";
 import TasksIcon from "../icons/TasksIcon";
 import GroupsIcon from "../icons/GroupsIcon";
 
-import profilePicDefault from "../assets/dave.jpeg";
+import { FaUserCircle } from "react-icons/fa";
 
 function MobileNavbar() {
   //Online status
@@ -47,10 +47,8 @@ function MobileNavbar() {
               "before:absolute before:-bottom-[2px] before:right-0 before:w-2 before:h-2 before:rounded-full before:bg-[#3f71fd]"
             }`}
           >
-            <img
-              src={profilePicDefault}
-              className="profile-pic w-6 h-6 rounded-full object-cover md:w-7 md:h-7"
-            />
+            {/*** Default profile picture */}
+            <FaUserCircle className="profile-pic w-6 h-6 rounded-full object-cover fill-blue600 md:w-7 md:h-7" />
           </section>
           <p className="navtext text-[14px] text-[#EEEEF0] font-semibold md:text-base">
             Profile
