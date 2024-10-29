@@ -14,6 +14,8 @@ import { RiUser3Fill } from "react-icons/ri";
 
 import { FiLogOut } from "react-icons/fi";
 
+import { FaUserCircle } from "react-icons/fa";
+
 import profilePicDefault from "../assets/dave.jpeg";
 
 function Sidebar() {
@@ -110,11 +112,13 @@ function Sidebar() {
               "before:absolute before:-bottom-[2px] before:right-0 before:w-2 before:h-2 before:rounded-full before:bg-[#3f71fd]"
             }`}
           >
-            <img
+            {/* <img
               src={profilePicDefault}
               className="h-5 w-5 rounded-full object-cover"
               alt=""
-            />
+            /> */}
+            {/**** Default profile picture */}
+            <FaUserCircle className="h-5 w-5 rounded-full object-cover fill-blue300" />
           </section>
 
           {/**** Username and email */}

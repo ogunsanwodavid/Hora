@@ -1,14 +1,16 @@
+import { useAuth } from "../../contexts/authContext";
+
+import { Link } from "react-router-dom";
+
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 import DailyProgressBox from "./components/DailyProgressBox";
 import DailySummaryBox from "./components/DailySummaryBox";
 import DailyStreakBox from "./components/DailyStreakBox";
 
-import defaultProfilePic from "../../assets/dave.jpeg";
-
 import rightCaretIcon from "../../icons/rightCaretIcon.svg";
+
 import { FaUserCircle } from "react-icons/fa";
-import { useAuth } from "../../contexts/authContext";
 
 function Profile() {
   //User credentials
@@ -34,13 +36,11 @@ function Profile() {
       </header>
 
       {/**** User details */}
-      <section className="w-full flex items-center gap-x-3 mt-4">
+      <Link
+        className="w-full flex items-center gap-x-3 mt-4"
+        to="/profile/info"
+      >
         {/**** Profile picture */}
-        {/* <img
-          src={defaultProfilePic}
-          className="h-[40px] w-[40px] flex-shrink-0 md:h-[43px] md:w-[43px] rounded-full object-cover"
-          alt="user profile picture"
-        /> */}
         <FaUserCircle className="h-[40px] w-[40px] flex-shrink-0 md:h-[43px] md:w-[43px] rounded-full object-cover fill-blue700" />
 
         {/**** Username and email */}
@@ -55,7 +55,7 @@ function Profile() {
 
         {/**** Right caret icon */}
         <img src={rightCaretIcon} className="h-4 ml-auto" alt="" />
-      </section>
+      </Link>
 
       {/**** Daiy progress box*/}
       <DailyProgressBox />

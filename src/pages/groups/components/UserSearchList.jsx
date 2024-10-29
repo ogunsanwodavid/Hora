@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import { useGroups } from "../../../contexts/groupsContext";
-import UserSearchListItem from "./UserSearchListItem";
+
 import { toast } from "react-toastify";
+
+import { useGroups } from "../../../contexts/groupsContext";
+
+import UserSearchListItem from "./UserSearchListItem";
 
 function UserSearchList() {
   //Variables from groups context
