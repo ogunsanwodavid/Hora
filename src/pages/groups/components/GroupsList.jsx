@@ -1,5 +1,8 @@
+import { useEffect } from "react";
+
 import { Link } from "react-router-dom";
 
+import { useAuth } from "../../../contexts/authContext";
 import { useGroups } from "../../../contexts/groupsContext";
 
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
@@ -14,6 +17,10 @@ import "react-loading-skeleton/dist/skeleton.css";
 function GroupsList() {
   //Window size info
   const { windowWidth } = useWindowDimensions();
+
+  //User credentials
+  const { user } = useAuth();
+  const userId = user?._id;
 
   //Variables from groups context
   const { groups, isGettingAllGroups } = useGroups();

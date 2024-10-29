@@ -39,7 +39,15 @@ function CreateGroupSuccessModal() {
     createGroupSuccessCode,
     createGroupSuccessName,
     createGroupSuccessInviteLink,
+    setShowcaseCreateGroupSuccessModal,
   } = useGroups();
+
+  //
+  /* useEffect(() => {
+    return () => {
+      setShowcaseCreateGroupSuccessModal(false);
+    };
+  }); */
 
   //State to handle notification box
   const [showcaseNotificationBox, setShowcaseNotificationBox] = useState(true);

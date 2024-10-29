@@ -13,6 +13,7 @@ import { getMonthName, parseDateFromYYYYMMDD } from "../../utils/helpers";
 import ExitingGroupLoader from "./components/ExitingGroupLoader";
 import DeleteGroupConfirmationModal from "./components/DeleteGroupConfirmationModal";
 import DeletingGroupLoader from "./components/DeletingGroupLoader";
+import GroupMembersList from "./components/GroupMembersList";
 
 import backButton from "../../icons/leftArrowIcon.svg";
 import kebabIcon from "../../icons/kebabIcon.svg";
@@ -23,7 +24,6 @@ import TasksIcon from "../../icons/TasksIcon";
 
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import GroupMembersList from "./components/GroupMembersList";
 
 function GroupInfo() {
   //Window size info
@@ -53,33 +53,40 @@ function GroupInfo() {
 
   //Variables from groups context
   const {
-    currentGroup,
+    currentGroupInfo,
+    getCurrentGroup,
+    exitGroup,
     isGettingCurrentGroup,
     isExitingGroup,
     isDeletingGroup,
   } = useGroups();
 
+  //Get current group info on mount
+  useEffect(() => {
+    getCurrentGroup(groupId);
+  }, []);
+
   //State of dropdown
   const [showcaseDropdown, setShowcaseDropdown] = useState(false);
 
   //Group information
-  const groupName = currentGroup?.name || "Designers in Group 8";
-  const groupCreator = currentGroup?.createdBy?.username || "Desire Destiny";
+  const groupName = currentGroupInfo?.name; //|| "Designers in Group 8";
+  const groupCreator = currentGroupInfo?.createdBy?.username; //|| "Desire Destiny";
 
   //Group date of creation info
-  const dateOfGroupCreation = currentGroup?.createdAt || "2024-09-11";
+  const dateOfGroupCreation = currentGroupInfo?.createdAt || "2024-09-11";
   const yearofGroupCreation = parseDateFromYYYYMMDD(
-    dateOfGroupCreation.substring(0, 10)
-  ).getFullYear();
+    dateOfGroupCreation?.substring(0, 10)
+  )?.getFullYear();
   const monthofGroupCreation = getMonthName(
-    parseDateFromYYYYMMDD(dateOfGroupCreation.substring(0, 10)).getMonth()
+    parseDateFromYYYYMMDD(dateOfGroupCreation?.substring(0, 10))?.getMonth()
   );
   const dayofGroupCreation = parseDateFromYYYYMMDD(
-    dateOfGroupCreation.substring(0, 10)
-  ).getDate();
+    dateOfGroupCreation?.substring(0, 10)
+  )?.getDate();
 
   //Group members info
-  const groupMembers = currentGroup?.members || [
+  const groupMembers = currentGroupInfo?.members; /*  || [
     {
       _id: "01",
       username: "desire007",
@@ -112,10 +119,10 @@ function GroupInfo() {
       _id: "08",
       username: "blink200",
     },
-  ];
+  ]; */
 
   //Check if group was created by user
-  const isGroupCreatedByUser = true || currentGroup?.createdBy?._id === userId;
+  const isGroupCreatedByUser = currentGroupInfo?.createdBy?._id === userId;
 
   //state to showcase delete confirm modal
   const [
@@ -123,8 +130,13 @@ function GroupInfo() {
     setShowcaseDeleteGroupConfirmationModal,
   ] = useState(false);
 
-  function handleExitGroup() {
-    console.log("exit group");
+  async function handleExitGroup() {
+    const formData = {
+      groupId: groupId,
+      userId: userId,
+    };
+
+    await exitGroup(formData);
   }
 
   function handleDeleteGroup() {
@@ -211,9 +223,10 @@ function GroupInfo() {
           {/***** Members info */}
           <section className="w-full space-y-4 mt-4 md:mt-6 md:space-y-6">
             {/**** Group members count */}
-            {groupMembers.length && !isGettingCurrentGroup && (
+            {groupMembers && groupMembers.length && !isGettingCurrentGroup && (
               <p className="text-[#B2B3BD] text-[14px] md:text-base">
-                {groupMembers.length} members
+                {groupMembers && groupMembers.length}{" "}
+                {groupMembers.length > 1 ? "members" : "member"}
               </p>
             )}
             {/**** Skeleton loader */}
@@ -245,9 +258,11 @@ function GroupInfo() {
             {/*** Members details */}
             <main className="w-full space-y-6 md:space-y-8">
               {/***** List of members */}
-              {groupMembers.length && !isGettingCurrentGroup && (
-                <GroupMembersList groupMembers={groupMembers} />
-              )}
+              {groupMembers &&
+                groupMembers.length &&
+                !isGettingCurrentGroup && (
+                  <GroupMembersList groupMembers={groupMembers} />
+                )}
 
               {/**** Skeleton loader */}
               {isGettingCurrentGroup &&

@@ -13,11 +13,10 @@ function DeleteGroupConfirmationModal({
   const { windowHeight } = useWindowDimensions();
 
   //Variables from groups context
-  //const { deleteGroup } = useGroups();
+  const { deleteGroup } = useGroups();
 
-  function handleDeleteGroup() {
-    console.log(groupId);
-    //await deleteGroup(GroupId)
+  async function handleDeleteGroup() {
+    await deleteGroup(groupId);
   }
 
   return (

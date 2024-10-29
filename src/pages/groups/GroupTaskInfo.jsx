@@ -59,12 +59,18 @@ function GroupTaskInfo() {
   //Variables from groups context
   const {
     currentGroupTaskInfo,
+    getCurrentGroupTask,
     isGettingCurrentGroupTask,
     isDeletingGroupTask,
     isCompletingGroupTask,
     showcaseGroupTaskCompletedModal,
     setShowcaseGroupTaskCompletedModal,
   } = useGroups();
+
+  //Get current group task on mount
+  useEffect(() => {
+    getCurrentGroupTask(groupId, taskId);
+  }, []);
 
   //Variables of current task info on display
   const title = currentGroupTaskInfo?.title;

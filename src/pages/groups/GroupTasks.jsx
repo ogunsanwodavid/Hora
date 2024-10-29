@@ -40,13 +40,23 @@ function GroupTasks() {
   const { groupId } = useParams();
 
   //Variables from groups context
-  const { isGettingCurrentGroupTasks, currentGroupTasks } = useGroups();
+  const {
+    currentGroup,
+    getCurrentGroupTasks,
+    isGettingCurrentGroupTasks,
+    currentGroupTasks,
+  } = useGroups();
+
+  //Get current group tasks on mount
+  useEffect(() => {
+    getCurrentGroupTasks(groupId);
+  }, []);
 
   //Group information
-  const groupName = "Designers in Group 8";
+  const groupName = currentGroup?.name || "Designers in Group 8";
 
   //Group members info
-  const groupMembers = [
+  const groupMembers = currentGroup?.members || [
     {
       _id: "01",
       username: "desire007",

@@ -15,6 +15,7 @@ const GroupsProvider = ({ children }) => {
 
   //Group variables
   const [groups, setGroups] = useState([
+    /*
     {
       type: [],
       _id: "66f4eeaa028275fa0620f25b",
@@ -43,7 +44,7 @@ const GroupsProvider = ({ children }) => {
       expiresAt: "2024-10-21T14:20:42.352Z",
       createdAt: "2024-10-20T14:20:42.355Z",
       __v: 4,
-    },
+    }, */
   ]);
   const [currentGroupInfo, setCurrentGroupInfo] = useState(null);
 
@@ -246,7 +247,7 @@ const GroupsProvider = ({ children }) => {
   const [createGroupSuccessName, setCreateGroupSuccessName] = useState("");
   const [createGroupSuccessCode, setCreateGroupSuccessCode] = useState("");
   const [createGroupSuccessInviteLink, setCreateGroupSuccessInviteLink] =
-    useState("https://hora-student-app.vercel.app");
+    useState("https://hora-student-app.vercel.app/groups/joingroup");
 
   //Variables related to the joinGroup page
   const [joinGroupError, setJoinGroupError] = useState("Some error");
@@ -285,7 +286,7 @@ const GroupsProvider = ({ children }) => {
         toast.error(data.message || "An unexpected error occurred");
 
         //set all tasks empty
-        setGroups(null);
+        setGroups([]);
 
         return {
           success: false,
@@ -382,8 +383,10 @@ const GroupsProvider = ({ children }) => {
         // Group creation successful
         const {
           message: createGroupMessage,
-          name: createdGroupName,
-          inviteLink: createdGroupInviteCode,
+          create: {
+            name: createdGroupName,
+            inviteLink: createdGroupInviteCode,
+          },
         } = data;
 
         //Toast message
@@ -397,7 +400,7 @@ const GroupsProvider = ({ children }) => {
         setCreateGroupSuccessCode(createdGroupInviteCode);
 
         //Navigate to group page
-        navigate("/groups");
+        //navigate("/groups");
 
         return { success: true, createGroupMessage };
       } else {
@@ -891,6 +894,7 @@ const GroupsProvider = ({ children }) => {
         createGroupSuccessInviteLink,
         showcaseCreateGroupSuccessModal,
         showcaseGroupTaskCompletedModal,
+        setShowcaseCreateGroupSuccessModal,
         setSelectedUsers,
       }}
     >

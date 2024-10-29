@@ -8,13 +8,24 @@ import GroupsList from "./components/GroupsList";
 import NoGroupError from "./components/NoGroupError";
 
 import NotificationsIcon from "../../icons/NotificationsIcon.jsx";
+import { useEffect } from "react";
+import { useAuth } from "../../contexts/authContext.jsx";
 
 function Groups() {
   //Window size info
   const { windowHeight } = useWindowDimensions();
 
+  //User credentials
+  const { user } = useAuth();
+  const userId = user?._id;
+
   //Variables from groups context
-  const { groups } = useGroups();
+  const { groups, getAllGroups, isGettingAllGroups } = useGroups();
+
+  //Get all groups on mount
+  useEffect(() => {
+    getAllGroups(userId);
+  }, []);
 
   return (
     <div
@@ -43,7 +54,7 @@ function Groups() {
       </header>
 
       {/**** Show error if no group else show list of groups */}
-      {groups ? <GroupsList /> : <NoGroupError />}
+      {groups.length || isGettingAllGroups ? <GroupsList /> : <NoGroupError />}
     </div>
   );
 }

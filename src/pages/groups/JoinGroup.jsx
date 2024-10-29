@@ -39,7 +39,7 @@ function JoinGroup() {
   }, [setShowcaseMobileNav]);
 
   //Variables from groups context
-  const { isJoiningGroup, joinGroupError } = useGroups();
+  const { joinGroup, isJoiningGroup, joinGroupError } = useGroups();
 
   //React hook form functions and variables
   const { register, formState, watch, handleSubmit } = useForm();
@@ -49,13 +49,13 @@ function JoinGroup() {
   const isJoinGroupBtnClickable = Boolean(watch("inviteLink"));
 
   //Function to create group
-  async function JoinGroup(data) {
+  async function handleJoinGroup(data) {
     const formData = {
       userId: userId,
       inviteLink: data.inviteLink,
     };
 
-    console.log(formData);
+    await joinGroup(formData);
   }
 
   return (
@@ -91,7 +91,7 @@ function JoinGroup() {
           {/**** Form */}
           <form
             className="w-full mt-6 lg:max-w-[500px] lg:mx-auto"
-            onSubmit={handleSubmit(JoinGroup)}
+            onSubmit={handleSubmit(handleJoinGroup)}
           >
             {/**** Invite Link input */}
             <FormInput error={errors?.inviteLink?.message || joinGroupError}>

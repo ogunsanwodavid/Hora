@@ -13,8 +13,8 @@ const TasksProvider = ({ children }) => {
   //navigate
   const navigate = useNavigate();
 
-  const [allTasks, setAllTasks] = useState(
-    /* [
+  const [allTasks, setAllTasks] = useState([
+    /*
     {
       _id: "67065c3bd60343ec0707dc2c",
       title: "Start looking for jobs",
@@ -88,17 +88,16 @@ const TasksProvider = ({ children }) => {
       createdAt: "2024-10-10T07:28:22.825Z",
       updatedAt: "2024-10-10T07:28:22.825Z",
       __v: 0,
-    },
-  ] */ null
-  );
+    },*/
+  ]);
 
-  const personalTasks = allTasks
+  const personalTasks = allTasks.length
     ? allTasks.filter((task) => {
         return task.type.at(0).replace(/\s+/g, "").toLowerCase() === "personal";
       })
     : null;
 
-  const groupTasks = allTasks
+  const groupTasks = allTasks.length
     ? allTasks.filter((task) => {
         return task.type.at(0).replace(/\s+/g, "").toLowerCase() === "group";
       })

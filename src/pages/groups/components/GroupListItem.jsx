@@ -39,7 +39,8 @@ function GroupListItem({ group }) {
           {capitalizeWords(group.name)}
         </h4>
         <p className="text-[14px] text-[#B2B3BD] line-clamp-1 overflow-hidden text-ellipsis md:text-base">
-          Created by Desire Destiny
+          {/* Created by Desire Destiny */}
+          {group?.createdBy?.username}
         </p>
       </Link>
 

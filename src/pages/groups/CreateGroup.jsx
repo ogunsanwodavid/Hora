@@ -40,7 +40,16 @@ function CreateGroup() {
   }, [setShowcaseMobileNav]);
 
   //Variables from groups context
-  const { isCreatingGroup, showcaseCreateGroupSuccessModal } = useGroups();
+  const {
+    createGroup,
+    isCreatingGroup,
+    showcaseCreateGroupSuccessModal,
+    setShowcaseCreateGroupSuccessModal,
+  } = useGroups();
+
+  useEffect(() => {
+    setShowcaseCreateGroupSuccessModal(false);
+  }, []);
 
   //React hook form functions and variables
   const { register, formState, watch, handleSubmit } = useForm();
@@ -50,13 +59,13 @@ function CreateGroup() {
   const isCreateGroupBtnClickable = Boolean(watch("groupName"));
 
   //Function to create group
-  async function createGroup(data) {
+  async function handleCreateGroup(data) {
     const formData = {
       groupName: data.groupName,
       userId: userId,
     };
 
-    console.log(formData);
+    await createGroup(formData);
   }
 
   return (
@@ -92,7 +101,7 @@ function CreateGroup() {
           {/***** Form */}
           <form
             className="w-full mt-6 lg:max-w-[500px] lg:mx-auto"
-            onSubmit={handleSubmit(createGroup)}
+            onSubmit={handleSubmit(handleCreateGroup)}
           >
             {/**** Group name input */}
             <FormInput error={errors?.groupName?.message}>
