@@ -799,11 +799,11 @@ const GroupsProvider = ({ children }) => {
   };
 
   //Function to search for a new member
-  const searchNewMember = async (userId, searchString) => {
+  const searchNewMember = async (searchString) => {
     setIsSearchingNewMember(true);
     try {
       const response = await fetch(
-        `"https://hora-1daj.onrender.com/user/username/${userId}?username=${searchString}`,
+        `https://hora-1daj.onrender.com/user/search/?username=${searchString}`,
         {
           method: "GET",
           redirect: "follow",
@@ -813,26 +813,90 @@ const GroupsProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
 
         // Search new member successful
-        const { message: searchNewMemberMessage } = data;
+        const { message: searchNewMemberMessage, data: searchNewMemberData } =
+          data;
 
         //Toast message
         //toast.success(searchNewMemberMessage);
 
-        //set all tasks
-        await setSearchNewMemberResult(data.data);
+        //Updated search new member data - adding selected key and set to "false"
+        /* const updatedSearchNewMemberData = searchNewMemberData.map(
+          (member) => ({
+            ...member,
+            selected: false,
+          })
+        ); */
+
+        //set search new member result
+        await setSearchNewMemberResult(searchNewMemberData);
 
         return { success: true, searchNewMemberMessage };
       } else {
         //console.log(data);
 
         // toast error
-        toast.error(data.message || "An unexpected error occurred");
+        //toast.error(data.message || "An unexpected error occurred");
 
         //set search member resulyt empty
         setSearchNewMemberResult([]);
+
+        return {
+          success: false,
+          error: data.message || "An unexpected error occurred",
+        };
+      }
+    } catch (error) {
+      // Network or other errors
+      //toast.error("Something went wrong.");
+
+      return {
+        success: false,
+        error: error.message || "An unexpected error occurred",
+      };
+    } finally {
+      setIsSearchingNewMember(false);
+    }
+  };
+
+  //Function to invite a member
+  const inviteMember = async ({ groupId, inviteLink, email }) => {
+    setIsInvitingNewMembers(true);
+    try {
+      const response = await fetch(`${BASE_URL}/send-link`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          groupId,
+          inviteLink,
+          email,
+        }),
+        redirect: "follow",
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        //console.log(data);
+
+        // Invite member successful
+        const { message: inviteMemberMessage } = data;
+
+        //Toast message
+        toast.success(inviteMemberMessage);
+
+        //Navigate to previous page
+        navigate(-1);
+
+        return { success: true, inviteMemberMessage };
+      } else {
+        //console.log(data);
+        // toast error
+        toast.error(data.message || "An unexpected error occurred");
 
         return {
           success: false,
@@ -848,7 +912,7 @@ const GroupsProvider = ({ children }) => {
         error: error.message || "An unexpected error occurred",
       };
     } finally {
-      setIsSearchingNewMember(false);
+      setIsInvitingNewMembers(false);
     }
   };
 
@@ -874,6 +938,7 @@ const GroupsProvider = ({ children }) => {
         createGroupTask,
         deleteGroupTask,
         searchNewMember,
+        inviteMember,
         isGettingAllGroups,
         isGettingCurrentGroup,
         isCreatingGroup,

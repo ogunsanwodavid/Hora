@@ -292,3 +292,51 @@ select {
   background-size: 15px 4px; /* Adjust dash length and gap */
   background-repeat: repeat-x;
 }
+
+/**** State of dsiabled Mui Text Field **/
+.Mui-disabled {
+  -webkit-text-fill-color: rgba(61, 99, 221) !important;
+  color: rgba(61, 99, 221, 1);
+}
+
+.MuiInputBase-input,
+label.MuiInputLabel-root {
+  color: rgba(61, 99, 221, 1);
+  font-family: "Raleway", sans-serif !important;
+}
+
+.profileInfo-passwordInput input.MuiInputBase-input {
+  color: rgba(61, 99, 221, 1) !important;
+  font-family: "Raleway", sans-serif !important;
+}
+
+.profileInfo-passwordInput .Mui-focused input.MuiInputBase-input {
+  color: #fff !important;
+}
+
+.profileInfo-passwordInput label {
+  color: rgba(61, 99, 221, 1) !important;
+}
+
+.profileInfo-passwordInput fieldset {
+  border-color: rgb(61, 99, 221) !important;
+}
+
+.profileInfo-passwordInput div.Mui-focused {
+  background-color: rgba(29, 46, 97, 1);
+}
+
+.MuiFormHelperText-root {
+  color: #e54d51 !important;
+  margin-left: 0 !important;
+  font-family: "Raleway", sans-serif !important;
+}
+
+/* input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+  color: auto;
+}
+input[data-autocompleted] {
+  background-color: transparent;
+} */

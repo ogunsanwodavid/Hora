@@ -120,9 +120,9 @@ function CreateGroup() {
                 onKeyDown={(e) => {
                   const key = e.key;
 
-                  // Allow only letters, spaces, and backspace
+                  // Allow letters, digits, spaces, and backspace
                   if (
-                    !/^[a-zA-Z]$/.test(key) &&
+                    !/^[a-zA-Z0-9]$/.test(key) &&
                     key !== "Backspace" &&
                     key !== " "
                   ) {

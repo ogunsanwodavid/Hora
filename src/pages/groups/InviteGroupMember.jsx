@@ -12,12 +12,12 @@ import UserSearchSkeletonLoader from "./components/UserSearchSkeletonLoader";
 import NoUserSearchResult from "./components/NoUserSearchResult";
 import InviteMembersButton from "./components/InviteMembersButton";
 import WaitingToSearchUser from "./components/WaitingToSearchUser";
+import InvitingNewMembersLoader from "./components/InvitingNewMembersLoader";
 
 import backButton from "../../icons/leftArrowIcon.svg";
 
 import { FiSearch } from "react-icons/fi";
 import { TfiClose } from "react-icons/tfi";
-import InvitingNewMembersLoader from "./components/InvitingNewMembersLoader";
 
 function InviteGroupMember() {
   //Window size info
@@ -43,17 +43,51 @@ function InviteGroupMember() {
 
   //Variables from groups context
   const {
+    searchNewMember,
     isSearchingNewMember,
     orderedSearchNewMemberResult,
     selectedUsers,
+    inviteMember,
     isInvitingNewMembers,
+    currentGroupInfo,
   } = useGroups();
 
+  /* const [selectedUsers, setSelectedUsers] = useState([]);
+
+  //Selected users ordered alphabetically by username
+  const orderedSelectedUsers = selectedUsers.length
+    ? selectedUsers.sort((userA, userB) =>
+        userA.username.localeCompare(userB.username)
+      )
+    : []; */
+
   //Group information
-  const groupName = "Designers in Group 8";
+  const groupName = currentGroupInfo?.name;
+  const groupInviteCode = currentGroupInfo?.inviteLink;
 
   //Search input
   const [searchInputValue, setSearchInputValue] = useState("");
+
+  //Empty search input while inviting members
+  useEffect(() => {
+    if (isInvitingNewMembers) {
+      setSearchInputValue("");
+    }
+  }, [isInvitingNewMembers]);
+
+  async function handleSearchInputChange(e) {
+    await setSearchInputValue(e.target.value);
+    await searchNewMember(e.target.value);
+  }
+
+  async function handleInviteMember() {
+    const formData = {
+      groupId: groupId,
+      inviteLink: groupInviteCode,
+      email: selectedUsers.at(0).email,
+    };
+    await inviteMember(formData);
+  }
 
   return (
     <>
@@ -80,7 +114,7 @@ function InviteGroupMember() {
             {groupName}
           </h2>
           <p className="text-[16px] text-[#B2B3BD] text-center md:text-lg">
-            Invite group members
+            Invite group member
           </p>
         </section>
 
@@ -94,7 +128,7 @@ function InviteGroupMember() {
             value={searchInputValue}
             placeholder="Search username..."
             className="w-full outline-none bg-transparent text-white text-[15px] placeholder:text-black150 placeholder:text-[15px] md:text-[17px] md:placeholder:text-[17px]"
-            onChange={(e) => setSearchInputValue(e.target.value)}
+            onChange={handleSearchInputChange}
             disabled={isInvitingNewMembers}
           />
 
@@ -129,7 +163,9 @@ function InviteGroupMember() {
       </div>
 
       {/**** Show invite members button if at least a user is selected */}
-      {selectedUsers.length && !isSearchingNewMember && <InviteMembersButton />}
+      {selectedUsers.length && !isSearchingNewMember && (
+        <InviteMembersButton onClick={handleInviteMember} />
+      )}
     </>
   );
 }

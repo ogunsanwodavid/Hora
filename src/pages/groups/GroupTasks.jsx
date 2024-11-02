@@ -41,7 +41,7 @@ function GroupTasks() {
 
   //Variables from groups context
   const {
-    currentGroup,
+    currentGroupInfo,
     getCurrentGroupTasks,
     isGettingCurrentGroupTasks,
     currentGroupTasks,
@@ -53,10 +53,10 @@ function GroupTasks() {
   }, []);
 
   //Group information
-  const groupName = currentGroup?.name || "Designers in Group 8";
+  const groupName = currentGroupInfo?.name;
 
   //Group members info
-  const groupMembers = currentGroup?.members || [
+  const groupMembers = currentGroupInfo?.members || [
     {
       _id: "01",
       username: "desire007",

@@ -39,7 +39,7 @@ function CreateGroupSuccessModal() {
     createGroupSuccessCode,
     createGroupSuccessName,
     createGroupSuccessInviteLink,
-    setShowcaseCreateGroupSuccessModal,
+    // setShowcaseCreateGroupSuccessModal,
   } = useGroups();
 
   //
@@ -83,12 +83,9 @@ function CreateGroupSuccessModal() {
         {/*** Header */}
         <header className="w-full flex space-x-7 md:mt-4 md:space-x-10">
           {/*** Back button */}
-          <img
-            src={backButton}
-            className="w-4"
-            alt="Back button"
-            onClick={() => navigate(-1)}
-          />
+          <Link to="/groups">
+            <img src={backButton} className="w-4" alt="Back button" />
+          </Link>
 
           <section className="w-full">
             {/**** Group name */}

@@ -6,10 +6,13 @@ import trianglePolygon from "../../../assets/trianglePolygon.svg";
 
 import whiteUserPlusIcon from "../../../icons/whiteUserPlusIcon.svg";
 
-function InviteMembersButton() {
+function InviteMembersButton({ onClick }) {
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   return (
-    <div className="fixed right-[36px] bottom-[90px] space-y-4 flex flex-col items-center  md:right-[calc((100%_-_700px)_/_2)] lg:absolute lg:bottom-[60px] lg:right-[34px] group">
+    <div
+      className="fixed right-[36px] bottom-[90px] space-y-4 flex flex-col items-center  md:right-[calc((100%_-_700px)_/_2)] lg:absolute lg:bottom-[60px] lg:right-[34px] group"
+      onClick={onClick}
+    >
       {/**** Modal */}
       <section
         className={`hidden relative bg-white px-[7px] py-[4px] rounded-[4px] items-center justify-center transition-opacity duration-300 lg:flex ${

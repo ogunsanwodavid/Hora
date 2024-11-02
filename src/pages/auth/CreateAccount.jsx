@@ -127,6 +127,14 @@ function CreateAccount() {
                   placeholder="Enter your username"
                   {...register("username", {
                     required: "This field is required",
+                    minLength: {
+                      value: 3,
+                      message: "Username must be at least 3 characters",
+                    },
+                    maxLength: {
+                      value: 20,
+                      message: "Username cannot exceed 20 characters",
+                    },
                   })}
                   className={`w-full bg-black700 h-[48px] px-4 py-3 text-base text-white  transition-all duration-500 border-[1.2px] border-black300 outline-none rounded-[4px] placeholder:text-black150 ${
                     errors?.username?.message ? "border-errorRed" : ""

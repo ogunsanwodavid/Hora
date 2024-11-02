@@ -122,7 +122,8 @@ function GroupInfo() {
   ]; */
 
   //Check if group was created by user
-  const isGroupCreatedByUser = currentGroupInfo?.createdBy?._id === userId;
+  const isGroupCreatedByUser =
+    true || currentGroupInfo?.createdBy?._id === userId;
 
   //state to showcase delete confirm modal
   const [
@@ -250,7 +251,7 @@ function GroupInfo() {
                 </div>
 
                 <h5 className="text-white font-semibold md:text-lg">
-                  Invite members
+                  Invite a member
                 </h5>
               </Link>
             )}

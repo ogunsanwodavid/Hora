@@ -15,6 +15,15 @@ function UserSearchList() {
     setSelectedUsers,
   } = useGroups();
 
+  /* const [selectedUsers, setSelectedUsers] = useState([]);
+
+  //Selected users ordered alphabetically by username
+  const orderedSelectedUsers = selectedUsers.length
+    ? selectedUsers.sort((userA, userB) =>
+        userA.username.localeCompare(userB.username)
+      )
+    : []; */
+
   //Reset the selected users array empty on unmount
   useEffect(() => {
     return () => {
@@ -27,7 +36,7 @@ function UserSearchList() {
 
   return (
     <section className="w-full space-y-5 mt-6 md:space-y-8">
-      {orderedSelectedUsers.map((newMember) => {
+      {/* orderedSelectedUsers.map((newMember) => {
         const newMemberId = newMember?._id;
 
         function handleClickUser() {
@@ -41,12 +50,12 @@ function UserSearchList() {
         return (
           <UserSearchListItem
             newMember={newMember}
-            isUserSelected={true}
+            isUserSelected={newMember.selected}
             key={newMemberId}
             onClick={handleClickUser}
           />
         );
-      })}
+      }) */}
 
       {orderedSearchNewMemberResult.map((newMember) => {
         const newMemberId = newMember?._id;
@@ -57,9 +66,10 @@ function UserSearchList() {
         );
 
         //Function when a user item is clicked
-        function handleClickUser() {
+        async function handleClickUser() {
           if (!isSelectedUsersMax) {
-            setSelectedUsers([...selectedUsers, newMember]);
+            // setSelectedUsers([...selectedUsers, newMember]);
+            setSelectedUsers([newMember]);
           } else {
             //Toast error
             toast.dismiss();
@@ -68,7 +78,7 @@ function UserSearchList() {
           }
         }
 
-        if (isUserSelected) return;
+        //if (isUserSelected) return;
 
         return (
           <UserSearchListItem
