@@ -1,6 +1,9 @@
-import { useAuth } from "../../contexts/authContext";
+import { useEffect } from "react";
 
 import { Link } from "react-router-dom";
+
+import { useTasks } from "../../contexts/tasksContext";
+import { useAuth } from "../../contexts/authContext";
 
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 
@@ -15,11 +18,20 @@ import { FaUserCircle } from "react-icons/fa";
 function Profile() {
   //User credentials
   const { user } = useAuth();
+  const userId = user?._id;
   const username = user?.username;
   const userEmail = user?.email;
 
   //Window size info
   const { windowHeight } = useWindowDimensions();
+
+  //Variables from tasks context
+  const { getTodayTasksInfo, todayTasksTotal } = useTasks();
+
+  //Get today tasks info on mount
+  useEffect(() => {
+    getTodayTasksInfo(userId);
+  }, []);
 
   return (
     <div
@@ -61,7 +73,8 @@ function Profile() {
       <DailyProgressBox />
 
       {/**** Daily activities summary box */}
-      <DailySummaryBox />
+      {/**** Show only if there is at least a task today */}
+      {todayTasksTotal > 0 && <DailySummaryBox />}
 
       {/*** Daily streak summary box */}
       <DailyStreakBox />

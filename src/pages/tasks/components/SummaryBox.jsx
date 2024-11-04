@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { useAuth } from "../../../contexts/authContext";
+import { useTasks } from "../../../contexts/tasksContext";
 
 import ProgressBar from "../components/ProgressBar";
 
@@ -12,15 +13,16 @@ import { FaUserCircle } from "react-icons/fa";
 
 function SummaryBox() {
   //User credentials
-  const { user, userProgress, calculateUserProgress } = useAuth();
+  const { user } = useAuth();
   const userId = user?._id;
   const username = user?.username;
 
-  //Calculate progress only once on mount hence empty dependency array
+  //Variables from tasks context
+  const { getTodayTasksInfo, todayTasksProgress } = useTasks();
+
+  //Get today tasks info on mount
   useEffect(() => {
-    if (userId) {
-      calculateUserProgress(userId);
-    }
+    getTodayTasksInfo(userId);
   }, []);
 
   return (
@@ -64,7 +66,7 @@ function SummaryBox() {
 
         {/**** Progress bar and value */}
         <main className="w-full mt-1">
-          <ProgressBar progress={userProgress} />
+          <ProgressBar progress={todayTasksProgress} />
         </main>
       </section>
     </section>

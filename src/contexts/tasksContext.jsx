@@ -126,6 +126,7 @@ const TasksProvider = ({ children }) => {
   const [isDeletingTask, setIsDeletingTask] = useState(false);
   const [isGettingCurrentTask, setIsGettingCurrentTask] = useState(false);
   const [isCompletingTask, setIsCompletingTask] = useState(false);
+  const [isGettingTodayTasksInfo, setIsGettingTodayTasksInfo] = useState(false);
 
   //Showcase time query setters
   const [showcaseTaskDueDatePicker, setShowcaseTaskDueDatePicker] =
@@ -137,6 +138,11 @@ const TasksProvider = ({ children }) => {
   //Show task completed modal
   const [showcaseTaskCompletedModal, setShowcaseTaskCompletedModal] =
     useState(false);
+
+  //Today's task information
+  const [todayTasksProgress, setTodayTasksProgress] = useState(0);
+  const [todayTasksTotal, setTodayTasksTotal] = useState(0);
+  const [todayTasksCompleted, setTodayTasksCompleted] = useState(0);
 
   //Function to get all tasks
   const getAllTasks = async (userId) => {
@@ -408,6 +414,63 @@ const TasksProvider = ({ children }) => {
     }
   };
 
+  //Function to get today tasks' information
+  const getTodayTasksInfo = async (userId) => {
+    setIsGettingTodayTasksInfo(true);
+    try {
+      const response = await fetch(`${BASE_URL}/today/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        //console.log(data);
+
+        // Today tasks gotten successfully
+        const {
+          message: gotTodayTasksMessage,
+          progress,
+          completedTasks,
+          totalTasks,
+        } = data;
+
+        //Toast message
+        //toast.success(gotTodayTasksMessage );
+
+        //Set necessary variables
+        setTodayTasksProgress(Math.round(Number(progress)));
+        setTodayTasksCompleted(Math.round(Number(completedTasks)));
+        setTodayTasksTotal(Math.round(Number(totalTasks)));
+
+        return { success: true, gotTodayTasksMessage };
+      } else {
+        //console.log(data);
+        // toast error
+        //toast.error(data.message || "An unexpected error occurred");
+
+        return {
+          success: false,
+          error: data.message || "An unexpected error occurred",
+        };
+      }
+    } catch (error) {
+      // Network or other errors
+      //toast.error("Something went wrong.");
+
+      return {
+        success: false,
+        error: error.message || "An unexpected error occurred",
+      };
+    } finally {
+      setIsGettingTodayTasksInfo(false);
+    }
+  };
+
   return (
     <TasksContext.Provider
       value={{
@@ -416,11 +479,15 @@ const TasksProvider = ({ children }) => {
         groupTasks,
         currentTaskInfo,
         setCurrentTaskInfo,
+        todayTasksProgress,
+        todayTasksCompleted,
+        todayTasksTotal,
         getAllTasks,
         getCurrentTask,
         createTask,
         deleteTask,
         completeTask,
+        getTodayTasksInfo,
         isGettingAllTasks,
         isCreatingTask,
         isGettingCurrentTask,

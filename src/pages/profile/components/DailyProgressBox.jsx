@@ -1,32 +1,12 @@
-import { useEffect } from "react";
-
-import { Link } from "react-router-dom";
-
-import { useAuth } from "../../../contexts/authContext";
+import { useTasks } from "../../../contexts/tasksContext";
 
 import ProgressBar from "../../tasks/components/ProgressBar";
 
 import yellowStarIcon from "../../../icons/yellowStarIcon.svg";
 
 function DailyProgressBox() {
-  /* //User credentials
-  const {
-    user,
-    isCalculatingUserProgress,
-    userProgress,
-    calculateUserProgress,
-  } = useAuth();
-  const userId = user?._id;
-  const username = user?.username;
-
-  //Calculate progress only once on mount hence empty dependency array
-  useEffect(() => {
-    if (userId) {
-      //calculateUserProgress(userId);
-    }
-  }, []); */
-
-  const userProgress = 27;
+  //Variables from tasks context
+  const { todayTasksProgress } = useTasks();
 
   return (
     <section
@@ -53,7 +33,7 @@ function DailyProgressBox() {
 
       {/**** Progress bar and value */}
       <main className="w-full mt-1">
-        <ProgressBar progress={userProgress} />
+        <ProgressBar progress={todayTasksProgress} />
       </main>
     </section>
   );
