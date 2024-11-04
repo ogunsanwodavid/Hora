@@ -388,7 +388,7 @@ function ProfileSettings() {
                   to="/profile/settings/changepassword"
                   className="w-max ml-auto mt-2 cursor-pointer"
                 >
-                  <p className="text-[15px] text-white font-semibold">
+                  <p className="text-[13px] text-blue200 font-semibold md:text-[15px]">
                     Change password?
                   </p>
                 </Link>
