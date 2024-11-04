@@ -1,8 +1,14 @@
 import yellowLightningIcon from "../../../icons/yellowLightningIcon.svg";
 import plainCircleIcon from "../../../icons/plainCircleIcon.svg";
 import tickCircleIcon from "../../../icons/tickCircleIcon.svg";
+import { useAuth } from "../../../contexts/authContext";
 
 function DailyStreakBox() {
+  //User streak information
+  const { user } = useAuth();
+  const userLongestStreak = user?.maxStreak;
+  const userCurrentStreak = user?.streakCount;
+
   return (
     <div className="w-full p-4 border-[1px] border-[#46484F] rounded-[10px] mt-4 lg:p-8">
       {/**** Current streak */}
@@ -18,7 +24,7 @@ function DailyStreakBox() {
 
         {/**** Current streak days */}
         <p className="font-inter ml-auto text-white font-semibold md:text-lg">
-          24 days
+          {userCurrentStreak} {userCurrentStreak > 1 ? "days" : "day"}
         </p>
       </section>
 
@@ -102,7 +108,7 @@ function DailyStreakBox() {
 
         {/**** Current streak days */}
         <p className="font-inter text-white font-semibold md:text-lg">
-          31 days
+          {userLongestStreak} {userLongestStreak > 1 ? "days" : "day"}
         </p>
       </section>
     </div>

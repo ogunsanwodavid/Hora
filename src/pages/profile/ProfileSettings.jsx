@@ -218,7 +218,6 @@ function ProfileSettings() {
     };
 
     updateUser(formData);
-    //console.log(formData);
   }
 
   //Function to log out user

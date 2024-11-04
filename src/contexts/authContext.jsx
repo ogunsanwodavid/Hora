@@ -34,6 +34,7 @@ const AuthProvider = ({ children }) => {
   const [isResettingPassword, setIsResettingPassword] = useState(false);
   const [isResendingOtp, setIsResendingOtp] = useState(false);
   const [isOnboardingUser, setIsOnboardingUser] = useState(false);
+  const [isGettingUser, setIsGettingUser] = useState(false);
   const [isCalculatingUserProgress, setIsCalculatingUserProgress] =
     useState(false);
   const [isUpdatingUser, setIsUpdatingUser] = useState(false);
@@ -223,6 +224,60 @@ const AuthProvider = ({ children }) => {
       };
     } finally {
       setIsOnboardingUser(false);
+    }
+  };
+
+  //Onboard User function
+  const getUser = async (userId) => {
+    setIsGettingUser(true);
+    try {
+      const response = await fetch(`${BASE_URL}/${userId}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+      });
+
+      const data = await response.json();
+
+      // Check if the response is Ok
+      if (response.ok) {
+        const gotUser = data.get.user;
+
+        //remove password key from user object
+        const noPasswordGottenUser = Object.fromEntries(
+          Object.entries(gotUser).filter(([key]) => key !== "password")
+        );
+
+        //console.log(noPasswordOnboardedUser);
+
+        //set User to the fetched user information
+        await setUser(noPasswordGottenUser);
+      } else {
+        console.error(data.message);
+
+        //Toast error message
+        //toast.error(data.message);
+
+        return {
+          success: false,
+          error: data.message || "An unexpected error occurred",
+        };
+      }
+    } catch (error) {
+      console.error(error);
+
+      //Toast error
+      //toast.error("Failed to get user");
+
+      return {
+        success: false,
+        error: error.message || "An unexpected error occurred",
+      };
+    } finally {
+      setIsGettingUser(false);
     }
   };
 
@@ -569,7 +624,7 @@ const AuthProvider = ({ children }) => {
   };
 
   //Update user function
-  const updateUser = async ({ email, username, password }) => {
+  const updateUser = async ({ username, email, password }) => {
     setIsUpdatingUser(true);
     try {
       const response = await fetch(`${BASE_URL}/update/${userId}`, {
@@ -578,7 +633,7 @@ const AuthProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, username, password }),
+        body: JSON.stringify({ username, email, password }),
         redirect: "follow",
       });
 
@@ -589,8 +644,14 @@ const AuthProvider = ({ children }) => {
         // Update user successful
         const { message: updateUserMessage } = data;
 
+        //Get user
+        await getUser(userId);
+
+        //Navigate to profile page
+        navigate("/profile");
+
         //toast message
-        toast.success(updateUserMessage);
+        //toast.success(updateUserMessage);
 
         //Navigate to profile settinga page
         //navigate("/profile/settings");
@@ -705,6 +766,7 @@ const AuthProvider = ({ children }) => {
         signup,
         login,
         onboardUser,
+        getUser,
         calculateUserProgress,
         changePassword,
         logout,
@@ -729,6 +791,7 @@ const AuthProvider = ({ children }) => {
         isRequestingReset,
         isResettingPassword,
         isOnboardingUser,
+        isGettingUser,
         isUpdatingUser,
         isCalculatingUserProgress,
         isChangingPassword,
