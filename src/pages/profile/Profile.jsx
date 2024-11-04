@@ -35,7 +35,7 @@ function Profile() {
 
   return (
     <div
-      className="w-full max-w-[700px] mx-auto relative  pb-[40px] lg:!min-h-[552px] lg:pb-0  lg:max-w-none"
+      className="w-full max-w-[700px] mx-auto relative  pb-[100px] lg:!min-h-[552px] lg:pb-0  lg:max-w-none"
       style={{
         minHeight: `${windowHeight - 77}px`,
       }}

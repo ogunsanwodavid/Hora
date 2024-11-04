@@ -24,8 +24,6 @@ const AuthProvider = ({ children }) => {
   const [resetPasswordId, setResetPasswordId] = useState("");
   const [resetPasswordEmail, setResetPasswordEmail] = useState("");
 
-  const [userProgress, setUserProgress] = useState(0);
-
   const [isSigningUp, setIsSigningUp] = useState(false);
   const [isVerifyingEmail, setIsVerifyingEmail] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -35,8 +33,6 @@ const AuthProvider = ({ children }) => {
   const [isResendingOtp, setIsResendingOtp] = useState(false);
   const [isOnboardingUser, setIsOnboardingUser] = useState(false);
   const [isGettingUser, setIsGettingUser] = useState(false);
-  const [isCalculatingUserProgress, setIsCalculatingUserProgress] =
-    useState(false);
   const [isUpdatingUser, setIsUpdatingUser] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [isDeletingUser, setIsDeletingUser] = useState(false);
@@ -514,64 +510,6 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  //Calculate user progress function
-  const calculateUserProgress = async (userId) => {
-    setIsCalculatingUserProgress(true);
-    try {
-      const response = await fetch(`${BASE_URL}/progress/${userId}`, {
-        /* method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        redirect: "follow", */
-      });
-
-      const data = await response.json();
-
-      // Check if the response is Ok
-      if (response.ok) {
-        console.log(data);
-
-        //round up progress and remove % symbol
-        const progressNumber = Math.round(
-          Number(data.progress.progress.replace("%", ""))
-        );
-
-        //set user progress
-        setUserProgress(progressNumber);
-      } else {
-        console.error(data.message);
-
-        //Toast error message
-        toast.error(data.message);
-
-        //set user progress to 0
-        setUserProgress(0);
-
-        return {
-          success: false,
-          error: data.message || "An unexpected error occurred",
-        };
-      }
-    } catch (error) {
-      console.error(error);
-
-      //Toast error
-      toast.error("Failed to calculate progress");
-
-      //set user progress to 0
-      setUserProgress(0);
-
-      return {
-        success: false,
-        error: error.message || "An unexpected error occurred",
-      };
-    } finally {
-      setIsCalculatingUserProgress(false);
-    }
-  };
-
   //Change password function
   const changePassword = async ({ oldPassword, newPassword }) => {
     setIsChangingPassword(true);
@@ -767,7 +705,6 @@ const AuthProvider = ({ children }) => {
         login,
         onboardUser,
         getUser,
-        calculateUserProgress,
         changePassword,
         logout,
         verifyEmail,
@@ -779,7 +716,6 @@ const AuthProvider = ({ children }) => {
         verificationOtp,
         setVerificationOtp,
         verificationOtpError,
-        userProgress,
         setVerificationOtpError,
         resetPasswordEmail,
         setResetPasswordId,
@@ -793,7 +729,6 @@ const AuthProvider = ({ children }) => {
         isOnboardingUser,
         isGettingUser,
         isUpdatingUser,
-        isCalculatingUserProgress,
         isChangingPassword,
         isDeletingUser,
       }}

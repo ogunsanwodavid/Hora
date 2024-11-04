@@ -33,7 +33,7 @@ function Tasks() {
   return (
     <>
       <div
-        className="w-full relative max-w-[700px] mx-auto px-0 flex flex-col lg:pb-0 lg:!min-h-[552px] lg:max-w-none"
+        className="w-full relative max-w-[700px] mx-auto px-0 pb-[100px] flex flex-col lg:pb-0 lg:!min-h-[552px] lg:max-w-none"
         style={{
           minHeight: `${windowHeight - 70}px`,
         }}
