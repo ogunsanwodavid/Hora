@@ -31,7 +31,8 @@ import GroupTaskInfo from "../pages/groups/GroupTaskInfo";
 import InviteGroupMember from "../pages/groups/InviteGroupMember";
 
 import Profile from "../pages/profile/Profile";
-import ProfileInformation from "../pages/profile/ProfileInformation";
+import ProfileSettings from "../pages/profile/ProfileSettings";
+import ChangePassword from "../pages/profile/ChangePassword";
 
 import Notifications from "../pages/notifications/Notifications";
 
@@ -85,7 +86,10 @@ function AppRoutes() {
           </Route>
           <Route path="profile">
             <Route index element={<Profile />} />
-            <Route path="info" element={<ProfileInformation />} />
+            <Route path="settings">
+              <Route index element={<ProfileSettings />} />
+              <Route path="changepassword" element={<ChangePassword />} />
+            </Route>
           </Route>
           <Route path="notifications" element={<Notifications />} />
         </Route>

@@ -38,7 +38,7 @@ function Profile() {
       {/**** User details */}
       <Link
         className="w-full flex items-center gap-x-3 mt-4"
-        to="/profile/info"
+        to="/profile/settings"
       >
         {/**** Profile picture */}
         <FaUserCircle className="h-[40px] w-[40px] flex-shrink-0 md:h-[43px] md:w-[43px] rounded-full object-cover fill-blue700" />

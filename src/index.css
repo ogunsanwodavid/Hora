@@ -150,9 +150,14 @@ select {
   }
 }
 
-/**** Modify the thickness of creating task loader spinner */
+/**** Modify the thickness of  loader spinner */
 .creatingtaskloader div {
   border: 6px solid #3d63dd !important;
+  border-right-color: transparent !important;
+}
+
+.confirmdeleteacc-btn div {
+  border: 3px solid #fff !important;
   border-right-color: transparent !important;
 }
 
@@ -326,17 +331,27 @@ label.MuiInputLabel-root {
   background-color: rgba(29, 46, 97, 1);
 }
 
-.MuiFormHelperText-root {
+label.MuiInputLabel-root.Mui-error {
+  color: #e54d51 !important;
+}
+
+.Mui-error div.Mui-error {
+  background-color: transparent !important;
+}
+
+.Mui-error fieldset {
+  border-color: #e54d51 !important;
+}
+
+.MuiFormHelperText-root.Mui-error {
   color: #e54d51 !important;
   margin-left: 0 !important;
   font-family: "Raleway", sans-serif !important;
 }
 
-/* input:-webkit-autofill,
-input:-webkit-autofill:focus {
-  transition: background-color 600000s 0s, color 600000s 0s;
-  color: auto;
+@media screen and (min-width: 700px) {
+  .MuiInputBase-input,
+  label.MuiInputLabel-root {
+    font-size: 17px !important;
+  }
 }
-input[data-autocompleted] {
-  background-color: transparent;
-} */

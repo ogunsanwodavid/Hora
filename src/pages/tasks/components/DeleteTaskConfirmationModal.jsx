@@ -26,7 +26,7 @@ function DeleteTaskConfirmationModal({
         minHeight: `${windowHeight}px`,
       }}
     >
-      <main className="w-full max-w-[345px] mx-5 rounded-[10px] bg-darkestBlue p-6 space-y-4">
+      <main className="w-full max-w-[345px] mx-5 rounded-[10px] bg-blue900 p-6 space-y-4">
         {/**** Close icon */}
         <img
           src={grayCloseIcon}

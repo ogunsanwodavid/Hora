@@ -37,10 +37,12 @@ function ResetPassword() {
     setShowConfirmNewPassword((p) => !p);
   };
 
-  const { register, formState, setValue, getValues, handleSubmit } = useForm();
+  const { register, formState, setValue, getValues, watch, handleSubmit } =
+    useForm();
   const { errors } = formState;
 
-  const { resetPassword, isResettingPassword, resetPasswordEmail } = useAuth();
+  const { resetPassword, isResettingPassword, resetPasswordEmail, resendOtp } =
+    useAuth();
 
   useEffect(() => {
     //Navigate back to forgot password page if no reset email to show this component
@@ -48,6 +50,15 @@ function ResetPassword() {
       navigate("/forgotpassword");
     }
   }, [resetPasswordEmail, navigate]);
+
+  async function handleResetOtp() {
+    const formValues = watch();
+    const emailInputValue = formValues.email;
+
+    await resendOtp({
+      email: emailInputValue,
+    });
+  }
 
   async function onSubmit(data) {
     const formData = {
@@ -81,7 +92,7 @@ function ResetPassword() {
           <img src={resetPasswordImg} className="min-w-[440px]" alt="" />
         </section>
 
-        <section className="w-full max-w-[500px] mx-auto lg:w-[470px] lg:flex lg:flex-col lg:items-center lg:justify-center lg:p-6">
+        <section className="w-full max-w-[500px] mx-auto lg:w-[470px] lg:flex lg:flex-col lg:items-center lg:justify-center lg:p-6 lg:main-scrollbar">
           <header className="w-full px-2 space-y-4 lg:space-y-2">
             <img
               src={leftArrow}
@@ -150,6 +161,14 @@ function ResetPassword() {
                     }
                   }}
                 />
+
+                {/**** Button to resend OTP */}
+                <p
+                  className="w-max ml-auto text-blue200 text-[14px] font-semibold mt-1"
+                  onClick={handleResetOtp}
+                >
+                  Resend OTP
+                </p>
               </FormInput>
 
               {/*** New Password input */}

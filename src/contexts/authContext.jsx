@@ -32,9 +32,13 @@ const AuthProvider = ({ children }) => {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isRequestingReset, setIsRequestingReset] = useState(false);
   const [isResettingPassword, setIsResettingPassword] = useState(false);
+  const [isResendingOtp, setIsResendingOtp] = useState(false);
   const [isOnboardingUser, setIsOnboardingUser] = useState(false);
   const [isCalculatingUserProgress, setIsCalculatingUserProgress] =
     useState(false);
+  const [isUpdatingUser, setIsUpdatingUser] = useState(false);
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [isDeletingUser, setIsDeletingUser] = useState(false);
 
   const navigate = useNavigate();
 
@@ -396,6 +400,65 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  //Resend otp function
+  const resendOtp = async ({ email, userId }) => {
+    setIsResendingOtp(true);
+    try {
+      const response = await fetch(`${BASE_URL}/resend-otp/${userId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+        redirect: "follow",
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data);
+        // Resend otp successful
+        const { message: resendOtpMessage } = data;
+
+        //toast message
+        //toast.success(resendOtpMessage);
+
+        //set reset password id and email
+        //setResetPasswordId(data.forgotPassword.forgotPassword.id)
+        //setResetPasswordEmail(email);
+
+        //Navigate to reset password page
+        //navigate("/resetpassword");
+
+        return { success: true, resendOtpMessage, user };
+      } else {
+        console.log(data);
+        // toast error
+        toast.error(data.message || "An unexpected error occurred");
+
+        return {
+          success: false,
+          error: data.message || "An unexpected error occurred",
+        };
+      }
+    } catch (error) {
+      // Network or other errors
+      toast.error("Something went wrong.");
+
+      return {
+        success: false,
+        error: error.message || "An unexpected error occurred",
+      };
+    } finally {
+      setIsResettingPassword(false);
+      /* //set reset password email
+      setResetPasswordEmail(email);
+
+      //Navigate to reset password page
+      navigate("/resetpassword"); */
+    }
+  };
+
   //Calculate user progress function
   const calculateUserProgress = async (userId) => {
     setIsCalculatingUserProgress(true);
@@ -454,6 +517,108 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  //Change password function
+  const changePassword = async ({ oldPassword, newPassword }) => {
+    setIsChangingPassword(true);
+    try {
+      const response = await fetch(`${BASE_URL}/change-password/${userId}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ oldPassword, newPassword }),
+        redirect: "follow",
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data);
+        // Change password successful
+        const { message: changePasswordMessage } = data;
+
+        //toast message
+        toast.success(changePasswordMessage);
+
+        //Navigate to profile settinga page
+        navigate("/profile/settings");
+
+        return { success: true, changePasswordMessage, user };
+      } else {
+        console.log(data);
+        // toast error
+        toast.error(data.message || "An unexpected error occurred");
+
+        return {
+          success: false,
+          error: data.message || "An unexpected error occurred",
+        };
+      }
+    } catch (error) {
+      // Network or other errors
+      toast.error("Something went wrong.");
+
+      return {
+        success: false,
+        error: error.message || "An unexpected error occurred",
+      };
+    } finally {
+      setIsChangingPassword(false);
+    }
+  };
+
+  //Update user function
+  const updateUser = async ({ email, username, password }) => {
+    setIsUpdatingUser(true);
+    try {
+      const response = await fetch(`${BASE_URL}/update/${userId}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, username, password }),
+        redirect: "follow",
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data);
+        // Update user successful
+        const { message: updateUserMessage } = data;
+
+        //toast message
+        toast.success(updateUserMessage);
+
+        //Navigate to profile settinga page
+        //navigate("/profile/settings");
+
+        return { success: true, updateUserMessage, user };
+      } else {
+        console.log(data);
+        // toast error
+        toast.error(data.message || "An unexpected error occurred");
+
+        return {
+          success: false,
+          error: data.message || "An unexpected error occurred",
+        };
+      }
+    } catch (error) {
+      // Network or other errors
+      toast.error("Something went wrong.");
+
+      return {
+        success: false,
+        error: error.message || "An unexpected error occurred",
+      };
+    } finally {
+      setIsUpdatingUser(false);
+    }
+  };
+
   //Logout Function
   const logout = async () => {
     setIsLoggingOut(true);
@@ -473,6 +638,59 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  //Delete user function
+  const deleteUser = async (userId) => {
+    setIsDeletingUser(true);
+    try {
+      const response = await fetch(`${BASE_URL}/delete/${userId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data);
+        // Delete user successful
+        const { message: deleteUserMessage } = data;
+
+        //Toast info
+        toast.success(deleteUserMessage);
+
+        //Logout
+        await logout();
+
+        //Navigate to home
+        navigate("/");
+
+        return { success: true, deleteUserMessage, user };
+      } else {
+        console.log(data);
+        // toast error
+        toast.error(data.message || "An unexpected error occurred");
+
+        return {
+          success: false,
+          error: data.message || "An unexpected error occurred",
+        };
+      }
+    } catch (error) {
+      // Network or other errors
+      toast.error("Something went wrong.");
+
+      return {
+        success: false,
+        error: error.message || "An unexpected error occurred",
+      };
+    } finally {
+      setIsDeletingUser(false);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -488,10 +706,14 @@ const AuthProvider = ({ children }) => {
         login,
         onboardUser,
         calculateUserProgress,
+        changePassword,
         logout,
         verifyEmail,
         requestReset,
         resetPassword,
+        resendOtp,
+        updateUser,
+        deleteUser,
         verificationOtp,
         setVerificationOtp,
         verificationOtpError,
@@ -507,7 +729,10 @@ const AuthProvider = ({ children }) => {
         isRequestingReset,
         isResettingPassword,
         isOnboardingUser,
+        isUpdatingUser,
         isCalculatingUserProgress,
+        isChangingPassword,
+        isDeletingUser,
       }}
     >
       {children}

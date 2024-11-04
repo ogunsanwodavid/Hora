@@ -124,7 +124,7 @@ function VerifyEmail() {
                   name="otp"
                   maxLength="1"
                   value={data}
-                  className={`w-[20px] h-[20px] bg-transparent border-[1.5px] text-white text-[20px] text-center  font-semibold sm:w-[40px] sm:h-[40px] ${
+                  className={`w-[30px] h-[30px] bg-transparent border-[1.5px] text-white text-[20px] text-center  font-semibold sm:w-[40px] sm:h-[40px] ${
                     verificationOtpError ? "border-errorRed" : "border-black300"
                   }`}
                   disabled={isVerifyingEmail}
