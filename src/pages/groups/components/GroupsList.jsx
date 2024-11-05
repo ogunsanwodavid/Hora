@@ -1,8 +1,5 @@
-import { useEffect } from "react";
-
 import { Link } from "react-router-dom";
 
-import { useAuth } from "../../../contexts/authContext";
 import { useGroups } from "../../../contexts/groupsContext";
 
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
@@ -18,12 +15,8 @@ function GroupsList() {
   //Window size info
   const { windowWidth } = useWindowDimensions();
 
-  //User credentials
-  const { user } = useAuth();
-  const userId = user?._id;
-
   //Variables from groups context
-  const { groups, isGettingAllGroups } = useGroups();
+  const { groupsUserIn, isGettingAllGroups } = useGroups();
 
   return (
     <div className="w-full space-y-5 mt-4 md:space-y-8 md:mt-8">
@@ -31,7 +24,7 @@ function GroupsList() {
         <main className="w-full space-y-3 md:space-y-4">
           {/**** Groups list */}
           {!isGettingAllGroups
-            ? groups.map((group) => {
+            ? groupsUserIn.map((group) => {
                 const groupId = group._id;
                 return <GroupListItem group={group} key={groupId} />;
               })

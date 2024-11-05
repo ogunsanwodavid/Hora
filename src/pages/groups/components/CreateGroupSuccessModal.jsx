@@ -81,7 +81,7 @@ function CreateGroupSuccessModal() {
     >
       <main className="w-full h-full flex-grow  flex flex-col max-w-[700px] mx-auto lg:max-w-none ">
         {/*** Header */}
-        <header className="w-full flex space-x-7 md:mt-4 md:space-x-10">
+        <header className="w-full flex items-center space-x-7 md:mt-4 md:space-x-10">
           {/*** Back button */}
           <Link to="/groups">
             <img src={backButton} className="w-4" alt="Back button" />

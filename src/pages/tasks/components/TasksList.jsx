@@ -35,8 +35,9 @@ function TasksList() {
     const isTaskDueDatePrevious = isDatePrevious(
       parseDateFromYYYYMMDD(task.dueDate.substring(0, 10))
     );
+    const isTaskNotCompleted = !task.completed;
 
-    return isTaskDueDatePrevious;
+    return isTaskDueDatePrevious && isTaskNotCompleted;
   });
   const [showcasePreviousTasks, setShowcasePreviousTasks] = useState(false);
 
@@ -96,7 +97,7 @@ function TasksList() {
         </div>
 
         {/**** Personal tasks selector */}
-        {personalTasks.length && (
+        {Boolean(personalTasks.length) && (
           <div
             className={`px-[20px] py-[10px] border-[1px] border-[#5F606A] text-[#B2B3BD] rounded-full md:text-[18px] ${
               isPersonalTasksDisplayed && "border-blue500 bg-blue500 text-white"
@@ -108,7 +109,7 @@ function TasksList() {
         )}
 
         {/**** Group tasks selector */}
-        {groupTasks.length && (
+        {Boolean(groupTasks.length) && (
           <div
             className={`px-[20px] py-[10px] border-[1px] border-[#5F606A] text-[#B2B3BD] rounded-full md:text-[18px] ${
               isGroupTasksDisplayed && "border-blue500 bg-blue500 text-white"

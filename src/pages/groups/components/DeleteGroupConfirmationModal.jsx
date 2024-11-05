@@ -1,3 +1,4 @@
+import { useAuth } from "../../../contexts/authContext";
 import { useGroups } from "../../../contexts/groupsContext";
 
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
@@ -12,16 +13,21 @@ function DeleteGroupConfirmationModal({
   //Window size info
   const { windowHeight } = useWindowDimensions();
 
+  //User credentials
+  const { user } = useAuth();
+  const userId = user?._id;
+
   //Variables from groups context
   const { deleteGroup } = useGroups();
 
   async function handleDeleteGroup() {
-    await deleteGroup(groupId);
+    await deleteGroup(groupId, userId);
+    setShowcaseDeleteGroupConfirmationModal(false);
   }
 
   return (
     <div
-      className="fixed top-0 left-0 w-full bg-[rgba(12,17,28,0.2)] backdrop-blur-[2px] flex items-center justify-center lg:absolute lg:!min-h-full"
+      className="fixed top-0 left-0 w-full bg-[rgba(12,17,28,0.2)] backdrop-blur-[2px] flex items-center z-20 justify-center lg:absolute lg:!min-h-full"
       style={{
         minHeight: `${windowHeight}px`,
       }}

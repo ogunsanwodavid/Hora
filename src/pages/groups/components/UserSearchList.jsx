@@ -36,7 +36,7 @@ function UserSearchList() {
 
   return (
     <section className="w-full space-y-5 mt-6 md:space-y-8">
-      {/* orderedSelectedUsers.map((newMember) => {
+      {orderedSelectedUsers.map((newMember) => {
         const newMemberId = newMember?._id;
 
         function handleClickUser() {
@@ -55,7 +55,7 @@ function UserSearchList() {
             onClick={handleClickUser}
           />
         );
-      }) */}
+      })}
 
       {orderedSearchNewMemberResult.map((newMember) => {
         const newMemberId = newMember?._id;

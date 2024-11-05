@@ -2,6 +2,8 @@ import { createContext, useContext, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import { useAuth } from "./authContext";
+
 import { toast } from "react-toastify";
 
 const GroupsContext = createContext();
@@ -13,39 +15,20 @@ const GroupsProvider = ({ children }) => {
   //navigate
   const navigate = useNavigate();
 
+  //User credentials
+  const { user } = useAuth();
+  const userId = user?._id;
+
   //Group variables
-  const [groups, setGroups] = useState([
-    /*
-    {
-      type: [],
-      _id: "66f4eeaa028275fa0620f25b",
-      name: "computer engineering groups",
-      members: ["66f3e60308383b211af0e2ad"],
-      tasks: [],
-      inviteLink: "9d61a0e1-13cc-4580-beeb-51299dbff8d2",
-      isFull: false,
-      expiresAt: "2024-09-27T05:18:34.092Z",
-      createdAt: "2024-09-26T05:18:34.170Z",
-      __v: 4,
-    },
-    {
-      _id: "671511badf6b964cc7a5aa64",
-      name: "growth group",
-      type: [],
-      members: [
-        "6714bd9832d90617a39f8ddf",
-        "6715125fdf6b964cc7a5aa70",
-        "67151241df6b964cc7a5aa6d",
-        "6715120fdf6b964cc7a5aa6a",
-      ],
-      tasks: ["67151367df6b964cc7a5aa7d"],
-      inviteLink: "rvdZBH",
-      isFull: true,
-      expiresAt: "2024-10-21T14:20:42.352Z",
-      createdAt: "2024-10-20T14:20:42.355Z",
-      __v: 4,
-    }, */
-  ]);
+  const [groups, setGroups] = useState([]);
+
+  //Make sure user is a member of the group on display
+  const groupsUserIn = groups.length
+    ? groups.filter((group) =>
+        group.members.some((member) => member._id === userId)
+      )
+    : [];
+
   const [currentGroupInfo, setCurrentGroupInfo] = useState(null);
 
   const [currentGroupTasks, setCurrentGroupTasks] = useState([
@@ -165,48 +148,7 @@ const GroupsProvider = ({ children }) => {
     updatedAt: "2024-10-09T10:34:35.131Z",
     __v: 0,
   });
-  const [searchNewMemberResult, setSearchNewMemberResult] = useState([
-    /*     {
-      _id: "01",
-      username: "desire007",
-      email: "destinydesire@gmail.com",
-    },
-    {
-      _id: "02",
-      username: "boluwatife010",
-      email: "ojoboluwatife@gmail.com",
-    },
-    {
-      _id: "03",
-      username: "hoaxthagod",
-      email: "hoaxgod777@gmail.com",
-    },
-    {
-      _id: "04",
-      username: "00xdave",
-      email: "ogunsanwodavid123@gmail.com",
-    },
-    {
-      _id: "05",
-      username: "incognito_lord",
-      email: "lordincognito54@gmail.com",
-    },
-    {
-      _id: "06",
-      username: "Redemptionsync",
-      email: "syncredeems66@gmail.com",
-    },
-    {
-      _id: "07",
-      username: "Beatthemyth",
-      email: "mythbeaterrocks@gmail.com",
-    },
-    {
-      _id: "08",
-      username: "blink200",
-      email: "idoblink200@gmail.com",
-    }, */
-  ]);
+  const [searchNewMemberResult, setSearchNewMemberResult] = useState([]);
 
   //Search result ordered alphabetically by username
   const orderedSearchNewMemberResult = searchNewMemberResult.length
@@ -260,7 +202,7 @@ const GroupsProvider = ({ children }) => {
   const getAllGroups = async (userId) => {
     setIsGettingAllGroups(true);
     try {
-      const response = await fetch(`${BASE_URL}/all-groups/${userId}`, {
+      const response = await fetch(`${BASE_URL}/allgroups/${userId}`, {
         method: "GET",
         redirect: "follow",
       });
@@ -384,7 +326,7 @@ const GroupsProvider = ({ children }) => {
         const {
           message: createGroupMessage,
           create: {
-            name: createdGroupName,
+            groupName: createdGroupName,
             inviteLink: createdGroupInviteCode,
           },
         } = data;
@@ -537,7 +479,7 @@ const GroupsProvider = ({ children }) => {
   };
 
   //Function to delete a group
-  const deleteGroup = async (groupId) => {
+  const deleteGroup = async (groupId, userId) => {
     setIsDeletingGroup(true);
     try {
       const response = await fetch(`${BASE_URL}/delete-group/${groupId}`, {
@@ -558,6 +500,7 @@ const GroupsProvider = ({ children }) => {
 
         //Navigate to group page
         navigate("/groups");
+        await getAllGroups(userId);
 
         return { success: true, deleteGroupMessage };
       } else {
@@ -920,6 +863,7 @@ const GroupsProvider = ({ children }) => {
     <GroupsContext.Provider
       value={{
         groups,
+        groupsUserIn,
         currentGroupInfo,
         currentGroupTaskInfo,
         currentGroupTasks,

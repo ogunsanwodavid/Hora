@@ -70,7 +70,7 @@ function GroupInfo() {
   const [showcaseDropdown, setShowcaseDropdown] = useState(false);
 
   //Group information
-  const groupName = currentGroupInfo?.name; //|| "Designers in Group 8";
+  const groupName = currentGroupInfo?.groupName; //|| "Designers in Group 8";
   const groupCreator = currentGroupInfo?.createdBy?.username; //|| "Desire Destiny";
 
   //Group date of creation info
@@ -86,44 +86,10 @@ function GroupInfo() {
   )?.getDate();
 
   //Group members info
-  const groupMembers = currentGroupInfo?.members; /*  || [
-    {
-      _id: "01",
-      username: "desire007",
-    },
-    {
-      _id: "02",
-      username: "boluwatife010",
-    },
-    {
-      _id: "03",
-      username: "hoaxthagod",
-    },
-    {
-      _id: "04",
-      username: "00xdave",
-    },
-    {
-      _id: "05",
-      username: "incognito_lord",
-    },
-    {
-      _id: "06",
-      username: "Redemptionsync",
-    },
-    {
-      _id: "07",
-      username: "Beatthemyth",
-    },
-    {
-      _id: "08",
-      username: "blink200",
-    },
-  ]; */
+  const groupMembers = currentGroupInfo?.members;
 
   //Check if group was created by user
-  const isGroupCreatedByUser =
-    true || currentGroupInfo?.createdBy?._id === userId;
+  const isGroupCreatedByUser = currentGroupInfo?.createdBy?._id === userId;
 
   //state to showcase delete confirm modal
   const [
@@ -294,21 +260,23 @@ function GroupInfo() {
               </Link>
 
               {/**** Exit group */}
-              <div
-                className="flex items-center gap-x-4 cursor-pointer md:gap-x-6"
-                onClick={handleExitGroup}
-              >
-                {/**** Exit icon */}
-                <img
-                  src={redSignOutIcon}
-                  className="w-[20px] h-[19px] md:w-[25px] md:h-[24px]"
-                  alt="red signout icon"
-                />
+              {!isGroupCreatedByUser && (
+                <div
+                  className="flex items-center gap-x-4 cursor-pointer md:gap-x-6"
+                  onClick={handleExitGroup}
+                >
+                  {/**** Exit icon */}
+                  <img
+                    src={redSignOutIcon}
+                    className="w-[20px] h-[19px] md:w-[25px] md:h-[24px]"
+                    alt="red signout icon"
+                  />
 
-                <p className="text-errorRed font-semibold md:text-lg">
-                  Exit Group
-                </p>
-              </div>
+                  <p className="text-errorRed font-semibold md:text-lg">
+                    Exit Group
+                  </p>
+                </div>
+              )}
 
               {/**** Delete group */}
               {isGroupCreatedByUser && (

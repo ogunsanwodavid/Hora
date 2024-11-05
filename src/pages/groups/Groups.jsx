@@ -20,7 +20,8 @@ function Groups() {
   const userId = user?._id;
 
   //Variables from groups context
-  const { groups, getAllGroups, isGettingAllGroups } = useGroups();
+  const { groups, groupsUserIn, getAllGroups, isGettingAllGroups } =
+    useGroups();
 
   //Get all groups on mount
   useEffect(() => {
@@ -54,7 +55,11 @@ function Groups() {
       </header>
 
       {/**** Show error if no group else show list of groups */}
-      {groups.length || isGettingAllGroups ? <GroupsList /> : <NoGroupError />}
+      {groupsUserIn.length || isGettingAllGroups ? (
+        <GroupsList />
+      ) : (
+        <NoGroupError />
+      )}
     </div>
   );
 }

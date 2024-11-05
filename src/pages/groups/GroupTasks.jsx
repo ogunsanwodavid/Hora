@@ -53,43 +53,10 @@ function GroupTasks() {
   }, []);
 
   //Group information
-  const groupName = currentGroupInfo?.name;
+  const groupName = currentGroupInfo?.groupName;
 
   //Group members info
-  const groupMembers = currentGroupInfo?.members || [
-    {
-      _id: "01",
-      username: "desire007",
-    },
-    {
-      _id: "02",
-      username: "boluwatife010",
-    },
-    {
-      _id: "03",
-      username: "hoaxthagod",
-    },
-    {
-      _id: "04",
-      username: "00xdave",
-    },
-    {
-      _id: "05",
-      username: "incognito_lord",
-    },
-    {
-      _id: "06",
-      username: "Redemptionsync",
-    },
-    {
-      _id: "07",
-      username: "Beatthemyth",
-    },
-    {
-      _id: "08",
-      username: "blink200",
-    },
-  ];
+  const groupMembers = currentGroupInfo?.members;
 
   //active state of scroll
   const [scrollDisplay, setScrollDisplay] = useState("grouptasks");
