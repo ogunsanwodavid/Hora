@@ -119,8 +119,6 @@ function TaskInfo() {
     setShowcaseDropdown(false);
 
     await completeTask(taskId);
-
-    //await console.log(taskId);
   }
 
   return (

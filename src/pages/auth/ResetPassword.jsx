@@ -18,9 +18,11 @@ import eyeOffIcon from "../../icons/eyeOffIcon.svg";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 function ResetPassword() {
-  const navigate = useNavigate();
-
+  //WIndow size info
   const { windowHeight } = useWindowDimensions();
+
+  //Naviagtion
+  const navigate = useNavigate();
 
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
@@ -41,8 +43,13 @@ function ResetPassword() {
     useForm();
   const { errors } = formState;
 
-  const { resetPassword, isResettingPassword, resetPasswordEmail, resendOtp } =
-    useAuth();
+  const {
+    resetPassword,
+    isResettingPassword,
+    resetPasswordEmail,
+    resetPasswordId,
+    resendOtp,
+  } = useAuth();
 
   useEffect(() => {
     //Navigate back to forgot password page if no reset email to show this component
@@ -51,12 +58,14 @@ function ResetPassword() {
     }
   }, [resetPasswordEmail, navigate]);
 
+  //Function to resend otp to user's email
   async function handleResetOtp() {
     const formValues = watch();
     const emailInputValue = formValues.email;
 
     await resendOtp({
       email: emailInputValue,
+      userId: resetPasswordId,
     });
   }
 

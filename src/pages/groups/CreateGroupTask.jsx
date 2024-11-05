@@ -61,7 +61,7 @@ function CreateGroupTask() {
   } = useTasks();
 
   //Values from groups context
-  const { isCreatingGroupTask } = useGroups();
+  const { isCreatingGroupTask, createGroupTask } = useGroups();
 
   //Dont show mobile navbar on mount
   useEffect(() => {
@@ -113,7 +113,6 @@ function CreateGroupTask() {
       dueDate: dueDate,
       time: time,
       repeatTask: repeat,
-      createdBy: userId,
     };
 
     //Check if date is today and make sure time isnt set to before current time
@@ -126,8 +125,7 @@ function CreateGroupTask() {
       );
     } else {
       //Add task
-      //await createTask(formData);
-      console.log(formData);
+      await createGroupTask(formData);
 
       //Reset all values
       setTitle("");

@@ -362,7 +362,7 @@ const AuthProvider = ({ children }) => {
         toast.success(resetRequestMessage);
 
         //set reset password id and email
-        //setResetPasswordId(data.forgotPassword.forgotPassword.id)
+        setResetPasswordId(data.forgetRoute.userInfo.id);
         setResetPasswordEmail(email);
 
         //Navigate to reset password page
@@ -389,11 +389,6 @@ const AuthProvider = ({ children }) => {
       };
     } finally {
       setIsRequestingReset(false);
-      /* //set reset password email
-      setResetPasswordEmail(email);
-
-      //Navigate to reset password page
-      navigate("/resetpassword"); */
     }
   };
 
@@ -471,16 +466,6 @@ const AuthProvider = ({ children }) => {
         // Resend otp successful
         const { message: resendOtpMessage } = data;
 
-        //toast message
-        //toast.success(resendOtpMessage);
-
-        //set reset password id and email
-        //setResetPasswordId(data.forgotPassword.forgotPassword.id)
-        //setResetPasswordEmail(email);
-
-        //Navigate to reset password page
-        //navigate("/resetpassword");
-
         return { success: true, resendOtpMessage, user };
       } else {
         console.log(data);
@@ -502,11 +487,6 @@ const AuthProvider = ({ children }) => {
       };
     } finally {
       setIsResettingPassword(false);
-      /* //set reset password email
-      setResetPasswordEmail(email);
-
-      //Navigate to reset password page
-      navigate("/resetpassword"); */
     }
   };
 
@@ -718,6 +698,7 @@ const AuthProvider = ({ children }) => {
         verificationOtpError,
         setVerificationOtpError,
         resetPasswordEmail,
+        resetPasswordId,
         setResetPasswordId,
         setResetPasswordEmail,
         isSigningUp,

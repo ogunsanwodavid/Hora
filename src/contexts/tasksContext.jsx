@@ -493,6 +493,7 @@ const TasksProvider = ({ children }) => {
         isGettingCurrentTask,
         isDeletingTask,
         isCompletingTask,
+        isGettingTodayTasksInfo,
         showcaseTaskDueDatePicker,
         setShowcaseTaskDueDatePicker,
         showcaseTaskTimeSetter,

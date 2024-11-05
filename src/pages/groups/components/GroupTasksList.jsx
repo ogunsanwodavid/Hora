@@ -101,16 +101,19 @@ function GroupTasksList() {
   //Tasks before current day
   const previousTasks = currentGroupTasks.filter((task) => {
     const isTaskDueDatePrevious = isDatePrevious(
-      parseDateFromYYYYMMDD(task.dueDate)
+      parseDateFromYYYYMMDD(task.dueDate.substring(0, 10))
     );
+    const isTaskNotCompleted = !task.completed;
 
-    return isTaskDueDatePrevious;
+    return isTaskDueDatePrevious && isTaskNotCompleted;
   });
   const [showcasePreviousTasks, setShowcasePreviousTasks] = useState(false);
 
   //Today's tasks
   const todayTasks = currentGroupTasks.filter((task) => {
-    const isTaskDueDateToday = isDateToday(parseDateFromYYYYMMDD(task.dueDate));
+    const isTaskDueDateToday = isDateToday(
+      parseDateFromYYYYMMDD(task.dueDate.substring(0, 10))
+    );
 
     return isTaskDueDateToday;
   });

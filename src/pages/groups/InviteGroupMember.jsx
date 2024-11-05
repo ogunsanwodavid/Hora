@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useAppDesign } from "../../contexts/appDesignContext";
+import { useAuth } from "../../contexts/authContext";
 import { useGroups } from "../../contexts/groupsContext";
 
 import useWindowDimensions from "../../hooks/useWindowDimensions";
@@ -26,6 +27,10 @@ function InviteGroupMember() {
   //Navigate
   const navigate = useNavigate();
 
+  //Variables from user context
+  const { user } = useAuth();
+  const userId = user?._id;
+
   //App design info
   const { setShowcaseMobileNav } = useAppDesign();
 
@@ -47,22 +52,13 @@ function InviteGroupMember() {
     isSearchingNewMember,
     orderedSearchNewMemberResult,
     selectedUsers,
-    inviteMember,
+    inviteMembers,
     isInvitingNewMembers,
     currentGroupInfo,
   } = useGroups();
 
-  /* const [selectedUsers, setSelectedUsers] = useState([]);
-
-  //Selected users ordered alphabetically by username
-  const orderedSelectedUsers = selectedUsers.length
-    ? selectedUsers.sort((userA, userB) =>
-        userA.username.localeCompare(userB.username)
-      )
-    : []; */
-
   //Group information
-  const groupName = currentGroupInfo?.name;
+  const groupName = currentGroupInfo?.groupName;
   const groupInviteCode = currentGroupInfo?.inviteLink;
 
   //Search input
@@ -77,16 +73,20 @@ function InviteGroupMember() {
 
   async function handleSearchInputChange(e) {
     await setSearchInputValue(e.target.value);
+    if (!searchInputValue) return;
     await searchNewMember(e.target.value);
   }
 
   async function handleInviteMember() {
+    const selectedUsersEmails = selectedUsers.map((user) => user.email);
+
     const formData = {
       groupId: groupId,
       inviteLink: groupInviteCode,
-      email: selectedUsers.at(0).email,
+      inviterId: userId,
+      emails: selectedUsersEmails,
     };
-    await inviteMember(formData);
+    await inviteMembers(formData);
   }
 
   return (
@@ -114,7 +114,7 @@ function InviteGroupMember() {
             {groupName}
           </h2>
           <p className="text-[16px] text-[#B2B3BD] text-center md:text-lg">
-            Invite group member
+            Invite group members
           </p>
         </section>
 
@@ -147,7 +147,8 @@ function InviteGroupMember() {
         {/*** Show loader if inviting new members */}
         {!isInvitingNewMembers ? (
           !isSearchingNewMember ? (
-            orderedSearchNewMemberResult.length && searchInputValue.length ? (
+            (orderedSearchNewMemberResult.length || selectedUsers.length) &&
+            searchInputValue.length ? (
               <UserSearchList />
             ) : searchInputValue.length ? (
               <NoUserSearchResult />

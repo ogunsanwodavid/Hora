@@ -71,7 +71,13 @@ function GroupInfo() {
 
   //Group information
   const groupName = currentGroupInfo?.groupName; //|| "Designers in Group 8";
-  const groupCreator = currentGroupInfo?.createdBy?.username; //|| "Desire Destiny";
+
+  //Check if group was created by user
+  const isGroupCreatedByUser = currentGroupInfo?.createdBy?._id === userId;
+
+  const groupCreator = isGroupCreatedByUser
+    ? "You"
+    : currentGroupInfo?.createdBy?.username; //|| "Desire Destiny";
 
   //Group date of creation info
   const dateOfGroupCreation = currentGroupInfo?.createdAt || "2024-09-11";
@@ -87,9 +93,6 @@ function GroupInfo() {
 
   //Group members info
   const groupMembers = currentGroupInfo?.members;
-
-  //Check if group was created by user
-  const isGroupCreatedByUser = currentGroupInfo?.createdBy?._id === userId;
 
   //state to showcase delete confirm modal
   const [
@@ -217,7 +220,7 @@ function GroupInfo() {
                 </div>
 
                 <h5 className="text-white font-semibold md:text-lg">
-                  Invite a member
+                  Invite Members
                 </h5>
               </Link>
             )}

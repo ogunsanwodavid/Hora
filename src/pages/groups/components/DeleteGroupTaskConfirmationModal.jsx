@@ -4,6 +4,7 @@ import useWindowDimensions from "../../../hooks/useWindowDimensions";
 
 import grayCloseIcon from "../../../icons/grayCloseIcon.svg";
 import deleteTaskModalImg from "../../../assets/deleteTaskModal.svg";
+import { useGroups } from "../../../contexts/groupsContext";
 
 function DeleteGroupTaskConfirmationModal({
   groupId,
@@ -13,9 +14,11 @@ function DeleteGroupTaskConfirmationModal({
   //Window size info
   const { windowHeight } = useWindowDimensions();
 
-  function handleDeleteTask() {
-    console.log(groupId, taskId);
-    //await deleteTask(taskId)
+  //Variables from groups context
+  const { deleteGroupTask } = useGroups();
+
+  async function handleDeleteTask() {
+    await deleteGroupTask(groupId, taskId);
   }
 
   return (

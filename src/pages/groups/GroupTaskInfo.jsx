@@ -60,6 +60,7 @@ function GroupTaskInfo() {
   const {
     currentGroupTaskInfo,
     getCurrentGroupTask,
+    completeGroupTask,
     isGettingCurrentGroupTask,
     isDeletingGroupTask,
     isCompletingGroupTask,
@@ -81,13 +82,18 @@ function GroupTaskInfo() {
   const isCompleted = currentGroupTaskInfo?.completed;
 
   //Date variables
-  const month = getMonthName(parseDateFromYYYYMMDD(dueDate).getMonth());
-  const day = String(parseDateFromYYYYMMDD(dueDate).getDate()).padStart(2, "0");
-  const year = parseDateFromYYYYMMDD(dueDate).getFullYear();
+  const month =
+    dueDate && getMonthName(parseDateFromYYYYMMDD(dueDate)?.getMonth());
+  const day =
+    dueDate &&
+    String(parseDateFromYYYYMMDD(dueDate)?.getDate())?.padStart(2, "0");
+  const year = dueDate && parseDateFromYYYYMMDD(dueDate)?.getFullYear();
 
-  const isDueDateToday = isDateToday(parseDateFromYYYYMMDD(dueDate));
+  const isDueDateToday = dueDate
+    ? isDateToday(parseDateFromYYYYMMDD(dueDate))
+    : "";
   const currentTime = formatTimeTo24Hour(new Date());
-  const isDueTimeAfter = isAfterCurrentTime(currentTime, time);
+  const isDueTimeAfter = time && isAfterCurrentTime(currentTime, time);
 
   function RepeatValueShowcase(repeat) {
     if (repeat === "daily") {
@@ -106,11 +112,6 @@ function GroupTaskInfo() {
     setShowcaseDeleteGroupTaskConfirmationModal,
   ] = useState(false);
 
-  //Get current task on mount
-  useEffect(() => {
-    //getcurrentGroupTask(taskId)
-  }, []);
-
   //Check if user created the task
   const isGroupTaskCreatedByUser = true;
 
@@ -125,9 +126,9 @@ function GroupTaskInfo() {
     e.preventDefault();
     setShowcaseDropdown(false);
 
-    //await completeTask(taskId)
+    await completeGroupTask(taskId);
 
-    await console.log(groupId, taskId);
+    //await console.log(groupId, taskId);
   }
 
   return (

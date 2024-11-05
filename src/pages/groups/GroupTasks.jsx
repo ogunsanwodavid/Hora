@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 
+import { useAuth } from "../../contexts/authContext";
 import { useGroups } from "../../contexts/groupsContext";
 import { useAppDesign } from "../../contexts/appDesignContext";
 
@@ -23,6 +24,10 @@ function GroupTasks() {
 
   //Navigate
   const navigate = useNavigate();
+
+  //User credentials
+  const { user } = useAuth();
+  const userId = user?._id;
 
   //App design info
   const { setShowcaseMobileNav } = useAppDesign();
@@ -89,7 +94,12 @@ function GroupTasks() {
 
             {/***** Group members */}
             <p className="w-full text-white text-[14px] line-clamp-1 overflow-hidden text-ellipsis md:text-base">
-              {groupMembers.map((member) => member.username).join(", ")}
+              {groupMembers &&
+                groupMembers
+                  .map((member) =>
+                    member._id === userId ? "You" : member.username
+                  )
+                  .join(", ")}
             </p>
           </section>
         </header>

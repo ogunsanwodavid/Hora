@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
+
+import { useForm } from "react-hook-form";
 
 import { useAuth } from "../../contexts/authContext";
 
@@ -11,23 +15,21 @@ import {
   InputLabel,
   OutlinedInput,
   styled,
-  TextField,
 } from "@mui/material";
+
+import { CircleSpinner } from "react-spinners-kit";
 
 import backButton from "../../icons/leftArrowIcon.svg";
 import eyeIcon from "../../icons/eyeIcon.svg";
 import eyeOffIcon from "../../icons/eyeOffIcon.svg";
 import blueEyeIcon from "../../icons/blueEyeIcon.svg";
 import blueEyeOffIcon from "../../icons/blueEyeOffIcon.svg";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { CircleSpinner } from "react-spinners-kit";
 
 // Create a custom-styled TextField
 const CustomOutlinedInput = styled(OutlinedInput)(({ theme }) => ({
   "& .MuiInputLabel-root": {
     color: "rgba(61, 99, 221, 1)", // Default label color
-    fontSize: "1rem",
+    fontSize: "14px",
   },
   "& .MuiInputLabel-root.Mui-focused": {
     color: "rgba(61, 99, 221, 1)", // Label color when focused

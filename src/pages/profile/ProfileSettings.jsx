@@ -38,7 +38,7 @@ import blueEyeOffIcon from "../../icons/blueEyeOffIcon.svg";
 const CustomTextField = styled(TextField)(({ theme }) => ({
   "& .MuiInputLabel-root": {
     color: "rgba(61, 99, 221, 1)", // Default label color
-    fontSize: "1rem",
+    fontSize: "14px",
   },
   "& .MuiInputLabel-root.Mui-focused": {
     color: "rgba(61, 99, 221, 1)", // Label color when focused
@@ -83,7 +83,7 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
 const CustomOutlinedInput = styled(OutlinedInput)(({ theme }) => ({
   "& .MuiInputLabel-root": {
     color: "rgba(61, 99, 221, 1)", // Default label color
-    fontSize: "1rem",
+    fontSize: "14px",
   },
   "& .MuiInputLabel-root.Mui-focused": {
     color: "rgba(61, 99, 221, 1)", // Label color when focused

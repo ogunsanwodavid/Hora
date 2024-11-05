@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -31,123 +31,9 @@ const GroupsProvider = ({ children }) => {
 
   const [currentGroupInfo, setCurrentGroupInfo] = useState(null);
 
-  const [currentGroupTasks, setCurrentGroupTasks] = useState([
-    {
-      _id: "670782168774060eefe22gggha",
-      title: "Gymming",
-      description: "Spend more time for my gym sessions",
-      type: "Group",
-      dueDate: "2024-10-24",
-      time: "18:35",
-      completedBy: [],
-      repeatTask: "none",
-      completed: true,
-      createdBy: {
-        username: "00xdave",
-      },
-      createdAt: "2024-10-10T07:28:22.825Z",
-      updatedAt: "2024-10-10T07:28:22.825Z",
-      __v: 0,
-    },
-    {
-      _id: "67065c3bd60343ec0707dc2c",
-      title: "Start looking for jobs",
-      type: "Group",
-      description: "Have to work",
-      dueDate: "2024-09-22",
-      time: "02:15",
-      repeatTask: "daily",
-      completed: false,
-      createdBy: {
-        username: "hoaxthagod",
-      },
-      createdAt: "2024-10-09T10:34:35.131Z",
-      updatedAt: "2024-10-09T10:34:35.131Z",
-      __v: 0,
-    },
-    {
-      _id: "67065c3bd60343ed1807dc2c",
-      title: "SIWES Report",
-      description: "Begin writing my SIWES report everyday",
-      type: "Group",
-      dueDate: "2024-10-17",
-      time: "20:15",
-      completedBy: [],
-      repeatTask: "weekly",
-      completed: false,
-      createdBy: {
-        username: "boluwatife010",
-      },
-      createdAt: "2024-10-09T10:34:35.131Z",
-      updatedAt: "2024-10-09T10:34:35.131Z",
-      __v: 0,
-    },
-    {
-      _id: "670782168774060eee22fcba",
-      title: "Complete project report",
-      description: "Finish writing the final project report and submit it.",
-      type: "Group",
-      dueDate: "2024-08-10",
-      time: "14:30",
-      repeatTask: "none",
-      completed: false,
-      createdBy: {
-        username: "desire007",
-      },
-      createdAt: "2024-10-10T07:28:22.825Z",
-      updatedAt: "2024-10-10T07:28:22.825Z",
-      __v: 0,
-    },
-    {
-      _id: "670782168774060eee22gggba",
-      title: "Go Skydiving",
-      description: "Take a trip to Ibadan and go skydiving with friends",
-      type: "Group",
-      dueDate: "2025-11-22",
-      time: "04:45",
-      completedBy: [],
-      repeatTask: "none",
-      completed: true,
-      createdBy: {
-        username: "00xdave",
-      },
-      createdAt: "2024-10-10T07:28:22.825Z",
-      updatedAt: "2024-10-10T07:28:22.825Z",
-      __v: 0,
-    },
-    {
-      _id: "670782168774060eefe22gggha",
-      title: "Read Gulag Archipelago",
-      description:
-        "Time to study my favourite history book and jot down unknown words",
-      type: "Group",
-      dueDate: "2024-10-24",
-      time: "09:30",
-      completedBy: [],
-      repeatTask: "none",
-      completed: true,
-      createdBy: {
-        username: "blink200",
-      },
-      createdAt: "2024-10-10T07:28:22.825Z",
-      updatedAt: "2024-10-10T07:28:22.825Z",
-      __v: 0,
-    },
-  ]);
-  const [currentGroupTaskInfo, setCurrentGroupTaskInfo] = useState({
-    _id: "67065c3bd60343ec0707dc2c",
-    title: "Start looking for jobs",
-    type: "Group",
-    description: "Have to work",
-    dueDate: "2024-09-22",
-    time: "02:15",
-    repeatTask: "daily",
-    completed: false,
-    createdBy: "6703d9cb0e71d411ae3e23f3",
-    createdAt: "2024-10-09T10:34:35.131Z",
-    updatedAt: "2024-10-09T10:34:35.131Z",
-    __v: 0,
-  });
+  const [currentGroupTasks, setCurrentGroupTasks] = useState([]);
+  const [currentGroupTaskInfo, setCurrentGroupTaskInfo] = useState(null);
+
   const [searchNewMemberResult, setSearchNewMemberResult] = useState([]);
 
   //Search result ordered alphabetically by username
@@ -429,8 +315,8 @@ const GroupsProvider = ({ children }) => {
   const exitGroup = async ({ groupId, userId }) => {
     setIsExitingGroup(true);
     try {
-      const response = await fetch(`${BASE_URL}/${groupId}/leave`, {
-        method: "POST",
+      const response = await fetch(`${BASE_URL}/${groupId}/leave/${userId}`, {
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
@@ -558,6 +444,9 @@ const GroupsProvider = ({ children }) => {
         //set all tasks empty
         setCurrentGroupTasks(null);
 
+        //Navigate to groups page
+        navigate("/groups");
+
         return {
           success: false,
           error: data.message || "An unexpected error occurred",
@@ -566,6 +455,9 @@ const GroupsProvider = ({ children }) => {
     } catch (error) {
       // Network or other errors
       toast.error("Something went wrong.");
+
+      //Navigate to groups page
+      navigate("/groups");
 
       return {
         success: false,
@@ -635,7 +527,6 @@ const GroupsProvider = ({ children }) => {
     dueDate,
     time,
     repeatTask,
-    createdBy,
   }) => {
     setIsCreatingGroupTask(true);
     try {
@@ -651,7 +542,6 @@ const GroupsProvider = ({ children }) => {
           dueDate,
           time,
           repeatTask,
-          createdBy,
         }),
         redirect: "follow",
       });
@@ -691,6 +581,64 @@ const GroupsProvider = ({ children }) => {
       };
     } finally {
       setIsCreatingGroupTask(false);
+    }
+  };
+
+  //Function to complete a group task
+  const completeGroupTask = async (taskId) => {
+    const completedJSON = {
+      completed: true,
+    };
+
+    setIsCompletingGroupTask(true);
+    try {
+      const response = await fetch(
+        `https://hora-1daj.onrender.com/task/status/${taskId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(completedJSON),
+          redirect: "follow",
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        //console.log(data);
+
+        // Group Task completion successful
+        const { message: completeGroupTaskMessage } = data;
+
+        //Toast message
+        //toast.success(completeGroupTaskMessage);
+
+        //show group task completed modal
+        setShowcaseGroupTaskCompletedModal(true);
+
+        return { success: true, completeGroupTaskMessage };
+      } else {
+        //console.log(data);
+        // toast error
+        toast.error(data.message || "An unexpected error occurred");
+
+        return {
+          success: false,
+          error: data.message || "An unexpected error occurred",
+        };
+      }
+    } catch (error) {
+      // Network or other errors
+      toast.error("Something went wrong.");
+
+      return {
+        success: false,
+        error: error.message || "An unexpected error occurred",
+      };
+    } finally {
+      setIsCompletingGroupTask(false);
     }
   };
 
@@ -762,17 +710,6 @@ const GroupsProvider = ({ children }) => {
         const { message: searchNewMemberMessage, data: searchNewMemberData } =
           data;
 
-        //Toast message
-        //toast.success(searchNewMemberMessage);
-
-        //Updated search new member data - adding selected key and set to "false"
-        /* const updatedSearchNewMemberData = searchNewMemberData.map(
-          (member) => ({
-            ...member,
-            selected: false,
-          })
-        ); */
-
         //set search new member result
         await setSearchNewMemberResult(searchNewMemberData);
 
@@ -783,7 +720,7 @@ const GroupsProvider = ({ children }) => {
         // toast error
         //toast.error(data.message || "An unexpected error occurred");
 
-        //set search member resulyt empty
+        //set search member result empty
         setSearchNewMemberResult([]);
 
         return {
@@ -804,8 +741,8 @@ const GroupsProvider = ({ children }) => {
     }
   };
 
-  //Function to invite a member
-  const inviteMember = async ({ groupId, inviteLink, email }) => {
+  //Function to invite group members
+  const inviteMembers = async ({ groupId, inviteLink, inviterId, emails }) => {
     setIsInvitingNewMembers(true);
     try {
       const response = await fetch(`${BASE_URL}/send-link`, {
@@ -816,7 +753,8 @@ const GroupsProvider = ({ children }) => {
         body: JSON.stringify({
           groupId,
           inviteLink,
-          email,
+          inviterId,
+          emails,
         }),
         redirect: "follow",
       });
@@ -880,9 +818,10 @@ const GroupsProvider = ({ children }) => {
         getCurrentGroupTasks,
         getCurrentGroupTask,
         createGroupTask,
+        completeGroupTask,
         deleteGroupTask,
         searchNewMember,
-        inviteMember,
+        inviteMembers,
         isGettingAllGroups,
         isGettingCurrentGroup,
         isCreatingGroup,
