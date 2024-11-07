@@ -14,6 +14,8 @@ import ExitingGroupLoader from "./components/ExitingGroupLoader";
 import DeleteGroupConfirmationModal from "./components/DeleteGroupConfirmationModal";
 import DeletingGroupLoader from "./components/DeletingGroupLoader";
 import GroupMembersList from "./components/GroupMembersList";
+import RemoveGroupMemberModal from "./components/RemoveGroupMemberModal";
+import RemovingGroupMemberLoader from "./components/RemovingGroupMemberLoader";
 
 import backButton from "../../icons/leftArrowIcon.svg";
 import kebabIcon from "../../icons/kebabIcon.svg";
@@ -59,6 +61,7 @@ function GroupInfo() {
     isGettingCurrentGroup,
     isExitingGroup,
     isDeletingGroup,
+    isRemovingGroupMember,
   } = useGroups();
 
   //Get current group info on mount
@@ -100,6 +103,11 @@ function GroupInfo() {
     setShowcaseDeleteGroupConfirmationModal,
   ] = useState(false);
 
+  //state to showcase remove member modal
+  const [removeMemberInfo, setRemoveMemberInfo] = useState(null);
+  const [showcaseRemoveMemberModal, setShowcaseRemoveMemberModal] =
+    useState(false);
+
   async function handleExitGroup() {
     const formData = {
       groupId: groupId,
@@ -134,7 +142,7 @@ function GroupInfo() {
             />
 
             {/*** More icon  */}
-            {!isGettingCurrentGroup && isGroupCreatedByUser && (
+            {!isGettingCurrentGroup && (
               <img
                 src={kebabIcon}
                 className="h-4"
@@ -153,19 +161,36 @@ function GroupInfo() {
                   <p>Tasks</p>
                 </Link>
 
-                <div
-                  className="w-full p-3 bg-blue800"
-                  onClick={handleExitGroup}
-                >
-                  Exit
-                </div>
+                {!isGroupCreatedByUser && (
+                  <div
+                    className="w-full p-3 bg-blue800"
+                    onClick={handleExitGroup}
+                  >
+                    Exit
+                  </div>
+                )}
 
-                <div
-                  className="w-full p-3 bg-blue700"
-                  onClick={handleDeleteGroup}
-                >
-                  Delete
-                </div>
+                {isGroupCreatedByUser && (
+                  <Link
+                    to={`/groups/group/edit/${groupId}`}
+                    className={`block w-full p-3 bg-blue700 ${
+                      isGroupCreatedByUser && "!bg-blue800"
+                    }`}
+                  >
+                    Edit
+                  </Link>
+                )}
+
+                {isGroupCreatedByUser && (
+                  <div
+                    className={`w-full p-3 bg-blue800 ${
+                      isGroupCreatedByUser && "!bg-blue700"
+                    }`}
+                    onClick={handleDeleteGroup}
+                  >
+                    Delete
+                  </div>
+                )}
               </section>
             )}
           </header>
@@ -226,12 +251,17 @@ function GroupInfo() {
             )}
 
             {/*** Members details */}
-            <main className="w-full space-y-6 md:space-y-8">
+            <main className="w-full relative space-y-6 md:space-y-8">
               {/***** List of members */}
               {groupMembers &&
                 groupMembers.length &&
                 !isGettingCurrentGroup && (
-                  <GroupMembersList groupMembers={groupMembers} />
+                  <GroupMembersList
+                    isGroupCreatedByUser={isGroupCreatedByUser}
+                    groupMembers={groupMembers}
+                    setRemoveMemberInfo={setRemoveMemberInfo}
+                    setShowcaseRemoveMemberModal={setShowcaseRemoveMemberModal}
+                  />
                 )}
 
               {/**** Skeleton loader */}
@@ -310,6 +340,9 @@ function GroupInfo() {
       {/*** Showcase Deleting Group loader */}
       {isDeletingGroup && <DeletingGroupLoader />}
 
+      {/**** Showcase Removing member loader */}
+      {isRemovingGroupMember && <RemovingGroupMemberLoader />}
+
       {/**** Delete Group Confirmation Modal */}
       {showcaseDeleteConfirmationModal && !isDeletingGroup && (
         <DeleteGroupConfirmationModal
@@ -317,6 +350,15 @@ function GroupInfo() {
           setShowcaseDeleteGroupConfirmationModal={
             setShowcaseDeleteGroupConfirmationModal
           }
+        />
+      )}
+
+      {/**** Remove member modal */}
+      {showcaseRemoveMemberModal && (
+        <RemoveGroupMemberModal
+          groupId={groupId}
+          removeMemberInfo={removeMemberInfo}
+          setShowcaseRemoveMemberModal={setShowcaseRemoveMemberModal}
         />
       )}
     </>

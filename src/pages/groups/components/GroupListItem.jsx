@@ -9,6 +9,7 @@ import { capitalizeWords } from "../../../utils/helpers";
 
 import DeleteGroupConfirmationModal from "./DeleteGroupConfirmationModal";
 import DeletingGroupLoader from "./DeletingGroupLoader";
+import EditingGroupNameLoader from "./EditingGroupNameLoader";
 
 import kebabIcon from "../../../icons/kebabIcon.svg";
 
@@ -18,7 +19,7 @@ function GroupListItem({ group }) {
   const userId = user?._id;
 
   //Variables from groups context
-  const { isDeletingGroup } = useGroups();
+  const { isDeletingGroup, isEditingGroupName } = useGroups();
 
   //Group id
   const groupId = group._id;
@@ -33,11 +34,6 @@ function GroupListItem({ group }) {
     showcaseDeleteConfirmationModal,
     setShowcaseDeleteGroupConfirmationModal,
   ] = useState(false);
-
-  function handleEditGroup() {
-    setShowcaseDropdown(false);
-    console.log("edit group");
-  }
 
   function handleDeleteGroup() {
     setShowcaseDeleteGroupConfirmationModal(true);
@@ -74,9 +70,12 @@ function GroupListItem({ group }) {
         {/****** Dropdown */}
         {showcaseDropdown && (
           <section className="w-[140px] rounded-[8px] overflow-hidden absolute top-6 mt-3 -right-2 text-white cursor-pointer z-10">
-            <div className="w-full p-3 bg-blue800" onClick={handleEditGroup}>
+            <Link
+              to={`/groups/group/edit/${groupId}`}
+              className="block w-full p-3 bg-blue800"
+            >
               Edit
-            </div>
+            </Link>
             <div className="w-full p-3 bg-blue900" onClick={handleDeleteGroup}>
               Delete
             </div>
@@ -86,6 +85,9 @@ function GroupListItem({ group }) {
 
       {/*** Showcase Deleting Group loader */}
       {isDeletingGroup && <DeletingGroupLoader />}
+
+      {/*** Showcase Editing Group Name loader */}
+      {isEditingGroupName && <EditingGroupNameLoader />}
 
       {/**** Delete Group Confirmation Modal */}
       {showcaseDeleteConfirmationModal && !isDeletingGroup && (

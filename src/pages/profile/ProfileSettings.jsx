@@ -178,6 +178,7 @@ function ProfileSettings() {
   //Make save changes button clickable if form is changed and if there's password input
   const isSaveChangesClickable =
     isFormChanged &&
+    !isUpdatingUser &&
     usernameInputValue &&
     emailInputValue &&
     passwordInputValue;

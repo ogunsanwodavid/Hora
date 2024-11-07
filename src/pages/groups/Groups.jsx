@@ -20,8 +20,7 @@ function Groups() {
   const userId = user?._id;
 
   //Variables from groups context
-  const { groups, groupsUserIn, getAllGroups, isGettingAllGroups } =
-    useGroups();
+  const { groupsUserIn, getAllGroups, isGettingAllGroups } = useGroups();
 
   //Get all groups on mount
   useEffect(() => {

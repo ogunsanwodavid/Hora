@@ -81,7 +81,6 @@ function ChangePassword() {
   const { changePassword, isChangingPassword } = useAuth();
 
   // React hook form variables
-  //Set default value of username and email to user username and user email
   const {
     register,
     formState: { errors },
@@ -102,6 +101,7 @@ function ChangePassword() {
 
   //State of change password button clickability
   const isChangePasswordBtnClickable =
+    !isChangingPassword &&
     oldPasswordInputValue &&
     newPasswordInputValue &&
     confirmNewPasswordInputValue;

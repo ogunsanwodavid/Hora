@@ -28,6 +28,7 @@ import GroupInfo from "../pages/groups/GroupInfo";
 import GroupTasks from "../pages/groups/GroupTasks";
 import CreateGroupTask from "../pages/groups/CreateGroupTask";
 import GroupTaskInfo from "../pages/groups/GroupTaskInfo";
+import EditGroupName from "../pages/groups/EditGroupName";
 import InviteGroupMember from "../pages/groups/InviteGroupMember";
 
 import Profile from "../pages/profile/Profile";
@@ -69,6 +70,7 @@ function AppRoutes() {
             <Route path="creategroup" element={<CreateGroup />} />
             <Route path="group">
               <Route path=":groupId" element={<GroupInfo />} />
+              <Route path="edit/:groupId" element={<EditGroupName />} />
               <Route
                 path="invitemembers/:groupId"
                 element={<InviteGroupMember />}

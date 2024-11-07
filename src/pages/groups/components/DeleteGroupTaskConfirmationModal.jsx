@@ -1,5 +1,3 @@
-import { useTasks } from "../../../contexts/tasksContext";
-
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
 
 import grayCloseIcon from "../../../icons/grayCloseIcon.svg";

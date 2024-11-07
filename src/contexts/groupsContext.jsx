@@ -57,6 +57,7 @@ const GroupsProvider = ({ children }) => {
   const [isGettingCurrentGroup, setIsGettingCurrentGroup] = useState(false);
   const [isCreatingGroup, setIsCreatingGroup] = useState(false);
   const [isJoiningGroup, setIsJoiningGroup] = useState(false);
+  const [isEditingGroupName, setIsEditingGroupName] = useState(false);
   const [isExitingGroup, setIsExitingGroup] = useState(false);
   const [isDeletingGroup, setIsDeletingGroup] = useState(false);
   const [isGettingCurrentGroupTasks, setIsGettingCurrentGroupTasks] =
@@ -67,6 +68,7 @@ const GroupsProvider = ({ children }) => {
   const [isCompletingGroupTask, setIsCompletingGroupTask] = useState(false);
   const [isDeletingGroupTask, setIsDeletingGroupTask] = useState(false);
   const [isSearchingNewMember, setIsSearchingNewMember] = useState(false);
+  const [isRemovingGroupMember, setIsRemovingGroupMember] = useState(false);
   const [isInvitingNewMembers, setIsInvitingNewMembers] = useState(false);
 
   //Variables related to the created group success modal
@@ -96,7 +98,7 @@ const GroupsProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
 
         // All tasks gotten successful
         const { message: getAllGroupsMessage } = data;
@@ -146,7 +148,7 @@ const GroupsProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        // console.log(data);
 
         // Current task gotten successful
         const { message: getCurrentGroupMessage } = data;
@@ -206,7 +208,7 @@ const GroupsProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
 
         // Group creation successful
         const {
@@ -273,7 +275,7 @@ const GroupsProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        // console.log(data);
 
         // Join group successful
         const { message: joinGroupMessage } = data;
@@ -311,6 +313,56 @@ const GroupsProvider = ({ children }) => {
     }
   };
 
+  //Function to edit group name
+  const editGroup = async ({ groupId, groupName }) => {
+    setIsEditingGroupName(true);
+    try {
+      const response = await fetch(`${BASE_URL}/groupName/${groupId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          groupName,
+        }),
+        redirect: "follow",
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data);
+
+        // Edit group successful
+        const { message: editGroupMessage } = data;
+
+        //Navigate to group page
+        navigate(`/groups/group/${groupId}`);
+
+        return { success: true, editGroupMessage };
+      } else {
+        //console.log(data);
+        // toast error
+        toast.error(data.message || "An unexpected error occurred");
+
+        return {
+          success: false,
+          error: data.message || "An unexpected error occurred",
+        };
+      }
+    } catch (error) {
+      // Network or other errors
+      toast.error("Something went wrong.");
+
+      return {
+        success: false,
+        error: error.message || "An unexpected error occurred",
+      };
+    } finally {
+      setIsEditingGroupName(false);
+    }
+  };
+
   //Function to exit a group
   const exitGroup = async ({ groupId, userId }) => {
     setIsExitingGroup(true);
@@ -329,7 +381,7 @@ const GroupsProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
 
         // Exit group successful
         const { message: exitGroupMessage } = data;
@@ -376,7 +428,7 @@ const GroupsProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
 
         // Delete group successful
         const { message: deleteGroupMessage } = data;
@@ -424,7 +476,7 @@ const GroupsProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
 
         // All current group tasks gotten successful
         const { message: getCurrentGroupTasksMessage } = data;
@@ -480,7 +532,7 @@ const GroupsProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
 
         // Current group task gotten successful
         const { message: getCurrentGroupTaskMessage } = data;
@@ -741,6 +793,56 @@ const GroupsProvider = ({ children }) => {
     }
   };
 
+  //Function to remove a group member
+  const removeGroupMember = async (groupId, memberId) => {
+    setIsRemovingGroupMember(true);
+    try {
+      const response = await fetch(
+        `${BASE_URL}/${groupId}/member/${memberId}`,
+        {
+          method: "DELETE",
+          redirect: "follow",
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        //console.log(data);
+
+        // Remove group member successful
+        const { message: removeGroupMemberMessage } = data;
+
+        //Get new info of the group
+        await getCurrentGroup(groupId);
+
+        return { success: true, removeGroupMemberMessage };
+      } else {
+        //console.log(data);
+
+        // toast error
+        //toast.error(data.message || "An unexpected error occurred");
+
+        //set search member result empty
+
+        return {
+          success: false,
+          error: data.message || "An unexpected error occurred",
+        };
+      }
+    } catch (error) {
+      // Network or other errors
+      //toast.error("Something went wrong.");
+
+      return {
+        success: false,
+        error: error.message || "An unexpected error occurred",
+      };
+    } finally {
+      setIsRemovingGroupMember(false);
+    }
+  };
+
   //Function to invite group members
   const inviteMembers = async ({ groupId, inviteLink, inviterId, emails }) => {
     setIsInvitingNewMembers(true);
@@ -768,7 +870,7 @@ const GroupsProvider = ({ children }) => {
         const { message: inviteMemberMessage } = data;
 
         //Toast message
-        toast.success(inviteMemberMessage);
+        //toast.success(inviteMemberMessage);
 
         //Navigate to previous page
         navigate(-1);
@@ -813,6 +915,7 @@ const GroupsProvider = ({ children }) => {
         getCurrentGroup,
         createGroup,
         joinGroup,
+        editGroup,
         exitGroup,
         deleteGroup,
         getCurrentGroupTasks,
@@ -821,11 +924,13 @@ const GroupsProvider = ({ children }) => {
         completeGroupTask,
         deleteGroupTask,
         searchNewMember,
+        removeGroupMember,
         inviteMembers,
         isGettingAllGroups,
         isGettingCurrentGroup,
         isCreatingGroup,
         isJoiningGroup,
+        isEditingGroupName,
         isExitingGroup,
         isDeletingGroup,
         isGettingCurrentGroupTasks,
@@ -834,6 +939,7 @@ const GroupsProvider = ({ children }) => {
         isCompletingGroupTask,
         isDeletingGroupTask,
         isSearchingNewMember,
+        isRemovingGroupMember,
         isInvitingNewMembers,
         joinGroupError,
         setJoinGroupError,
