@@ -52,9 +52,14 @@ function TasksList() {
 
   const [showcaseTodayTasks, setShowcaseTodayTasks] = useState(false);
 
-  //Completed tasks
+  // Function to filter completed tasks whose due date is today or in the past
   const completedTasks = currentTasks.filter((task) => {
-    return task.completed;
+    const isTaskDueDateToday = isDateToday(
+      parseDateFromYYYYMMDD(task.dueDate.substring(0, 10))
+    );
+
+    // Task should be completed and have a due date either today or in the past
+    return task.completed && isTaskDueDateToday;
   });
   const [showcaseCompletedTasks, setShowcaseCompletedTasks] = useState(false);
 

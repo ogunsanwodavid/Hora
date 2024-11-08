@@ -43,7 +43,10 @@ function SummaryBox() {
           </p>
         </div>
 
-        <Link to="/notifications" className="relative lg:hidden">
+        <Link
+          //to="/notifications"
+          className="relative lg:hidden"
+        >
           {/**** Notification icon */}
           <main className="w-[40px] h-[40px] bg-blue600 rounded-[100px] flex items-center justify-center">
             <NotificationsIcon className="w-[18px]" />

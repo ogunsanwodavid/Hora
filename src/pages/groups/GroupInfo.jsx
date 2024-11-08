@@ -26,6 +26,7 @@ import TasksIcon from "../../icons/TasksIcon";
 
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { MdEditSquare } from "react-icons/md";
 
 function GroupInfo() {
   //Window size info
@@ -62,6 +63,7 @@ function GroupInfo() {
     isExitingGroup,
     isDeletingGroup,
     isRemovingGroupMember,
+    setEditedGroupInfo,
   } = useGroups();
 
   //Get current group info on mount
@@ -108,6 +110,7 @@ function GroupInfo() {
   const [showcaseRemoveMemberModal, setShowcaseRemoveMemberModal] =
     useState(false);
 
+  //Function to exit group
   async function handleExitGroup() {
     const formData = {
       groupId: groupId,
@@ -117,6 +120,16 @@ function GroupInfo() {
     await exitGroup(formData);
   }
 
+  //Function to edit group
+  function handleEditGroup() {
+    //Set currently edited group info
+    setEditedGroupInfo(currentGroupInfo);
+
+    //Navigate to group page
+    navigate(`/groups/group/edit/${groupId}`);
+  }
+
+  //Function to delete group
   function handleDeleteGroup() {
     setShowcaseDeleteGroupConfirmationModal(true);
     setShowcaseDropdown(false);
@@ -134,12 +147,9 @@ function GroupInfo() {
           {/*** Header */}
           <header className="relative w-full flex items-center justify-between md:mt-4">
             {/*** Back button */}
-            <img
-              src={backButton}
-              className="w-4"
-              alt="Back button"
-              onClick={() => navigate(-1)}
-            />
+            <Link to="/groups">
+              <img src={backButton} className="w-4" alt="Back button" />
+            </Link>
 
             {/*** More icon  */}
             {!isGettingCurrentGroup && (
@@ -171,14 +181,14 @@ function GroupInfo() {
                 )}
 
                 {isGroupCreatedByUser && (
-                  <Link
-                    to={`/groups/group/edit/${groupId}`}
-                    className={`block w-full p-3 bg-blue700 ${
+                  <div
+                    className={`w-full p-3 bg-blue700 ${
                       isGroupCreatedByUser && "!bg-blue800"
                     }`}
+                    onClick={handleEditGroup}
                   >
                     Edit
-                  </Link>
+                  </div>
                 )}
 
                 {isGroupCreatedByUser && (
@@ -291,6 +301,21 @@ function GroupInfo() {
                   Group Tasks
                 </p>
               </Link>
+
+              {/**** Edit group */}
+              {isGroupCreatedByUser && (
+                <div
+                  className="flex items-center gap-x-4 cursor-pointer md:gap-x-6"
+                  onClick={handleEditGroup}
+                >
+                  {/**** Edit icon */}
+                  <MdEditSquare className="text-blue200 text-xl md:text-[25px]" />
+
+                  <p className="text-blue200 font-semibold md:text-lg">
+                    Edit Group
+                  </p>
+                </div>
+              )}
 
               {/**** Exit group */}
               {!isGroupCreatedByUser && (

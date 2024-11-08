@@ -4,6 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 
+import {
+  isDatePrevious,
+  isDateToday,
+  parseDateFromYYYYMMDD,
+} from "../utils/helpers";
+
 const TasksContext = createContext();
 
 const TasksProvider = ({ children }) => {
@@ -93,9 +99,26 @@ const TasksProvider = ({ children }) => {
 
   const personalTasks = allTasks.length
     ? allTasks.filter((task) => {
+        /* const isTaskDueDatePrevious = isDatePrevious(
+          parseDateFromYYYYMMDD(task.dueDate.substring(0, 10))
+        );
+        const isTaskDueDateToday = isDateToday(
+          parseDateFromYYYYMMDD(task.dueDate.substring(0, 10))
+        );
+        const isTaskDueDateAfter = !(
+          isTaskDueDatePrevious || isTaskDueDateToday
+        );
+
+        if (!isTaskDueDateToday && !task.completed) {
+          console.log(task);
+          return false;
+        } */
+
         return task.type.at(0).replace(/\s+/g, "").toLowerCase() === "personal";
       })
     : null;
+
+  //console.log(personalTasks);
 
   const groupTasks = allTasks.length
     ? allTasks.filter((task) => {

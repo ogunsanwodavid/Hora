@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../../contexts/authContext";
 import { useGroups } from "../../../contexts/groupsContext";
@@ -14,12 +14,16 @@ import EditingGroupNameLoader from "./EditingGroupNameLoader";
 import kebabIcon from "../../../icons/kebabIcon.svg";
 
 function GroupListItem({ group }) {
+  //Navigation
+  const navigate = useNavigate();
+
   //Variables from user context
   const { user } = useAuth();
   const userId = user?._id;
 
   //Variables from groups context
-  const { isDeletingGroup, isEditingGroupName } = useGroups();
+  const { isDeletingGroup, isEditingGroupName, setEditedGroupInfo } =
+    useGroups();
 
   //Group id
   const groupId = group._id;
@@ -34,6 +38,14 @@ function GroupListItem({ group }) {
     showcaseDeleteConfirmationModal,
     setShowcaseDeleteGroupConfirmationModal,
   ] = useState(false);
+
+  function handleEditGroup() {
+    //Set currently edited group info
+    setEditedGroupInfo(group);
+
+    //Navigate to group page
+    navigate(`/groups/group/edit/${groupId}`);
+  }
 
   function handleDeleteGroup() {
     setShowcaseDeleteGroupConfirmationModal(true);
@@ -70,12 +82,9 @@ function GroupListItem({ group }) {
         {/****** Dropdown */}
         {showcaseDropdown && (
           <section className="w-[140px] rounded-[8px] overflow-hidden absolute top-6 mt-3 -right-2 text-white cursor-pointer z-10">
-            <Link
-              to={`/groups/group/edit/${groupId}`}
-              className="block w-full p-3 bg-blue800"
-            >
+            <div className=" w-full p-3 bg-blue800" onClick={handleEditGroup}>
               Edit
-            </Link>
+            </div>
             <div className="w-full p-3 bg-blue900" onClick={handleDeleteGroup}>
               Delete
             </div>

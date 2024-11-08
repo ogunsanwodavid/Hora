@@ -70,7 +70,8 @@ function EditGroupName() {
   const { groupId } = useParams();
 
   //Variables from groups context
-  const { currentGroupInfo, isEditingGroupName, editGroup } = useGroups();
+  const { currentGroupInfo, isEditingGroupName, editGroup, editedGroupInfo } =
+    useGroups();
 
   //React hook form variables
   //Pre-fiiled with the existing group name
@@ -81,7 +82,7 @@ function EditGroupName() {
     watch,
   } = useForm({
     defaultValues: {
-      groupName: currentGroupInfo?.groupName,
+      groupName: editedGroupInfo?.groupName,
     },
   });
 
@@ -109,8 +110,8 @@ function EditGroupName() {
       groupId: groupId,
       groupName: data.groupName,
     };
-    console.log(formData);
-    //await editGroup(formData);
+    //console.log(formData);
+    await editGroup(formData);
   }
 
   return (

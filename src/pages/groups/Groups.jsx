@@ -40,7 +40,10 @@ function Groups() {
           Groups
         </h2>
 
-        <Link to="/notifications" className="relative lg:hidden">
+        <Link
+          //to="/notifications"
+          className="relative lg:hidden"
+        >
           {/**** Notification icon */}
           <main className="w-[40px] h-[40px] bg-blue900 rounded-[100px] flex items-center justify-center">
             <NotificationsIcon className="w-[18px]" />

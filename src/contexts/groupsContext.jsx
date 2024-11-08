@@ -86,6 +86,9 @@ const GroupsProvider = ({ children }) => {
   const [showcaseGroupTaskCompletedModal, setShowcaseGroupTaskCompletedModal] =
     useState(false);
 
+  //Info of currently edited group
+  const [editedGroupInfo, setEditedGroupInfo] = useState(null);
+
   //Function to get all groups
   const getAllGroups = async (userId) => {
     setIsGettingAllGroups(true);
@@ -148,7 +151,7 @@ const GroupsProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        // console.log(data);
+        console.log(data);
 
         // Current task gotten successful
         const { message: getCurrentGroupMessage } = data;
@@ -942,6 +945,7 @@ const GroupsProvider = ({ children }) => {
         isRemovingGroupMember,
         isInvitingNewMembers,
         joinGroupError,
+        editedGroupInfo,
         setJoinGroupError,
         createGroupSuccessCode,
         createGroupSuccessName,
@@ -950,6 +954,7 @@ const GroupsProvider = ({ children }) => {
         showcaseGroupTaskCompletedModal,
         setShowcaseCreateGroupSuccessModal,
         setSelectedUsers,
+        setEditedGroupInfo,
       }}
     >
       {children}
