@@ -1,6 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
 
@@ -38,6 +38,17 @@ const AuthProvider = ({ children }) => {
   const [isDeletingUser, setIsDeletingUser] = useState(false);
 
   const navigate = useNavigate();
+
+  //Store the url first visited before the auth wall
+  const [userVisitedRoute, setUserVisitedRoute] = useState("");
+  const location = useLocation();
+  const fullPath = location.pathname;
+
+  useEffect(() => {
+    if (fullPath !== "/" || fullPath !== "/signin") {
+      setUserVisitedRoute(fullPath);
+    }
+  }, []);
 
   //Signup Function
   const signup = async ({ username, email, password }) => {
@@ -300,15 +311,20 @@ const AuthProvider = ({ children }) => {
         const token = data.login.login.token;
 
         //set user information and token to local storage
-        setToken(token);
-        setUserId(data.login.login._id);
+        await setToken(token);
+        await setUserId(data.login.login._id);
 
         //await getUser(data.login.login._id);
 
         //toast.success(loginMessage);
 
-        //Navigate to HOME page
-        navigate("/");
+        //Navigate to the real route user wanted to before being bounced out the auth wall
+        //Else navigate to home page
+        if (userVisitedRoute && userVisitedRoute !== "/signin") {
+          navigate(userVisitedRoute);
+        } else {
+          navigate("/");
+        }
 
         return { success: true, loginMessage, user };
       } else {

@@ -23,7 +23,8 @@ function ProtectedRoute({ isAuthenticated }) {
   if (isOnboardingUser && isAuthenticated) return <OnboardingPageLoader />;
 
   //Displays Accessdenied page if user is not authenticated
-  if (!isAuthenticated && !isLoggingOut) return <AccessDenied />;
+  //if (!isAuthenticated && !isLoggingOut) return <AccessDenied />;
+  if (!isAuthenticated && !isLoggingOut) return <Navigate to="/" />;
 
   //Show Spinner if user is logging out
   if (!isAuthenticated && isLoggingOut) return <LoggingOutLoader />;
