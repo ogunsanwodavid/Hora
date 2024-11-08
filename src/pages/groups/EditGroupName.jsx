@@ -149,24 +149,16 @@ function EditGroupName() {
             id="groupname"
             {...register("groupName", {
               required: "This field is required",
+              pattern: {
+                value: /^[A-Za-z0-9 ]*$/, // Only allows letters, digits, and spaces
+                message: "Only digits, text, and spaces are allowed",
+              },
             })}
             helperText={errors?.groupName?.message}
             error={Boolean(errors?.groupName?.message)}
             autoComplete="off"
             className="w-full"
             disabled={isEditingGroupName}
-            onKeyDown={(e) => {
-              const key = e.key;
-
-              // Allow letters, digits, spaces, and backspace
-              if (
-                !/^[a-zA-Z0-9]$/.test(key) &&
-                key !== "Backspace" &&
-                key !== " "
-              ) {
-                e.preventDefault();
-              }
-            }}
           />
 
           {/**** Submit button */}

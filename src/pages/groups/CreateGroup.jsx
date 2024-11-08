@@ -112,23 +112,15 @@ function CreateGroup() {
                 placeholder="Enter your group name"
                 {...register("groupName", {
                   required: "This field is required",
+                  pattern: {
+                    value: /^[A-Za-z0-9 ]*$/, // Only allows letters, digits, and spaces
+                    message: "Only digits, text, and spaces are allowed",
+                  },
                 })}
                 className={`w-full bg-black700 h-[48px] px-4 py-3 text-base text-white  transition-all duration-500 border-[1.2px] border-black300 outline-none rounded-[4px] placeholder:text-black150 ${
                   errors?.groupName?.message ? "border-errorRed" : ""
                 } ${!errors?.groupName?.message && "focus:border-white"}`}
                 disabled={isCreatingGroup}
-                onKeyDown={(e) => {
-                  const key = e.key;
-
-                  // Allow letters, digits, spaces, and backspace
-                  if (
-                    !/^[a-zA-Z0-9]$/.test(key) &&
-                    key !== "Backspace" &&
-                    key !== " "
-                  ) {
-                    e.preventDefault();
-                  }
-                }}
               />
             </FormInput>
 
