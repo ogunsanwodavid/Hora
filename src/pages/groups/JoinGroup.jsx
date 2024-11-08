@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 
@@ -22,6 +22,9 @@ function JoinGroup() {
   //Navigate
   const navigate = useNavigate();
 
+  //Route parameters
+  const { inviteCode: routeInviteCode } = useParams();
+
   //User credentials
   const { user } = useAuth();
   const userId = user?._id;
@@ -42,7 +45,11 @@ function JoinGroup() {
   const { joinGroup, isJoiningGroup, joinGroupError } = useGroups();
 
   //React hook form functions and variables
-  const { register, formState, watch, handleSubmit } = useForm();
+  const { register, formState, watch, handleSubmit } = useForm({
+    defaultValues: {
+      inviteLink: routeInviteCode,
+    },
+  });
   const { errors } = formState;
 
   //Join group clickable only where theres a inviteLink input value

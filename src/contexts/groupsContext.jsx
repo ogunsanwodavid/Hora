@@ -80,7 +80,7 @@ const GroupsProvider = ({ children }) => {
     useState("https://hora-student-app.vercel.app/groups/joingroup");
 
   //Variables related to the joinGroup page
-  const [joinGroupError, setJoinGroupError] = useState("Some error");
+  const [joinGroupError, setJoinGroupError] = useState("");
 
   //Showcase modal after completing group task
   const [showcaseGroupTaskCompletedModal, setShowcaseGroupTaskCompletedModal] =

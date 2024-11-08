@@ -66,7 +66,7 @@ function AppRoutes() {
           <Route path="groups">
             <Route index element={<Groups />} />
             <Route path="newgroup" element={<NewGroup />} />
-            <Route path="joingroup" element={<JoinGroup />} />
+            <Route path="joingroup/:inviteCode?" element={<JoinGroup />} />
             <Route path="creategroup" element={<CreateGroup />} />
             <Route path="group">
               <Route path=":groupId" element={<GroupInfo />} />
