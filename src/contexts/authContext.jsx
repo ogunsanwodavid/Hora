@@ -44,12 +44,14 @@ const AuthProvider = ({ children }) => {
   const location = useLocation();
   const fullPath = location.pathname;
 
+  //This effect set the first visited route if it is not an auth page
   useEffect(() => {
     if (
       fullPath !== "/" ||
       fullPath !== "/signin" ||
       fullPath !== "/createaccount" ||
-      fullPath !== "/forgotpassword"
+      fullPath !== "/forgotpassword" ||
+      fullPath !== "/verifyemail"
     ) {
       setUserVisitedRoute(fullPath);
     }
