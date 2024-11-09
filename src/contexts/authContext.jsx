@@ -45,7 +45,12 @@ const AuthProvider = ({ children }) => {
   const fullPath = location.pathname;
 
   useEffect(() => {
-    if (fullPath !== "/" || fullPath !== "/signin") {
+    if (
+      fullPath !== "/" ||
+      fullPath !== "/signin" ||
+      fullPath !== "/createaccount" ||
+      fullPath !== "/forgotpassword"
+    ) {
       setUserVisitedRoute(fullPath);
     }
   }, []);
