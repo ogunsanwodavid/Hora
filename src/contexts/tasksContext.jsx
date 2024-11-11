@@ -158,7 +158,7 @@ const TasksProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        //console.log(data);
+        console.log(data);
 
         // All tasks gotten successful
         const { message: getAllTasksMessage } = data;

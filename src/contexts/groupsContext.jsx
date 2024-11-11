@@ -485,7 +485,7 @@ const GroupsProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        //console.log(data);
+        console.log(data);
 
         // All current group tasks gotten successful
         const { message: getCurrentGroupTasksMessage } = data;
