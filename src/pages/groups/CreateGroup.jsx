@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +12,7 @@ import { useAuth } from "../../contexts/authContext";
 
 import CreatingGroupLoader from "./components/CreatingGroupLoader";
 import CreateGroupSuccessModal from "./components/CreateGroupSuccessModal";
+import ShareJoinGroupUrl from "./components/ShareJoinGroupUrl";
 
 import backButton from "../../icons/leftArrowIcon.svg";
 import FormInput from "../../ui/FormInput";
@@ -67,6 +68,10 @@ function CreateGroup() {
 
     await createGroup(formData);
   }
+
+  //State to showcase share join group url
+  const [showcaseShareJoinGroupUrl, setShowcaseShareJoinGroupUrl] =
+    useState(true);
 
   return (
     <>
@@ -144,7 +149,18 @@ function CreateGroup() {
       {isCreatingGroup && <CreatingGroupLoader />}
 
       {/**** Showcase CreatSuccessGroupLoader */}
-      {showcaseCreateGroupSuccessModal && <CreateGroupSuccessModal />}
+      {showcaseCreateGroupSuccessModal && (
+        <CreateGroupSuccessModal
+          setShowcaseShareJoinGroupUrl={setShowcaseShareJoinGroupUrl}
+        />
+      )}
+
+      {/**** Showcase Share join group if device is not compatible with WEB Share API */}
+      {showcaseShareJoinGroupUrl && (
+        <ShareJoinGroupUrl
+          setShowcaseShareJoinGroupUrl={setShowcaseShareJoinGroupUrl}
+        />
+      )}
     </>
   );
 }

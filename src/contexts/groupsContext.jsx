@@ -212,6 +212,8 @@ const GroupsProvider = ({ children }) => {
 
       if (response.ok) {
         //console.log(data);
+        const BASE_JOINGROUP_URL =
+          "https://hora-student-app.vercel.app/groups/joingroup";
 
         // Group creation successful
         const {
@@ -231,9 +233,9 @@ const GroupsProvider = ({ children }) => {
         //created group name and invite code
         setCreateGroupSuccessName(createdGroupName);
         setCreateGroupSuccessCode(createdGroupInviteCode);
-
-        //Navigate to group page
-        //navigate("/groups");
+        setCreateGroupSuccessInviteLink(
+          `${BASE_JOINGROUP_URL}/${createdGroupInviteCode}`
+        );
 
         return { success: true, createGroupMessage };
       } else {
@@ -640,24 +642,17 @@ const GroupsProvider = ({ children }) => {
   };
 
   //Function to complete a group task
-  const completeGroupTask = async (taskId) => {
-    const completedJSON = {
-      completed: true,
-    };
-
+  const completeGroupTask = async ({ taskId, userId }) => {
     setIsCompletingGroupTask(true);
     try {
-      const response = await fetch(
-        `https://hora-1daj.onrender.com/task/status/${taskId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(completedJSON),
-          redirect: "follow",
-        }
-      );
+      const response = await fetch(`${BASE_URL}/complete/group-task`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ taskId, userId }),
+        redirect: "follow",
+      });
 
       const data = await response.json();
 

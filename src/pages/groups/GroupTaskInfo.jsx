@@ -33,10 +33,15 @@ import redAlarmIcon from "../../icons/redAlarmIcon.svg";
 
 import repeatIcon from "../../icons/repeatIcon.svg";
 import alarmIcon from "../../icons/alarmIcon.svg";
+import { useAuth } from "../../contexts/authContext";
 
 function GroupTaskInfo() {
   //Window size info
   const { windowHeight } = useWindowDimensions();
+
+  //User credentials
+  const { user } = useAuth();
+  const userId = user._id;
 
   //Navigate
   const navigate = useNavigate();
@@ -126,9 +131,12 @@ function GroupTaskInfo() {
     e.preventDefault();
     setShowcaseDropdown(false);
 
-    await completeGroupTask(taskId);
+    const formData = {
+      taskId: taskId,
+      userId: userId,
+    };
 
-    //await console.log(groupId, taskId);
+    await completeGroupTask(formData);
   }
 
   return (

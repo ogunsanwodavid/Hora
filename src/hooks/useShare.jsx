@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 
 const useShare = () => {
-  const shareContent = async (title, text, url) => {
+  const shareContent = async (title, text, url, errorFunc) => {
     if (navigator.share) {
       try {
         await navigator.share({
@@ -14,8 +14,7 @@ const useShare = () => {
         toast.warning("Failed to share content");
       }
     } else {
-      toast.warning("Web Share API is not supported in your browser.");
-      console.log("Web Share API not supported");
+      errorFunc();
     }
   };
 

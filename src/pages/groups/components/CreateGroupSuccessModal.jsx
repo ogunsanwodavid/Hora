@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { useAppDesign } from "../../../contexts/appDesignContext";
 import { useGroups } from "../../../contexts/groupsContext";
@@ -15,15 +15,12 @@ import backButton from "../../../icons/leftArrowIcon.svg";
 import whiteCloseIcon from "../../../icons/whiteCloseIcon.svg";
 import grayInfoIcon from "../../../icons/grayInfoIcon.svg";
 
-function CreateGroupSuccessModal() {
+function CreateGroupSuccessModal({ setShowcaseShareJoinGroupUrl }) {
   //Window size info
   const { windowHeight } = useWindowDimensions();
 
   //App design info
   const { setShowcaseMobileNav } = useAppDesign();
-
-  //Navigate
-  const navigate = useNavigate();
 
   //Dont show mobile navbar on mount
   useEffect(() => {
@@ -42,18 +39,11 @@ function CreateGroupSuccessModal() {
     // setShowcaseCreateGroupSuccessModal,
   } = useGroups();
 
-  //
-  /* useEffect(() => {
-    return () => {
-      setShowcaseCreateGroupSuccessModal(false);
-    };
-  }); */
-
   //State to handle notification box
   const [showcaseNotificationBox, setShowcaseNotificationBox] = useState(true);
 
   //Varaibles from copy to clipboard hook
-  const { copied, copy } = useCopyToClipboard("", 3000);
+  const { copy } = useCopyToClipboard("", 3000);
 
   //Function from useshare hook
   const shareContent = useShare();
@@ -63,12 +53,18 @@ function CreateGroupSuccessModal() {
     copy(createGroupSuccessCode);
   }
 
+  //Function to show share group url if web share API is not supported
+  function handleShareInviteLinkError() {
+    setShowcaseShareJoinGroupUrl(true);
+  }
+
   //Function to share invite link
   function handleShareInviteLink() {
     shareContent(
       createGroupSuccessCode,
       "Join our group to start keeping streaks and competing on the leaderboard",
-      createGroupSuccessInviteLink
+      createGroupSuccessInviteLink,
+      handleShareInviteLinkError
     );
   }
 

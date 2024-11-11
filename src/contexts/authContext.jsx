@@ -329,6 +329,7 @@ const AuthProvider = ({ children }) => {
         //Else navigate to home page
         if (userVisitedRoute && userVisitedRoute !== "/signin") {
           navigate(userVisitedRoute);
+          console.log(userVisitedRoute);
         } else {
           navigate("/");
         }
