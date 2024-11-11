@@ -86,7 +86,6 @@ const AuthProvider = ({ children }) => {
 
         //Set token
         setToken(data.register.token);
-        //setUserId(data.register.createUser._id);
 
         //Set otp
         setVerificationOtp(data.register.createUser.onetime);
@@ -318,11 +317,12 @@ const AuthProvider = ({ children }) => {
         // Login successful
         const { message: loginMessage } = data;
         //const token = data.login.login.token;
-        const token = data.login.token;
+        const token = data.login.user.token;
+        const userId = data.login.user._id;
 
         //set user information and token to local storage
         await setToken(token);
-        //await setUserId(data.login.login._id);
+        await setUserId(userId);
 
         //await getUser(data.login.login._id);
 
@@ -330,11 +330,20 @@ const AuthProvider = ({ children }) => {
 
         //Navigate to the real route user wanted to before being bounced out the auth wall
         //Else navigate to home page
-        if (userVisitedRoute && userVisitedRoute !== "/signin") {
+        if (
+          userVisitedRoute &&
+          userVisitedRoute !== "/signin" &&
+          userVisitedRoute !== "/createaccount" &&
+          userVisitedRoute !== "/forgotpassword" &&
+          userVisitedRoute !== "/resetpassword" &&
+          userVisitedRoute !== "/verifyemail"
+        ) {
           navigate(userVisitedRoute);
+          //console.log(userVisitedRoute);
         } else {
           navigate("/");
         }
+        //navigate("/");
 
         return { success: true, loginMessage, user };
       } else {
