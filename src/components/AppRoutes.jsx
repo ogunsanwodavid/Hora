@@ -41,8 +41,8 @@ function AppRoutes() {
   const { token, userId } = useAuth();
 
   //set user authenticated if userId and token exists in local storage
-  //const isAuthenticated = Boolean(token && userId);
-  const isAuthenticated = true;
+  const isAuthenticated = Boolean(token && userId);
+  //const isAuthenticated = true;
 
   return (
     <Routes>

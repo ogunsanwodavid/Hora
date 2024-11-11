@@ -122,6 +122,7 @@ function VerifyEmail() {
                   type="text"
                   inputMode="numeric"
                   name="otp"
+                  autoComplete="off"
                   maxLength="1"
                   value={data}
                   className={`w-[30px] h-[30px] bg-transparent border-[1.5px] text-white text-[20px] text-center  font-semibold sm:w-[40px] sm:h-[40px] ${

@@ -51,6 +51,7 @@ const AuthProvider = ({ children }) => {
       fullPath !== "/signin" ||
       fullPath !== "/createaccount" ||
       fullPath !== "/forgotpassword" ||
+      fullPath !== "/resetpassword" ||
       fullPath !== "/verifyemail"
     ) {
       setUserVisitedRoute(fullPath);
@@ -85,6 +86,7 @@ const AuthProvider = ({ children }) => {
 
         //Set token
         setToken(data.register.token);
+        //setUserId(data.register.createUser._id);
 
         //Set otp
         setVerificationOtp(data.register.createUser.onetime);
@@ -225,12 +227,12 @@ const AuthProvider = ({ children }) => {
       //Toast error
       toast.error("Failed to onboard user");
 
-      //Navigate ti sign in
-      navigate("/signin");
-
       //Remove token and userId
-      removeToken();
-      removeUserId();
+      await removeToken();
+      await removeUserId();
+
+      //Navigate to sign in
+      navigate("/signin");
 
       return {
         success: false,
@@ -315,11 +317,12 @@ const AuthProvider = ({ children }) => {
         console.log(data);
         // Login successful
         const { message: loginMessage } = data;
-        const token = data.login.login.token;
+        //const token = data.login.login.token;
+        const token = data.login.token;
 
         //set user information and token to local storage
         await setToken(token);
-        await setUserId(data.login.login._id);
+        //await setUserId(data.login.login._id);
 
         //await getUser(data.login.login._id);
 
@@ -329,7 +332,6 @@ const AuthProvider = ({ children }) => {
         //Else navigate to home page
         if (userVisitedRoute && userVisitedRoute !== "/signin") {
           navigate(userVisitedRoute);
-          console.log(userVisitedRoute);
         } else {
           navigate("/");
         }
@@ -510,7 +512,7 @@ const AuthProvider = ({ children }) => {
         error: error.message || "An unexpected error occurred",
       };
     } finally {
-      setIsResettingPassword(false);
+      setIsResendingOtp(false);
     }
   };
 
@@ -731,6 +733,7 @@ const AuthProvider = ({ children }) => {
         isLoggingOut,
         isRequestingReset,
         isResettingPassword,
+        isResendingOtp,
         isOnboardingUser,
         isGettingUser,
         isUpdatingUser,

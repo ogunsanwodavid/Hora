@@ -1,6 +1,4 @@
-import { useEffect } from "react";
-
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
 
@@ -11,6 +9,15 @@ function TaskCompletedModal({ setShowcaseTaskCompletedModal }) {
   //Window size info
   const { windowHeight } = useWindowDimensions();
 
+  //Navigate
+  const navigate = useNavigate();
+
+  //Function to close modal
+  async function handleCloseModal() {
+    await setShowcaseTaskCompletedModal(false);
+    navigate(-1);
+  }
+
   return (
     <div
       className="fixed top-0 left-0 w-full bg-[rgba(12,17,28,0.2)] backdrop-blur-[2px] flex items-center justify-center lg:absolute lg:!min-h-full"
@@ -20,14 +27,14 @@ function TaskCompletedModal({ setShowcaseTaskCompletedModal }) {
     >
       <main className="w-full max-w-[345px] mx-5 rounded-[10px] bg-darkestBlue p-6 space-y-4">
         {/**** Close icon */}
-        <Link to="/tasks">
+        <div onClick={handleCloseModal}>
           <img
             src={grayCloseIcon}
             className="w-[20px] h-[20px] ml-auto"
             alt="gray close icon"
-            onClick={() => setShowcaseTaskCompletedModal(false)}
+            //onClick={() => setShowcaseTaskCompletedModal(false)}
           />
-        </Link>
+        </div>
 
         {/**** Image */}
         <img
@@ -42,7 +49,7 @@ function TaskCompletedModal({ setShowcaseTaskCompletedModal }) {
             Task Completed!
           </h3>
           <p className="text-[14px] text-[#EEEEF0] text-center">
-            You’re one step closer to a full progress bar. Maintain the
+            You&apos;re one step closer to a full progress bar. Maintain the
             momentum!
           </p>
         </section>

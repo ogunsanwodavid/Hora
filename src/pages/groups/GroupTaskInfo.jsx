@@ -41,7 +41,7 @@ function GroupTaskInfo() {
 
   //User credentials
   const { user } = useAuth();
-  const userId = user._id;
+  const userId = user?._id;
 
   //Navigate
   const navigate = useNavigate();
@@ -131,12 +131,7 @@ function GroupTaskInfo() {
     e.preventDefault();
     setShowcaseDropdown(false);
 
-    const formData = {
-      taskId: taskId,
-      userId: userId,
-    };
-
-    await completeGroupTask(formData);
+    await completeGroupTask(taskId);
   }
 
   return (

@@ -106,6 +106,7 @@ function JoinGroup() {
                 type="text"
                 name="inviteLink"
                 id="inviteLink"
+                autoComplete="off"
                 placeholder="Enter group code"
                 {...register("inviteLink", {
                   required: "This field is required",

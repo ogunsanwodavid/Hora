@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "./authContext";
 
 import { toast } from "react-toastify";
+import { isDateAfter, parseDateFromYYYYMMDD } from "../utils/helpers";
 
 const GroupsContext = createContext();
 
@@ -21,13 +22,6 @@ const GroupsProvider = ({ children }) => {
 
   //Group variables
   const [groups, setGroups] = useState([]);
-
-  //Make sure user is a member of the group on display
-  const groupsUserIn = groups.length
-    ? groups.filter((group) =>
-        group.members.some((member) => member._id === userId)
-      )
-    : [];
 
   const [currentGroupInfo, setCurrentGroupInfo] = useState(null);
 
@@ -106,11 +100,21 @@ const GroupsProvider = ({ children }) => {
         // All tasks gotten successful
         const { message: getAllGroupsMessage } = data;
 
+        //ALl groups gotten from response
+        const allGroups = data.groups;
+
         //Toast message
         //toast.success(getAllTasksMessage);
 
+        //Only groups user in
+        const groupsUserIn = allGroups.length
+          ? allGroups.filter((group) =>
+              group.members.some((member) => member._id === userId)
+            )
+          : [];
+
         //set all tasks
-        await setGroups(data.groups);
+        await setGroups(groupsUserIn);
 
         return { success: true, getAllGroupsMessage };
       } else {
@@ -486,11 +490,22 @@ const GroupsProvider = ({ children }) => {
         // All current group tasks gotten successful
         const { message: getCurrentGroupTasksMessage } = data;
 
+        //ALl tasks gotten from response
+        const allTasks = data.allTasks;
+
+        //Remove future tasks
+        const onlyTodayOrPreviousTasks = allTasks.filter((task) => {
+          const dueDate = parseDateFromYYYYMMDD(task.dueDate.substring(0, 10));
+          const isDueDateAfter = isDateAfter(dueDate);
+
+          return !isDueDateAfter;
+        });
+
         //Toast message
         //toast.success(getCurrentGroupTasksMessage);
 
         //set all tasks
-        await setCurrentGroupTasks(data.allTasks);
+        await setCurrentGroupTasks(onlyTodayOrPreviousTasks);
 
         return { success: true, getCurrentGroupTasksMessage };
       } else {
@@ -642,22 +657,29 @@ const GroupsProvider = ({ children }) => {
   };
 
   //Function to complete a group task
-  const completeGroupTask = async ({ taskId, userId }) => {
+  const completeGroupTask = async (taskId) => {
+    const completedJSON = {
+      completed: true,
+    };
+
     setIsCompletingGroupTask(true);
     try {
-      const response = await fetch(`${BASE_URL}/complete/group-task`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ taskId, userId }),
-        redirect: "follow",
-      });
+      const response = await fetch(
+        `https://hora-1daj.onrender.com/task/status/${taskId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(completedJSON),
+          redirect: "follow",
+        }
+      );
 
       const data = await response.json();
 
       if (response.ok) {
-        //console.log(data);
+        console.log(data);
 
         // Group Task completion successful
         const { message: completeGroupTaskMessage } = data;
@@ -901,7 +923,6 @@ const GroupsProvider = ({ children }) => {
     <GroupsContext.Provider
       value={{
         groups,
-        groupsUserIn,
         currentGroupInfo,
         currentGroupTaskInfo,
         currentGroupTasks,
@@ -948,6 +969,7 @@ const GroupsProvider = ({ children }) => {
         showcaseCreateGroupSuccessModal,
         showcaseGroupTaskCompletedModal,
         setShowcaseCreateGroupSuccessModal,
+        setShowcaseGroupTaskCompletedModal,
         setSelectedUsers,
         setEditedGroupInfo,
       }}

@@ -16,7 +16,7 @@ function GroupsList() {
   const { windowWidth } = useWindowDimensions();
 
   //Variables from groups context
-  const { groupsUserIn, isGettingAllGroups } = useGroups();
+  const { groups, isGettingAllGroups } = useGroups();
 
   return (
     <div className="w-full space-y-5 mt-4 md:space-y-8 md:mt-8">
@@ -24,7 +24,7 @@ function GroupsList() {
         <main className="w-full space-y-3 md:space-y-4">
           {/**** Groups list */}
           {!isGettingAllGroups
-            ? groupsUserIn.map((group) => {
+            ? groups.map((group) => {
                 const groupId = group._id;
                 return <GroupListItem group={group} key={groupId} />;
               })

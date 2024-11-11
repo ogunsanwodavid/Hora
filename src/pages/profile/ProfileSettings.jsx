@@ -306,20 +306,16 @@ function ProfileSettings() {
                 value: 20,
                 message: "Username cannot exceed 20 characters",
               },
+              pattern: {
+                value: /^[a-zA-Z0-9]+$/, // Regular expression for alphanumeric characters
+                message: "Username can only contain letters and digits",
+              },
             })}
             helperText={errors?.username?.message}
             error={Boolean(errors?.username?.message)}
             autoComplete="off"
             className="w-full"
             disabled={!isEditingUserInfo || isUpdatingUser}
-            onKeyDown={(e) => {
-              const key = e.key;
-
-              // Allow only letters and digits
-              if (!/^[a-zA-Z0-9]$/.test(key) && key !== "Backspace") {
-                e.preventDefault();
-              }
-            }}
           />
 
           {/*** Email input */}

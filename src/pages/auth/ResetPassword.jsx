@@ -49,6 +49,7 @@ function ResetPassword() {
     resetPasswordEmail,
     resetPasswordId,
     resendOtp,
+    isResendingOtp,
   } = useAuth();
 
   useEffect(() => {
@@ -132,6 +133,7 @@ function ResetPassword() {
                   id="email"
                   value={resetPasswordEmail}
                   placeholder="Enter your email address"
+                  autoComplete="off"
                   {...register("email", {
                     required: "This field is required",
                     pattern: {
@@ -142,7 +144,6 @@ function ResetPassword() {
                   className={`w-full !bg-black700 h-[48px] px-4 py-3 text-base text-white  transition-all duration-500 border-[1.2px] border-black300 outline-none rounded-[4px] lowercase placeholder:normal-case placeholder:text-black150 ${
                     errors?.email?.message ? "border-errorRed" : ""
                   }  ${!errors?.email?.message && "focus:border-white"}`}
-                  disabled={isResettingPassword}
                 />
               </FormInput>
 
@@ -172,12 +173,14 @@ function ResetPassword() {
                 />
 
                 {/**** Button to resend OTP */}
-                <p
-                  className="w-max ml-auto text-blue200 text-[14px] font-semibold mt-1"
-                  onClick={handleResetOtp}
-                >
-                  Resend OTP
-                </p>
+                {!isResendingOtp && (
+                  <p
+                    className="w-max ml-auto text-blue200 text-[14px] font-semibold mt-1 cursor-pointer"
+                    onClick={handleResetOtp}
+                  >
+                    Resend OTP
+                  </p>
+                )}
               </FormInput>
 
               {/*** New Password input */}

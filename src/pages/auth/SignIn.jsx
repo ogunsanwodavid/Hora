@@ -95,6 +95,7 @@ function SignIn() {
                   name="email"
                   id="email"
                   placeholder="Enter your email address"
+                  autoComplete="off"
                   {...register("email", {
                     required: "This field is required",
                     pattern: {

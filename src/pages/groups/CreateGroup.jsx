@@ -71,7 +71,7 @@ function CreateGroup() {
 
   //State to showcase share join group url
   const [showcaseShareJoinGroupUrl, setShowcaseShareJoinGroupUrl] =
-    useState(true);
+    useState(false);
 
   return (
     <>
@@ -114,6 +114,7 @@ function CreateGroup() {
                 type="text"
                 name="groupName"
                 id="groupName"
+                autoComplete="off"
                 placeholder="Enter your group name"
                 {...register("groupName", {
                   required: "This field is required",

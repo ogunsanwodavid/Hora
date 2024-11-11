@@ -14,7 +14,7 @@ function ProtectedRoute({ isAuthenticated }) {
   //Fetch new user information using user's id on mount
   useEffect(() => {
     if (isAuthenticated) {
-      //onboardUser(userId);
+      onboardUser(userId);
     }
   }, [userId]);
 

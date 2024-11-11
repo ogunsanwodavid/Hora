@@ -125,6 +125,7 @@ function CreateAccount() {
                   name="username"
                   id="username"
                   placeholder="Enter your username"
+                  autoComplete="off"
                   {...register("username", {
                     required: "This field is required",
                     minLength: {
@@ -135,19 +136,15 @@ function CreateAccount() {
                       value: 20,
                       message: "Username cannot exceed 20 characters",
                     },
+                    pattern: {
+                      value: /^[a-zA-Z0-9]+$/, // Regular expression for alphanumeric characters
+                      message: "Username can only contain letters and digits",
+                    },
                   })}
                   className={`w-full bg-black700 h-[48px] px-4 py-3 text-base text-white  transition-all duration-500 border-[1.2px] border-black300 outline-none rounded-[4px] placeholder:text-black150 ${
                     errors?.username?.message ? "border-errorRed" : ""
                   } ${!errors?.username?.message && "focus:border-white"}`}
                   disabled={isSigningUp}
-                  onKeyDown={(e) => {
-                    const key = e.key;
-
-                    // Allow only letters and digits
-                    if (!/^[a-zA-Z0-9]$/.test(key) && key !== "Backspace") {
-                      e.preventDefault();
-                    }
-                  }}
                 />
               </FormInput>
 
@@ -158,6 +155,7 @@ function CreateAccount() {
                   name="email"
                   id="email"
                   placeholder="Enter your email address"
+                  autoComplete="off"
                   {...register("email", {
                     required: "This field is required",
                     pattern: {

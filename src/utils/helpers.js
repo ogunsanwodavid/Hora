@@ -75,6 +75,20 @@ export const isDatePrevious = (parsedDate) => {
   return givenDate < today;
 };
 
+export const isDateAfter = (parsedDate) => {
+  const today = new Date();
+
+  // Set today's date to midnight to compare only the date part
+  today.setHours(0, 0, 0, 0);
+
+  // Set the parsed date's time to midnight to compare the date part
+  const givenDate = new Date(parsedDate);
+  givenDate.setHours(0, 0, 0, 0);
+
+  // Return true if the parsed date is after today
+  return givenDate > today;
+};
+
 export function formatTimeTo24Hour(date) {
   const hours = date.getHours().toString().padStart(2, "0"); // Get hours and pad with 0 if needed
   const minutes = date.getMinutes().toString().padStart(2, "0"); // Get minutes and pad with 0 if needed
