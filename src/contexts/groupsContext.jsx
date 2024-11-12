@@ -1,11 +1,15 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "./authContext";
 
 import { toast } from "react-toastify";
-import { isDateAfter, parseDateFromYYYYMMDD } from "../utils/helpers";
+import {
+  isDateAfter,
+  isDatePrevious,
+  parseDateFromYYYYMMDD,
+} from "../utils/helpers";
 
 const GroupsContext = createContext();
 
@@ -155,7 +159,7 @@ const GroupsProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
 
         // Current task gotten successful
         const { message: getCurrentGroupMessage } = data;
@@ -340,7 +344,7 @@ const GroupsProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
 
         // Edit group successful
         const { message: editGroupMessage } = data;
@@ -485,7 +489,7 @@ const GroupsProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
 
         // All current group tasks gotten successful
         const { message: getCurrentGroupTasksMessage } = data;
@@ -495,8 +499,12 @@ const GroupsProvider = ({ children }) => {
 
         //Remove future tasks
         const onlyTodayOrPreviousTasks = allTasks.filter((task) => {
+          const isTaskCompleted = task.completed;
           const dueDate = parseDateFromYYYYMMDD(task.dueDate.substring(0, 10));
           const isDueDateAfter = isDateAfter(dueDate);
+          const isDueDateBefore = isDatePrevious(dueDate);
+
+          if (isDueDateBefore && isTaskCompleted) return false;
 
           return !isDueDateAfter;
         });
@@ -679,7 +687,7 @@ const GroupsProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
 
         // Group Task completion successful
         const { message: completeGroupTaskMessage } = data;

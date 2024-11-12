@@ -316,6 +316,10 @@ function ProfileSettings() {
             autoComplete="off"
             className="w-full"
             disabled={!isEditingUserInfo || isUpdatingUser}
+            onInput={(e) => {
+              // Remove any characters that aren't letters, digits, or underscores
+              e.target.value = e.target.value.replace(/[^a-zA-Z0-9_]/g, "");
+            }}
           />
 
           {/*** Email input */}

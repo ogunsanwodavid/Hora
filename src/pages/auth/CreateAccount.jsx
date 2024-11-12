@@ -137,14 +137,33 @@ function CreateAccount() {
                       message: "Username cannot exceed 20 characters",
                     },
                     pattern: {
-                      value: /^[a-zA-Z0-9]+$/, // Regular expression for alphanumeric characters
-                      message: "Username can only contain letters and digits",
+                      value: /^[a-zA-Z0-9_]+$/, // Allow letters, digits, and underscores
+                      message:
+                        "Username can only contain letters, digits, and underscores",
                     },
                   })}
-                  className={`w-full bg-black700 h-[48px] px-4 py-3 text-base text-white  transition-all duration-500 border-[1.2px] border-black300 outline-none rounded-[4px] placeholder:text-black150 ${
+                  className={`w-full bg-black700 h-[48px] px-4 py-3 text-base text-white transition-all duration-500 border-[1.2px] border-black300 outline-none rounded-[4px] placeholder:text-black150 ${
                     errors?.username?.message ? "border-errorRed" : ""
                   } ${!errors?.username?.message && "focus:border-white"}`}
                   disabled={isSigningUp}
+                  /* onKeyDown={(e) => {
+                    const key = e.key;
+                    // Allow letters, digits, underscore, Backspace, and Tab
+                    if (
+                      !/^[a-zA-Z0-9_]$/.test(key) &&
+                      key !== "Backspace" &&
+                      key !== "Tab"
+                    ) {
+                      e.preventDefault();
+                    }
+                  }} */
+                  onInput={(e) => {
+                    // Remove any characters that aren't letters, digits, or underscores
+                    e.target.value = e.target.value.replace(
+                      /[^a-zA-Z0-9_]/g,
+                      ""
+                    );
+                  }}
                 />
               </FormInput>
 

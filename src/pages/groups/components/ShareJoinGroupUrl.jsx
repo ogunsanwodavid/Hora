@@ -45,7 +45,7 @@ function ShareJoinGroupUrl({ setShowcaseShareJoinGroupUrl }) {
     >
       <div
         className={
-          "w-full flex flex-col absolute bottom-0 left-0 bg-blue900 rounded-t-2xl px-5 py-10 md:rounded-t-[2.5rem] md:px-[24px] md:py-[50px] "
+          "w-full flex flex-col absolute bottom-0 left-0 bg-blue900 rounded-t-2xl p-5 pb-10 md:rounded-t-[2.5rem] md:px-[24px] md:py-[50px] "
         }
         style={{
           animation: "slideUp 250ms ease-in forwards",

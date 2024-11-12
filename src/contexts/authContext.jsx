@@ -9,6 +9,10 @@ import { toast } from "react-toastify";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  //Navigation function
+  const navigate = useNavigate();
+
+  //Endpoints Base URL
   const BASE_URL = "https://hora-1daj.onrender.com/user";
 
   const [user, setUser] = useState(null);
@@ -24,6 +28,8 @@ const AuthProvider = ({ children }) => {
   const [resetPasswordId, setResetPasswordId] = useState("");
   const [resetPasswordEmail, setResetPasswordEmail] = useState("");
 
+  const [pageBeforeEmailVerify, setPageBeforeEmailVerify] = useState("");
+
   const [isSigningUp, setIsSigningUp] = useState(false);
   const [isVerifyingEmail, setIsVerifyingEmail] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -36,8 +42,6 @@ const AuthProvider = ({ children }) => {
   const [isUpdatingUser, setIsUpdatingUser] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [isDeletingUser, setIsDeletingUser] = useState(false);
-
-  const navigate = useNavigate();
 
   //Store the url first visited before the auth wall
   const [userVisitedRoute, setUserVisitedRoute] = useState("");
@@ -74,7 +78,8 @@ const AuthProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
+
         // Registration successful
         const { message: signUpMessage } = data;
 
@@ -89,6 +94,9 @@ const AuthProvider = ({ children }) => {
 
         //Set otp
         setVerificationOtp(data.register.createUser.onetime);
+
+        //Set page before email verification signup
+        setPageBeforeEmailVerify("createaccount");
 
         //Navigate to verify email page
         navigate("/verifyemail");
@@ -138,7 +146,8 @@ const AuthProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
+
         // Verification successful
         const { message: verifyEmailMessage } = data;
 
@@ -146,10 +155,11 @@ const AuthProvider = ({ children }) => {
         toast.success(verifyEmailMessage);
 
         //removeToken
-        removeToken();
+        if (pageBeforeEmailVerify === "createaccount") removeToken();
 
         //Navigate to signin page
-        navigate("/signin");
+        if (pageBeforeEmailVerify === "createaccount") navigate("/signin");
+        if (pageBeforeEmailVerify === "login") navigate("/");
 
         return { success: true, verifyEmailMessage, user };
       } else {
@@ -296,6 +306,53 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  //Resend otp function
+  const resendOtp = async ({ email, userId }) => {
+    setIsResendingOtp(true);
+    try {
+      const response = await fetch(`${BASE_URL}/resend-otp/${userId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+        redirect: "follow",
+      });
+      console.log(email);
+
+      const data = await response.json();
+
+      if (response.ok) {
+        //console.log(data);
+
+        // Resend otp successful
+        const { message: resendOtpMessage } = data;
+
+        return { success: true, resendOtpMessage, user };
+      } else {
+        console.log(data);
+
+        // toast error
+        toast.error(data.message || "An unexpected error occurred");
+
+        return {
+          success: false,
+          error: data.message || "An unexpected error occurred",
+        };
+      }
+    } catch (error) {
+      // Network or other errors
+      toast.error("Something went wrong.");
+
+      return {
+        success: false,
+        error: error.message || "An unexpected error occurred",
+      };
+    } finally {
+      setIsResendingOtp(false);
+    }
+  };
+
   //Login function
   const login = async ({ email, password }) => {
     setIsLoggingIn(true);
@@ -313,12 +370,14 @@ const AuthProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
+
         // Login successful
         const { message: loginMessage } = data;
         //const token = data.login.login.token;
         const token = data.login.user.token;
         const userId = data.login.user._id;
+        const isUserVerified = data.login.user.isVerified;
 
         //set user information and token to local storage
         await setToken(token);
@@ -330,20 +389,37 @@ const AuthProvider = ({ children }) => {
 
         //Navigate to the real route user wanted to before being bounced out the auth wall
         //Else navigate to home page
-        if (
-          userVisitedRoute &&
-          userVisitedRoute !== "/signin" &&
-          userVisitedRoute !== "/createaccount" &&
-          userVisitedRoute !== "/forgotpassword" &&
-          userVisitedRoute !== "/resetpassword" &&
-          userVisitedRoute !== "/verifyemail"
-        ) {
-          navigate(userVisitedRoute);
-          //console.log(userVisitedRoute);
+        if (isUserVerified) {
+          if (
+            userVisitedRoute &&
+            userVisitedRoute !== "/signin" &&
+            userVisitedRoute !== "/createaccount" &&
+            userVisitedRoute !== "/forgotpassword" &&
+            userVisitedRoute !== "/resetpassword" &&
+            userVisitedRoute !== "/verifyemail"
+          ) {
+            navigate(userVisitedRoute);
+            //console.log(userVisitedRoute);
+          } else {
+            navigate("/");
+          }
         } else {
-          navigate("/");
+          await resendOtp({ email: email, userId: userId });
+
+          //Set sign up user's id and email
+          setVerifyEmailId(userId);
+          setVerifyEmailAddress(email);
+
+          //Set token
+          setToken(token);
+
+          //Set otp
+          setVerificationOtp(data.login.user.onetime);
+
+          setPageBeforeEmailVerify("login");
+
+          navigate("/verifyemail");
         }
-        //navigate("/");
 
         return { success: true, loginMessage, user };
       } else {
@@ -370,7 +446,7 @@ const AuthProvider = ({ children }) => {
   };
 
   //Request reset Function
-  const requestReset = async ({ email }) => {
+  const requestReset = async ({ email, page }) => {
     setIsRequestingReset(true);
     try {
       const response = await fetch(`${BASE_URL}/forgot-password`, {
@@ -385,7 +461,8 @@ const AuthProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
+
         // Reset Request successful
         const { message: resetRequestMessage } = data;
         //const token = data.login.login.token;
@@ -401,7 +478,9 @@ const AuthProvider = ({ children }) => {
         setResetPasswordEmail(email);
 
         //Navigate to reset password page
-        navigate("/resetpassword");
+        if (page === "forgotpassword") {
+          navigate("/resetpassword");
+        }
 
         return { success: true, resetRequestMessage, user };
       } else {
@@ -447,7 +526,8 @@ const AuthProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
+
         // Reset Request successful
         const { message: resetPasswordMessage } = data;
 
@@ -481,50 +561,6 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  //Resend otp function
-  const resendOtp = async ({ email, userId }) => {
-    setIsResendingOtp(true);
-    try {
-      const response = await fetch(`${BASE_URL}/resend-otp/${userId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-        redirect: "follow",
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        console.log(data);
-        // Resend otp successful
-        const { message: resendOtpMessage } = data;
-
-        return { success: true, resendOtpMessage, user };
-      } else {
-        console.log(data);
-        // toast error
-        toast.error(data.message || "An unexpected error occurred");
-
-        return {
-          success: false,
-          error: data.message || "An unexpected error occurred",
-        };
-      }
-    } catch (error) {
-      // Network or other errors
-      toast.error("Something went wrong.");
-
-      return {
-        success: false,
-        error: error.message || "An unexpected error occurred",
-      };
-    } finally {
-      setIsResendingOtp(false);
-    }
-  };
-
   //Change password function
   const changePassword = async ({ oldPassword, newPassword }) => {
     setIsChangingPassword(true);
@@ -542,7 +578,8 @@ const AuthProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
+
         // Change password successful
         const { message: changePasswordMessage } = data;
 
@@ -593,7 +630,8 @@ const AuthProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
+
         // Update user successful
         const { message: updateUserMessage } = data;
 
@@ -668,7 +706,8 @@ const AuthProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        //console.log(data);
+
         // Delete user successful
         const { message: deleteUserMessage } = data;
 

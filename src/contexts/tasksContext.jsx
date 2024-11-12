@@ -4,7 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 
-import { isDateAfter, parseDateFromYYYYMMDD } from "../utils/helpers";
+import {
+  isDateAfter,
+  isDatePrevious,
+  parseDateFromYYYYMMDD,
+} from "../utils/helpers";
 
 const TasksContext = createContext();
 
@@ -158,7 +162,7 @@ const TasksProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
+        // console.log(data);
 
         // All tasks gotten successful
         const { message: getAllTasksMessage } = data;
@@ -168,17 +172,36 @@ const TasksProvider = ({ children }) => {
 
         //Remove future tasks
         const onlyTodayOrPreviousTasks = allTasks.filter((task) => {
+          const isTaskCompleted = task.completed;
           const dueDate = parseDateFromYYYYMMDD(task.dueDate.substring(0, 10));
           const isDueDateAfter = isDateAfter(dueDate);
+          const isDueDateBefore = isDatePrevious(dueDate);
+
+          if (isDueDateBefore && isTaskCompleted) return false;
 
           return !isDueDateAfter;
+        });
+
+        const sortedTasks = onlyTodayOrPreviousTasks.filter((task) => {
+          const isPersonalTask =
+            task.type.at(0).replace(/\s+/g, "").toLowerCase() === "personal";
+
+          /* const isGroupTask =
+            task.type.at(0).replace(/\s+/g, "").toLowerCase() === "group"; */
+
+          const isTaskCreatedByUser = task?.createdBy?._id === userId;
+
+          //Be false if is a personal task and user did not create the task
+          if (isPersonalTask && !isTaskCreatedByUser) return false;
+
+          return true;
         });
 
         //Toast message
         //toast.success(getAllTasksMessage);
 
         //set all tasks
-        await setAllTasks(onlyTodayOrPreviousTasks);
+        await setAllTasks(sortedTasks);
 
         return { success: true, getAllTasksMessage };
       } else {

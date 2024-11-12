@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../contexts/authContext";
 
@@ -38,6 +38,7 @@ function ForgotPassword() {
   async function onSubmit(data) {
     const formData = {
       email: data.email,
+      page: "forgotpassword",
     };
 
     await requestReset(formData);
@@ -67,12 +68,9 @@ function ForgotPassword() {
 
         <section className="w-full max-w-[500px] mx-auto lg:w-[470px] lg:flex lg:flex-col lg:items-center lg:justify-center lg:p-6">
           <header className="w-full px-2 space-y-4 max-w-[500px] mx-auto">
-            <img
-              src={leftArrow}
-              className="w-4"
-              alt="left-arrow"
-              onClick={() => navigate(-1)}
-            />
+            <Link to="/signin">
+              <img src={leftArrow} className="w-4" alt="left-arrow" />
+            </Link>
 
             <main className="space-y-3 text-white text-center">
               <img src={fullLogo} className="mx-auto h-8" alt="" />

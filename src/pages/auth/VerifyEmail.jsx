@@ -43,6 +43,8 @@ function VerifyEmail() {
   const [otp, setOtp] = useState(new Array(6).fill("")); // Initialize an array with 6 empty strings
   const otpString = otp.join("");
 
+  const [timeLeft, setTimeLeft] = useState(60); // Initialize to 60 seconds (1 minute) for countdown timer
+
   const handleChange = (element, index) => {
     if (!isNaN(element.value)) {
       let newOtp = [...otp];
@@ -76,8 +78,6 @@ function VerifyEmail() {
     setOtp(new Array(6).fill(""));
     setTimeLeft(60);
   };
-
-  const [timeLeft, setTimeLeft] = useState(60); // Initialize to 60 seconds (1 minute) for countdown timer
 
   return (
     <div

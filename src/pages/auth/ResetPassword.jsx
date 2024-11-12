@@ -6,16 +6,19 @@ import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../contexts/authContext";
 
+import useWindowDimensions from "../../hooks/useWindowDimensions";
+
 import FormInput from "../../ui/FormInput";
 import FormButton from "../../ui/FormButton";
 
 import fullLogo from "../../assets/fullLogo.svg";
 import resetPasswordImg from "../../assets/resetpassword.svg";
 
+import CountdownTimer from "./CountdownTimer";
+
 import leftArrow from "../../icons/leftArrowIcon.svg";
 import eyeIcon from "../../icons/eyeIcon.svg";
 import eyeOffIcon from "../../icons/eyeOffIcon.svg";
-import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 function ResetPassword() {
   //WIndow size info
@@ -47,9 +50,7 @@ function ResetPassword() {
     resetPassword,
     isResettingPassword,
     resetPasswordEmail,
-    resetPasswordId,
-    resendOtp,
-    isResendingOtp,
+    requestReset,
   } = useAuth();
 
   useEffect(() => {
@@ -59,15 +60,21 @@ function ResetPassword() {
     }
   }, [resetPasswordEmail, navigate]);
 
+  const [timeLeft, setTimeLeft] = useState(0); // Initialize to 60 seconds (1 minute) for countdown timer
+
   //Function to resend otp to user's email
   async function handleResetOtp() {
     const formValues = watch();
     const emailInputValue = formValues.email;
 
-    await resendOtp({
+    const formData = {
       email: emailInputValue,
-      userId: resetPasswordId,
-    });
+      page: "resetpassword",
+    };
+
+    setTimeLeft(60);
+
+    await requestReset(formData);
   }
 
   async function onSubmit(data) {
@@ -158,22 +165,40 @@ function ResetPassword() {
                   {...register("otp", {
                     required: "This field is required",
                   })}
-                  className={`w-full bg-black700 h-[48px] px-4 py-3 text-base text-white  transition-all duration-500 border-[1.2px] border-black300 outline-none rounded-[4px] placeholder:text-black150 ${
+                  className={`w-full bg-black700 h-[48px] px-4 py-3 text-base text-white transition-all duration-500 border-[1.2px] border-black300 outline-none rounded-[4px] placeholder:text-black150 ${
                     errors?.otp?.message ? "border-errorRed" : ""
                   } ${!errors?.otp?.message && "focus:border-white"}`}
                   disabled={isResettingPassword}
-                  onKeyDown={(e) => {
+                  /* onKeyDown={(e) => {
                     const key = e.key;
 
-                    // Allow only digits
-                    if (!/^[0-9]$/.test(key) && key !== "Backspace") {
+                    // Allow all key entries, but prevent non-digit characters from showing up
+                    if (
+                      !/^[0-9]$/.test(key) &&
+                      key !== "Backspace" &&
+                      key !== "Tab"
+                    ) {
                       e.preventDefault();
                     }
+                  }} */
+                  onInput={(e) => {
+                    // Allow only digits to be displayed in the input field
+                    e.target.value = e.target.value.replace(/\D/g, "");
                   }}
                 />
 
-                {/**** Button to resend OTP */}
-                {!isResendingOtp && (
+                {/*** SHow resend coce button if only there is time left */}
+                {timeLeft ? (
+                  <div className="space-y-1">
+                    <p className="w-max ml-auto text-blue200 text-[14px] font-semibold mt-1 cursor-pointer">
+                      Resend code in{" "}
+                      <CountdownTimer
+                        timeLeft={timeLeft}
+                        setTimeLeft={setTimeLeft}
+                      />
+                    </p>
+                  </div>
+                ) : (
                   <p
                     className="w-max ml-auto text-blue200 text-[14px] font-semibold mt-1 cursor-pointer"
                     onClick={handleResetOtp}

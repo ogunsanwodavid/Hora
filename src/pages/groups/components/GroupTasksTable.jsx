@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { useGroups } from "../../../contexts/groupsContext";
+import { useAuth } from "../../../contexts/authContext";
 
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
@@ -19,6 +20,10 @@ import {
 } from "../../../utils/helpers";
 
 function GroupTasksTable() {
+  //User credentials
+  const { user } = useAuth();
+  const userId = user?._id;
+
   //Variables from the groups context
   const { currentGroupTasks } = useGroups();
 
@@ -105,6 +110,8 @@ function GroupTasksTable() {
 
         const taskTimeText = convertTo12HourFormat(task?.time); //time in 12hr format
 
+        const isTaskCreatedByUser = task?.createdBy?._id === userId;
+
         const repeatTaskText =
           task?.repeatTask === "weekly"
             ? "Weekly"
@@ -120,7 +127,7 @@ function GroupTasksTable() {
           taskTimeText,
           repeatTaskText,
           task?.completed,
-          task?.createdBy?.username
+          isTaskCreatedByUser ? "You" : task?.createdBy?.username
         );
       });
 
