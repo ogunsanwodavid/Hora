@@ -2,9 +2,8 @@ import { createContext, useContext, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { useAuth } from "./authContext";
-
 import { toast } from "react-toastify";
+
 import {
   isDateAfter,
   isDatePrevious,
@@ -21,8 +20,6 @@ const GroupsProvider = ({ children }) => {
   const navigate = useNavigate();
 
   //User credentials
-  const { user } = useAuth();
-  const userId = user?._id;
 
   //Group variables
   const [groups, setGroups] = useState([]);

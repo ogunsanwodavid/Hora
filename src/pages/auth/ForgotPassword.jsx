@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { useAuth } from "../../contexts/authContext";
 
@@ -46,8 +46,6 @@ function ForgotPassword() {
     //Reset form inputs on successful login request
     setValue("email", "");
   }
-
-  const navigate = useNavigate();
 
   return (
     <div
