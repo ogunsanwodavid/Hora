@@ -374,7 +374,7 @@ const AuthProvider = ({ children }) => {
 
         // Login successful
         const { message: loginMessage } = data;
-        //const token = data.login.login.token;
+
         const token = data.login.user.token;
         const userId = data.login.user._id;
         const isUserVerified = data.login.user.isVerified;
