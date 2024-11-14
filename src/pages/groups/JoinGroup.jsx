@@ -120,8 +120,16 @@ function JoinGroup() {
                 onKeyDown={(e) => {
                   const key = e.key;
 
-                  // Allow only alphabets and hyphen
-                  if (!/^[a-zA-Z-]$/.test(key) && key !== "Backspace") {
+                  // Allow alphabets, digits, hyphen, backspace, control keys, and arrow keys
+                  if (
+                    !/^[a-zA-Z0-9-]$/.test(key) && // Allow letters, digits, and hyphen
+                    key !== "Backspace" && // Allow backspace
+                    key !== "ArrowLeft" && // Allow left arrow
+                    key !== "ArrowRight" && // Allow right arrow
+                    key !== "ArrowUp" && // Allow up arrow
+                    key !== "ArrowDown" && // Allow down arrow
+                    !e.ctrlKey // Allow control keys (Ctrl+C, Ctrl+V, etc.)
+                  ) {
                     e.preventDefault();
                   }
                 }}
